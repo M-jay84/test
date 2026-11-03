@@ -1,0 +1,40 @@
+[2026-11-03 07:39:50] [APPLICATION] Class "Bootstrap\Libs\Auth" not found
+File: C:\xampp\htdocs\newsite\page\theme\default\header.php:13
+Trace:
+#0 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(44): require()
+#1 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(51): theme_include('header.php')
+#2 C:\xampp\htdocs\newsite\page\user\home.php(4): theme_header('Home \xE2\x80\x93 Exampl...')
+#3 C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php(28): require('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\newsite\index.php(15): router_dispatch()
+#5 {main}
+
+[2026-11-03 07:40:48] [APPLICATION] Class "Bootstrap\Libs\Auth" not found
+File: C:\xampp\htdocs\newsite\page\theme\default\header.php:13
+Trace:
+#0 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(44): require()
+#1 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(51): theme_include('header.php')
+#2 C:\xampp\htdocs\newsite\page\user\home.php(4): theme_header('Home \xE2\x80\x93 Exampl...')
+#3 C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php(28): require('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\newsite\index.php(15): router_dispatch()
+#5 {main}
+
+[2026-11-03 07:48:35] [APPLICATION] Class "Bootstrap\Libs\Auth" not found
+File: C:\xampp\htdocs\newsite\page\theme\default\header.php:13
+Trace:
+#0 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(44): require()
+#1 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(51): theme_include('header.php')
+#2 C:\xampp\htdocs\newsite\page\user\home.php(4): theme_header('Home \xE2\x80\x93 Exampl...')
+#3 C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php(28): require('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\newsite\index.php(15): router_dispatch()
+#5 {main}
+
+[2026-11-03 07:48:37] [APPLICATION] Class "Bootstrap\Libs\Auth" not found
+File: C:\xampp\htdocs\newsite\page\theme\default\header.php:13
+Trace:
+#0 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(44): require()
+#1 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(51): theme_include('header.php')
+#2 C:\xampp\htdocs\newsite\page\user\home.php(4): theme_header('Home \xE2\x80\x93 Exampl...')
+#3 C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php(28): require('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\newsite\index.php(15): router_dispatch()
+#5 {main}
+

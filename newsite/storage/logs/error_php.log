@@ -1,0 +1,72 @@
+[2026-11-02 09:00:58] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/config/settings.php): Failed to open stream: No such file or directory
+File: C:\xampp\htdocs\newsite\Bootstrap\init.php:21
+
+[2026-11-02 09:00:58] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/config/settings.php): Failed to open stream: No such file or directory
+File: C:\xampp\htdocs\newsite\Bootstrap\init.php:21
+
+[2026-11-02 09:00:59] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/config/settings.php): Failed to open stream: No such file or directory
+File: C:\xampp\htdocs\newsite\Bootstrap\init.php:21
+
+[2026-11-02 08:01:22] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/language_functions.php): Failed to open stream: No such file or directory
+File: C:\xampp\htdocs\newsite\Bootstrap\init.php:36
+
+[2026-11-02 08:02:03] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/router_functions.php): Failed to open stream: No such file or directory
+File: C:\xampp\htdocs\newsite\Bootstrap\init.php:49
+
+[2026-11-02 08:02:04] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/router_functions.php): Failed to open stream: No such file or directory
+File: C:\xampp\htdocs\newsite\Bootstrap\init.php:49
+
+[2026-11-02 08:03:20] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/security_functions.php): Failed to open stream: No such file or directory
+File: C:\xampp\htdocs\newsite\Bootstrap\init.php:40
+
+[2026-11-02 08:03:21] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/security_functions.php): Failed to open stream: No such file or directory
+File: C:\xampp\htdocs\newsite\Bootstrap\init.php:40
+
+[2026-11-02 08:11:35] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/functions/security_functions.php): Failed to open stream: No such file or directory
+File: C:\xampp\htdocs\newsite\Bootstrap\init.php:40
+
+[02-Nov-2026 09:20:16 Europe/London] PHP Fatal error:  strict_types declaration must be the very first statement in the script in C:\xampp\htdocs\newsite\page\theme\default\footer.php on line 2
+[2026-11-02 11:21:09] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/legacy_functions.php): Failed to open stream: No such file or directory
+File: C:\xampp\htdocs\newsite\Bootstrap\init.php:44
+
+[02-Nov-2026 11:22:20 Europe/London] PHP Fatal error:  Cannot redeclare Url() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:6) in C:\xampp\htdocs\newsite\Bootstrap\functions\legacy_functions.php on line 48
+[02-Nov-2026 17:12:29 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:29 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:29 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:29 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:30 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:32 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:32 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:32 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:32 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:32 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:58 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:58 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:58 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:58 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+[02-Nov-2026 17:12:58 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
+Error-page rendering failed: Error: Class "Bootstrap\Libs\Auth" not found in C:\xampp\htdocs\newsite\page\theme\default\header.php:13
+Stack trace:
+#0 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(44): require()
+#1 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(51): theme_include('header.php')
+#2 C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php(105): theme_header('Errors')
+#3 [internal function]: error_handle_exception(Object(Error))
+#4 {main}Error-page rendering failed: Error: Class "Bootstrap\Libs\Auth" not found in C:\xampp\htdocs\newsite\page\theme\default\header.php:13
+Stack trace:
+#0 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(44): require()
+#1 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(51): theme_include('header.php')
+#2 C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php(105): theme_header('Errors')
+#3 [internal function]: error_handle_exception(Object(Error))
+#4 {main}Error-page rendering failed: Error: Class "Bootstrap\Libs\Auth" not found in C:\xampp\htdocs\newsite\page\theme\default\header.php:13
+Stack trace:
+#0 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(44): require()
+#1 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(51): theme_include('header.php')
+#2 C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php(105): theme_header('Errors')
+#3 [internal function]: error_handle_exception(Object(Error))
+#4 {main}Error-page rendering failed: Error: Class "Bootstrap\Libs\Auth" not found in C:\xampp\htdocs\newsite\page\theme\default\header.php:13
+Stack trace:
+#0 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(44): require()
+#1 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(51): theme_include('header.php')
+#2 C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php(105): theme_header('Errors')
+#3 [internal function]: error_handle_exception(Object(Error))
+#4 {main}
