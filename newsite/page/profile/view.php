@@ -115,7 +115,7 @@ usermenu($ID);
         <?= e(__('UPLOADED')) ?>: <?= mksize($USER['uploaded'] ?? 0) ?><br>
         <?= e(__('DOWNLOADED')) ?>: <?= mksize($USER['downloaded'] ?? 0) ?><br>
         <?= e(__('RATIO')) ?>: <?= get_ratio_color($HTML['userratio']) ?><br>
-        <?= e(__('BONUS')) ?>: <a href="<?= url('bonus') ?>"><?= e((string) ($USER['seedbonus'] ?? '0')) ?></a><br>
+        <?= e(__('BONUS')) ?>: <a href="<?= url('bonus/view') ?>"><?= e((string) ($USER['seedbonus'] ?? '0')) ?></a><br>
         <?= e(__('HNR')) ?>: <?= (int) ($COUNT['numhnr'] ?? 0) ?><br>
         <?php
         $days = max(1, (CONFIG['TT_TIME'] - strtotime((string) $USER['added'])) / 86400);

@@ -521,7 +521,7 @@ class TorrentsLogic
         $catsquery = CatagoriesLogic::getCatByParent();
         $torrents_query = "SELECT COUNT(*) FROM torrents LEFT JOIN categories ON category = categories.id $search[where]";
         $count = DB::run($torrents_query, $search['params'])->fetchColumn();
-        list($pagerbuttons, $limit) = pagination(25, $count, URLROOT . "/browse" . $search['url'] . $search['pagerlink']);
+        list($pagerbuttons, $limit) = pagination(25, $count, URLROOT . "/torrents/browse" . $search['url'] . $search['pagerlink']);
 
         $torrents_query = 
                     "SELECT torrents.id, torrents.anon, torrents.announce, torrents.category, torrents.sticky, 

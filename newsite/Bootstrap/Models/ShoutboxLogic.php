@@ -40,7 +40,7 @@ class ShoutboxLogic
             DB::run($shoutbox_query, [0, CONFIG['TT_DATE'], 'System', $msg_shout]);
             message('admincp', "<b><font color='#ff0000'>Shoutbox Cleared....</font></b>");
         } else {
-            message('admincp', "<b>Are You Sure <a href='".URLROOT."/admintasks/clearshoutbox/sure'>delete all shouts</a></b>");
+            message('admincp', "<b>Are You Sure <a href='".URLROOT."/task/clearshout/sure'>delete all shouts</a></b>");
         }
     }
 
@@ -92,7 +92,6 @@ class ShoutboxLogic
             DB::run($shoutbox_query, [$message, $msgid]);
             message(URLROOT, LANG["UPDATE_COMPLETE"]);
         } else {
-            message('authorize/logout', LANG["NO_PERMISSION"]);
         }
     }
 

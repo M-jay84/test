@@ -15,11 +15,11 @@ if (Auth::check() || empty(CONFIG['MEMBERSONLY'])) {
     );
     ?>
     <div class="list-group">
-        <a href="<?= url('browse') ?>" class="list-group-item">
+        <a href="<?= url('torrents/browse') ?>" class="list-group-item">
             <i class="fa fa-list tticon"></i> <?= e(__('SHOW_ALL')) ?>
         </a>
         <?php foreach ($catsquery as $catsrow) : ?>
-            <a href="<?= url('browse?cat=' . (int) $catsrow['id']) ?>" class="list-group-item">
+            <a href="<?= url('torrents/browse?cat=' . (int) $catsrow['id']) ?>" class="list-group-item">
                 <i class="fa <?= e($catsrow['image'] ?? '') ?> tticon"></i>
                 <?= e($catsrow['parent_cat'] ?? '') ?>
             </a>

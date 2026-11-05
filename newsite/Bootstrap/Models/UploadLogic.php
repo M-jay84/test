@@ -199,7 +199,7 @@ class UploadLogic
     LogsLogic::write(sprintf(LANG["TORRENT_UPLOADED"], htmlspecialchars($name), $current_user->username));
     
     // Shout Torrent
-    $msg_shout = "New Torrent: [url=" . URLROOT . "/torrent/" . $id . "]" . $name . "[/url] has been uploaded " . ($anon == 'no' ? "by [color=".$current_user->Color."]" . $current_user->username . "[/color]" : "") . "";
+    $msg_shout = "New Torrent: [url=" . URLROOT . "/torrent/view/" . $id . "]" . $name . "[/url] has been uploaded " . ($anon == 'no' ? "by [color=".$current_user->Color."]" . $current_user->username . "[/color]" : "") . "";
     $shoutbox_query = "INSERT INTO `shoutbox` (userid, date,user, message) VALUES (?,?,?,?)";
     DB::run($shoutbox_query, [0, CONFIG['TT_DATE'], 'System', $msg_shout]);
 

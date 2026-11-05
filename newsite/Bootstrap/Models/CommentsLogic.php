@@ -36,7 +36,7 @@ class CommentsLogic
         // Pagination
         $comments_query = "SELECT count(id) FROM `comments`";
         $count = DB::run($comments_query)->fetchColumn();
-        list($pager, $limit) = pagination(10, $count, URLROOT."/admincomment?");
+        list($pager, $limit) = pagination(10, $count, URLROOT."/comment/admin?");
         $comments_query = "SELECT c.id, c.text, c.user, c.torrent, c.news, t.name, n.title, u.username, c.added 
         FROM comments c 
         LEFT JOIN torrents t ON c.torrent = t.id 
@@ -70,7 +70,7 @@ class CommentsLogic
             if (!$row) {
                 message(URLROOT, LANG["TORRENT_NOT_FOUND"]);
             }
-            $title = LANG["COMMENT_FOR"] . "<a href='" . URLROOT . "/torrent/" . $row['id'] . "'>" . htmlspecialchars($row['name']) . "</a>";
+            $title = LANG["COMMENT_FOR"] . "<a href='" . URLROOT . "/torrent/view/" . $row['id'] . "'>" . htmlspecialchars($row['name']) . "</a>";
         }
 
         if ($type == "id") {

@@ -116,7 +116,7 @@ $user       = Auth::user();   // object (guest or member)
                             <?= __('PROFILE') ?>
                         </a>
                         <?php if (Auth::isStaff()): ?>
-                            <a href="<?= url('admincp') ?>" class="dropdown-item">
+                            <a href="<?= url('admin/admincp') ?>" class="dropdown-item">
                                 <?= __('STAFF') ?>
                             </a>
                         <?php endif; ?>

@@ -224,8 +224,8 @@
                 <img src="<?= $avatar ?>" class="user-avatar" onclick="toggleDropdown('userDropdown')" alt="Avatar">
                 <div class="dropdown-menu">
                     <a href="<?=url('profile/view/' . ($_SESSION['id'] ?? $current_user->id ?? '')) ?>"><?= LANG['PROFILE'] ?></a>
-                    <a href="<?=url('admincp') ?>"><?= LANG['STAFF'] ?></a>
-                    <a href="<?=url('authorize/logout') ?>"><?= LANG['LOGOUT'] ?></a>
+                    <a href="<?=url('admin/admincp') ?>"><?= LANG['STAFF'] ?></a>
+                    <a href="<?=url('authorise/logout') ?>"><?= LANG['LOGOUT'] ?></a>
                 </div>
             </div>
         </div>
@@ -244,7 +244,7 @@
                 </div>
                 <div class="menu-items open">
                     <a href="<?=url() ?>"><?= LANG["HOME"] ?></a>
-                    <a href="<?=url('admincp') ?>"><?= LANG["ADMIN"] ?></a>
+                    <a href="<?=url('admin/admincp') ?>"><?= LANG["ADMIN"] ?></a>
                 </div>
             </div>
 
@@ -255,13 +255,13 @@
                     <i class="fa fa-chevron-right arrow"></i>
                 </div>
                 <div class="menu-items">
-                    <a href="<?=url('adminusersearch') ?>"><?= LANG["USER_SEARCH"] ?></a>
-                    <a href="<?=url('admingroup') ?>"><?= LANG["GROUPS"] ?></a>
-                    <a href="<?=url('adminban') ?>"><?= LANG["BANNED"] ?></a>
-                    <a href="<?=url('adminwarning') ?>"><?= LANG["WARNINGS"] ?></a>
-                    <a href="<?=url('admininactive/30') ?>"><?= LANG["INACTIVE"] ?></a>
-                    <a href="<?=url('admininvite') ?>"><?= LANG["INVITES"] ?></a>
-                    <a href="<?=url('admininvite/pending') ?>"><?= LANG["PENDING"] ?></a>
+                    <a href="<?=url('users/search') ?>"><?= LANG["USER_SEARCH"] ?></a>
+                    <a href="<?=url('group/view') ?>"><?= LANG["GROUPS"] ?></a>
+                    <a href="<?=url('ban/admin') ?>"><?= LANG["BANNED"] ?></a>
+                    <a href="<?=url('warning/admin') ?>"><?= LANG["WARNINGS"] ?></a>
+                    <a href="<?=url('inactive/view/30') ?>"><?= LANG["INACTIVE"] ?></a>
+                    <a href="<?=url('invite/home') ?>"><?= LANG["INVITES"] ?></a>
+                    <a href="<?=url('invite/home/pending') ?>"><?= LANG["PENDING"] ?></a>
                 </div>
             </div>
 
@@ -272,12 +272,12 @@
                     <i class="fa fa-chevron-right arrow"></i>
                 </div>
                 <div class="menu-items">
-                    <a href="<?=url('admincategorie') ?>"><?= LANG["CATEGORIES"] ?></a>
-                    <a href="<?=url('admintorrent') ?>"><?= LANG["TORRENT"] ?></a>
-                    <a href="<?=url('admincomment') ?>"><?= LANG["COMMENT"] ?></a>
-                    <a href="<?=url('adminnews') ?>"><?= LANG["NEWS"] ?></a>
-                    <a href="<?=url('admintag') ?>"><?= LANG["TAGS"] ?></a>
-                    <a href="<?=url('adminforumcat') ?>"><?= LANG["FORUM"] ?></a>
+                    <a href="<?=url('categorie/view') ?>"><?= LANG["CATEGORIES"] ?></a>
+                    <a href="<?=url('torrents/admin') ?>"><?= LANG["TORRENT"] ?></a>
+                    <a href="<?=url('comment/admin') ?>"><?= LANG["COMMENT"] ?></a>
+                    <a href="<?=url('news/view') ?>"><?= LANG["NEWS"] ?></a>
+                    <a href="<?=url('tag/admin') ?>"><?= LANG["TAGS"] ?></a>
+                    <a href="<?=url('forumcat/admin') ?>"><?= LANG["FORUM"] ?></a>
                 </div>
             </div>
 
@@ -288,10 +288,10 @@
                     <i class="fa fa-chevron-right arrow"></i>
                 </div>
                 <div class="menu-items">
-                    <a href="<?=url('adminpeer') ?>"><?= LANG["PEERS"] ?></a>
-                    <a href="<?=url('adminclient/peers') ?>"><?= LANG["CLIENTS"] ?></a>
-                    <a href="<?=url('adminsnatch') ?>"><?= LANG["SNATCH"] ?></a>
-                    <a href="<?=url('admintask/clearshoutbox') ?>"><?= LANG["SHOUTBOX_CLEAR"] ?></a>
+                    <a href="<?=url('peers/admin') ?>"><?= LANG["PEERS"] ?></a>
+                    <a href="<?=url('client/view/peers') ?>"><?= LANG["CLIENTS"] ?></a>
+                    <a href="<?=url('snatch/admin') ?>"><?= LANG["SNATCH"] ?></a>
+                    <a href="<?=url('task/clearshout') ?>"><?= LANG["SHOUTBOX_CLEAR"] ?></a>
                 </div>
             </div>
 
@@ -302,10 +302,10 @@
                     <i class="fa fa-chevron-right arrow"></i>
                 </div>
                 <div class="menu-items">
-                    <a href="<?=url('adminlog') ?>"><?= LANG["LOGS"] ?></a>
-                    <a href="<?=url('adminmessage') ?>"><?= LANG["MESSAGES"] ?></a>
-                    <a href="<?=url('adminreport') ?>"><?= LANG["REPORT"] ?></a>
-                    <a href="<?=url('adminemail') ?>"><?= LANG["EMAIL"] ?></a>
+                    <a href="<?=url('log/view') ?>"><?= LANG["LOGS"] ?></a>
+                    <a href="<?=url('message/admin') ?>"><?= LANG["MESSAGES"] ?></a>
+                    <a href="<?=url('report/view') ?>"><?= LANG["REPORT"] ?></a>
+                    <a href="<?=url('email/view') ?>"><?= LANG["EMAIL"] ?></a>
                 </div>
             </div>
 

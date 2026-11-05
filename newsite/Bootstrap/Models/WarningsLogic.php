@@ -92,7 +92,7 @@ class WarningsLogic
         // Pagination
         $users_query = "SELECT id FROM `users` WHERE warned=?";
         $count = DB::run($users_query, ['yes'])->fetchColumn();
-        list($pager, $limit) = pagination(25, $count, URLROOT . '/adminwarning?');
+        list($pager, $limit) = pagination(25, $count, URLROOT . '/warning/admin?');
         $users_query = "SELECT users.id,users.username,users.class,users.added,users.last_access 
                         FROM users
                         WHERE warned = ?

@@ -59,7 +59,7 @@ if (Auth::check()) {
     <div class="text-center">
         <a href="<?= url('profile/view/' . $uid) ?>" class="btn ttbtn"><?= e(__('ACCOUNT')) ?></a>
         <?php if (($user->control_panel ?? $_SESSION['control_panel'] ?? '') === 'yes') : ?>
-            <a href="<?= url('admincp') ?>" class="btn ttbtn"><?= e(__('STAFFCP')) ?></a>
+            <a href="<?= url('admin/admincp') ?>" class="btn ttbtn"><?= e(__('STAFFCP')) ?></a>
         <?php endif; ?>
     </div>
     <?php
