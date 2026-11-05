@@ -33,7 +33,7 @@ class WarningsLogic
 
         // Check Input
         if (!$input['reason'] || !$input['expiry'] || !$input['type']) {
-            message("profile/$input[userid]", LANG["MISSING_FORM_DATA"]);
+            message("profile/view/$input[userid]", LANG["MISSING_FORM_DATA"]);
         }
 
 

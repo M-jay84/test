@@ -122,7 +122,7 @@ class SnatchedLogic
             DB::run($snatched_query, [$torsize, $modcomment, $current_user->id]);
             $snatched_query = "UPDATE snatched SET last_time = ? AND hnr =? AND done =? WHERE tid=? AND uid =?";
             DB::run($snatched_query, [86400, 'no', 'yes', $torid,  $current_user->id]);
-            LogsLogic::write("<a href=" . URLROOT . "/profile/" . $current_user->id . "><b>" . $current_user->username . "</b></a> " . LANG["DELETED_RECORDING"] . ": <a href=" . URLROOT . "/torrent/$torid><b>$torid</b></a>  " . LANG["HIT_AND_RUN_WITH"] . " <b>$torsize</b> " . LANG["POINTS_OF_SEED_BONUS"] . "");
+            LogsLogic::write("<a href=" . URLROOT . "/profile/view/" . $current_user->id . "><b>" . $current_user->username . "</b></a> " . LANG["DELETED_RECORDING"] . ": <a href=" . URLROOT . "/torrent/$torid><b>$torid</b></a>  " . LANG["HIT_AND_RUN_WITH"] . " <b>$torsize</b> " . LANG["POINTS_OF_SEED_BONUS"] . "");
             message('snatch/trade', LANG["DEL_COMPLETE"]);
         } elseif ($_POST["requestupload"]) {
             $modcomment = date("d-M-Y") . " - " . LANG["DELETED_RECORDING"] . ": " . $torid . " with " . mksize($torsize) . " " . LANG["OF_UPLOAD"];
@@ -130,7 +130,7 @@ class SnatchedLogic
             DB::run($users_query, [$modcomment, $current_user->id]);
             $snatched_query = "UPDATE snatched SET last_time = ? AND hnr =? AND done =? WHERE tid=? AND uid =?";
             DB::run($snatched_query, [86400, 'no', 'yes', $torid,  $current_user->id]);
-            LogsLogic::write("<a href=" . URLROOT . "/profile/" . $current_user->id . "><b>" . $current_user->username . "</b></a> " . LANG["DELETED_RECORDING"] . ": <a href=" . URLROOT . "/torrent/$torid><b>$torid</b></a> " . LANG["HIT_AND_RUN_WITH"] . " <b>$torsize</b> " . LANG["OF_UPLOAD"] . "");
+            LogsLogic::write("<a href=" . URLROOT . "/profile/view/" . $current_user->id . "><b>" . $current_user->username . "</b></a> " . LANG["DELETED_RECORDING"] . ": <a href=" . URLROOT . "/torrent/$torid><b>$torid</b></a> " . LANG["HIT_AND_RUN_WITH"] . " <b>$torsize</b> " . LANG["OF_UPLOAD"] . "");
             message('snatch/trade', LANG["DEL_COMPLETE"]);
         } else {
             message('snatch/trade', LANG["ACTION_FAILED"]);

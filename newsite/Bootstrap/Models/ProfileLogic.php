@@ -48,7 +48,7 @@ class ProfileLogic
         $count['numhnr'] = DB::run($snatched_query, [$id])->fetchColumn();
 
         $html['userratio'] = $user["downloaded"] > 0 ? number_format($user["uploaded"] / $user["downloaded"], 1) : "---";
-        $html['avatar'] = htmlspecialchars($user["avatar"]) ? htmlspecialchars($user["avatar"]) : URLROOT . "/page/images/misc/default_avatar.webp";
+        $html['avatar'] = htmlspecialchars($user["avatar"]) ? htmlspecialchars($user["avatar"]) : URLROOT . "/page/theme/default/images/misc/default_avatar.webp";
         $html['usersignature'] = stripslashes($user["signature"]);
         $html['country'] = CountriesLogic::fetchRow($user['country']);
 
@@ -91,7 +91,7 @@ class ProfileLogic
 
             // Update
             DB::updateset("users", $data, ['id' => $id]);
-            message(("profile/$id"), LANG["UPDATE_COMPLETE"]);
+            message(("profile/view/$id"), LANG["UPDATE_COMPLETE"]);
         }
     }
 
@@ -102,7 +102,7 @@ class ProfileLogic
 
         // Check User
         if ($current_user->class < 5 && $id != $current_user->id) {
-            message(("profile/$id"), LANG["NO_PERMISSION"]);
+            message(("profile/view/$id"), LANG["NO_PERMISSION"]);
         }
 
         // Init Data
@@ -166,7 +166,7 @@ class ProfileLogic
         // Update
         DB::updateset("users", $data, ['id' => $id]);
         LogsLogic::write($current_user->username . " has edited user: $id details");
-        message(("profile/$id"), LANG["UPDATE_COMPLETE"]);
+        message(("profile/view/$id"), LANG["UPDATE_COMPLETE"]);
     }
 
     // Delete Profile Default Page otdo (tidy up)
@@ -178,25 +178,25 @@ class ProfileLogic
 
         // Check User
         if (!$current_user->delete_users) {
-            message(("profile/$userid"), LANG["NO_PERMISSION"]);
+            message(("profile/view/$userid"), LANG["NO_PERMISSION"]);
         }
 
         if (!intval($userid)) {
-            message(("profile/$userid"), LANG["MISSING_ID"]);
+            message(("profile/view/$userid"), LANG["MISSING_ID"]);
         }
 
         if ($current_user->id == $userid) {
-            message(("profile/$userid"), LANG["YOU_CANT_DELETE_ADMIN"]);
+            message(("profile/view/$userid"), LANG["YOU_CANT_DELETE_ADMIN"]);
         }
 
         if (!$delreason) {
-            message(("profile/$userid"), LANG["MISSING_FORM_DATA"]);
+            message(("profile/view/$userid"), LANG["MISSING_FORM_DATA"]);
         }
 
         // Delete Profile
         UsersLogic::deleteUser($userid);
         LogsLogic::write($current_user->username . " has deleted account: " . coloredname($userid) . "");
-        message(("profile/$userid"), LANG["DEL_COMPLETE"]);
+        message(("profile/view/$userid"), LANG["DEL_COMPLETE"]);
     }
 
 }

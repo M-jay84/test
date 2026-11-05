@@ -18,7 +18,7 @@ class RatingsLogic
             $rating = "<b>" . LANG["RATINGS"] . ":</b> <b>Not Yet Rated</b><br>";
         } else {
             $average = ceil($rating);
-            $rating = "<img src=\"" . URLROOT . "/page/images/rating/$average.webp\" alt=\"rating: $average/5\" title=\"rating: $average/5\" /></a><br>";
+            $rating = "<img src=\"" . URLROOT . "/page/theme/default/images/rating/$average.webp\" alt=\"rating: $average/5\" title=\"rating: $average/5\" /></a><br>";
         }
         if ($userid) {
             $ratings = [

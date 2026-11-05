@@ -7,14 +7,14 @@
             $hideSidebars = false; // same flag as header – fix later
 
             if (!$hideSidebars) {
-              /* TODO
+              
                 include BASEROOT . '/page/block/navigate_block.php';
                 include BASEROOT . '/page/block/usersonline_block.php';
                 include BASEROOT . '/page/block/invite_block.php';
                 include BASEROOT . '/page/block/newestmember_block.php';
                 include BASEROOT . '/page/block/search_block.php';
                 include BASEROOT . '/page/block/statistics_block.php';
-                */
+                
             }
             ?>
         </div>
@@ -61,23 +61,23 @@ document.addEventListener('click', function (e) {
 </script>
 
 <!-- Scripts -->
-<script src="<?= url('assets/js/smileIT_checkall.js') ?>"></script>
+<script src="<?= url('page/theme/default/js/smileIT_checkall.js') ?>"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script src="<?= url('assets/js/overlib.js') ?>"></script>
+<script src="<?= url('page/theme/default/js/overlib.js') ?>"></script>
 
 <script type="module">
-    import Tags from "<?= url('assets/js/tags.js') ?>";
+    import Tags from "<?= url('page/theme/default/js/tags.js') ?>";
     Tags.init("select[multiple]");
 </script>
 
 <?php
 // These were required as files – keep them if they still exist
 $extraJs = [
-    'assets/js/shoutbox.js',
-    'assets/js/carousel.js',
-    'assets/js/usersearch.js',
+    'page/theme/default/js/shoutbox.js',
+    'page/theme/default/js/carousel.js',
+    'page/theme/default/js/usersearch.js',
 ];
 foreach ($extraJs as $js) {
     $full = BASEROOT . '/public/' . $js; // adjust path if needed

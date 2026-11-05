@@ -3,6 +3,7 @@
 namespace Bootstrap\Models;
 
 use Bootstrap\Libs\DB;
+use Bootstrap\Libs\Auth;
 use Bootstrap\Libs\Validate;
 use Bootstrap\Models\ForumCatsLogic;
 use Bootstrap\Models\GroupsLogic;
@@ -16,6 +17,26 @@ use PDO;
 */
 class ForumsLogic
 {
+
+public static function forum_guard(): object
+{
+    $user = \Bootstrap\Libs\Auth::user();
+
+    if (empty(CONFIG['FORUMS'])) {
+        redirect('home', __('FORUM_AVAILABLE'), 'warning');
+    }
+    if (empty(CONFIG['FORUMS_GUESTREAD']) && !\Bootstrap\Libs\Auth::check()) {
+        redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    }
+    if (($user->forumbanned ?? '') === 'yes' || ($user->view_forum ?? '') === 'no') {
+        // staff override optional:
+        if (!\Bootstrap\Libs\Auth::isStaff()) {
+            redirect('home', __('FORUM_BANNED'), 'warning');
+        }
+    }
+    return $user;
+}
+
     // Returns the minimum read/write class levels of a forum
     public static function getForumAccessLevels($forumid)
     {

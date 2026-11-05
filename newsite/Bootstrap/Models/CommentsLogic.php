@@ -59,7 +59,7 @@ class CommentsLogic
             $news_query = "SELECT * FROM `news`  WHERE id=?";
             $row = DB::run($news_query, [$id])->fetch(PDO::FETCH_ASSOC);
             if (!$row) {
-                message((URLROOT . "/comment/$id/news"), LANG["MISSING_ID"]);
+                message((URLROOT . "/comment/view/$id/news"), LANG["MISSING_ID"]);
             }
             $title = LANG["NEWS"];
         }

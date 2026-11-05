@@ -85,13 +85,13 @@ class Thumbnail
             $y = $x + 1;
             $im = getimagesize($_FILES["image$x"]["tmp_name"]);
             if (!$im[2]) {
-                showMessage((URLROOT . $_SERVER["HTTP_REFERER"]), "Invalid Image $y.");
+                message((URLROOT . $_SERVER["HTTP_REFERER"]), "Invalid Image $y.");
             }
             if (!array_key_exists($im['mime'], $allowed_types)) {
-                showMessage((URLROOT . $_SERVER["HTTP_REFERER"]), LANG["INVALID_FILETYPE_IMAGE"]);
+                message((URLROOT . $_SERVER["HTTP_REFERER"]), LANG["INVALID_FILETYPE_IMAGE"]);
             }
             if ($_FILES["image$x"]["size"] > CONFIG['IMAGEMAXFILESIZE']) {
-                showMessage((URLROOT . $_SERVER["HTTP_REFERER"]), sprintf(LANG["INVAILD_FILE_SIZE_IMAGE"], $y));
+                message((URLROOT . $_SERVER["HTTP_REFERER"]), sprintf(LANG["INVAILD_FILE_SIZE_IMAGE"], $y));
             }
             $uploaddir = "$imagesdir/";
             $ifilename = $tid . $x . $allowed_types[$im['mime']];
@@ -125,14 +125,14 @@ class Thumbnail
             $image = imagecreatefromjpeg($source);
             $new_destination = substr($destination, 0, -4) . 'webp';
         } else {
-            showMessage(URLROOT, 'Strange Image Type - Only Gif, Png, Jpeg & Jpg allowed');
+            message(URLROOT, 'Strange Image Type - Only Gif, Png, Jpeg & Jpg allowed');
         }
 
         // convert image
         $result = imagewebp($image, $new_destination, $compression_quality);
         // check result
         if (false === $result) {
-            showMessage(URLROOT, sprintf(LANG["No Image Result"]));
+            message(URLROOT, sprintf(LANG["No Image Result"]));
         }
         // destroy temp
         imagedestroy($image);

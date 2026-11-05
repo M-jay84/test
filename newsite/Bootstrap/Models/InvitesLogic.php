@@ -63,10 +63,10 @@ class InvitesLogic
         $users_query ="SELECT count(id) FROM `users` WHERE status =? AND invited_by=?ORDER BY username";
         $invitees = DB::run($users_query, ['confirmed',$user_id])->fetchColumn();
         if ($invitees == 0) {
-            message("profile/$user_id", LANG["USER_NOT_INVITED"]);
+            message("profile/view/$user_id", LANG["USER_NOT_INVITED"]);
         }
         
-        $title = "Invite Tree for [<a href=" . URLROOT . "/profile/$user_id>" . $user_id . "</a>]";
+        $title = "Invite Tree for [<a href=" . URLROOT . "/profile/view/$user_id>" . $user_id . "</a>]";
 
         $data = [
             'res' => $res,

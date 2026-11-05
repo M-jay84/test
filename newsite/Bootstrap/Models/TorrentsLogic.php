@@ -268,7 +268,7 @@ class TorrentsLogic
         $html['ratings'] = RatingsLogic::ratingTor($stmt['id'], $data->id, $stmt['rating']);
         $html['externaltorrent'] = $stmt["external"] == 'yes' ? "<a type='#' class='model_form ttbtn btn-sm' data-bs-toggle='modal' data-bs-target='#trackerModal'>". LANG["TRACKERS"] ."</a>" : LANG['LOCAL'];
         $html['nfo'] = $stmt["nfo"] == "yes" ? "<a href='#' data-bs-toggle='modal' data-bs-target='#nfoModal'><i class='fa fa-file fa-1x' title='". LANG["NFO"] ."'></i></a>" : LANG['NOTHING_FOUND'];
-        $html['langname'] = empty($stmt["lang_name"]) ? "Unknown/NA" : "<img src='" .url("page/images/languages/$stmt[lang_image]") . "' alt='" . $stmt["lang_name"] . "' width='20' height='20'/>";
+        $html['langname'] = empty($stmt["lang_name"]) ? "Unknown/NA" : "<img src='" .url("page/theme/default/images/languages/$stmt[lang_image]") . "' alt='" . $stmt["lang_name"] . "' width='20' height='20'/>";
         $html['lang'] = TorrentLangLogic::langList($stmt['torrentlang']);
         $html['vip1'] = ($stmt["vip"] == "yes") ? 1 : 0;
         $html['freeleech1'] = $stmt["freeleech"] == 1 ? "<font color=green><b>Yes</b></font>" : "<font color=red><b>No</b></font>";
@@ -464,7 +464,7 @@ class TorrentsLogic
             MessagesLogic::newinsert(['sender' => 0, 'receiver' => $owner['owner'], 'added' => CONFIG['TT_DATE'], 'subject' => 'Torrent Deleted', 'msg' => $msg_shout, 'unread' => 'yes', 'location' => 'in']);
         }
 
-        message("peer/seeding/$owner[owner]", htmlspecialchars($torrentname) . " " . LANG["DEL_ERROR"]);
+        message("peer/view/seeding/$owner[owner]", htmlspecialchars($torrentname) . " " . LANG["DEL_ERROR"]);
     }
     // Update Comments
     public static function updateComments($id, $var)

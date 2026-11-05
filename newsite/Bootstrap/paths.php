@@ -11,11 +11,7 @@ define('NFOS_PATH', BASEROOT . '/storage/nfos');
 define('TORRENT_PATH', BASEROOT . '/storage/torrents');
 
 // public_html images (avatars and thumbnails)
-define('UPLOAD_PATH', BASEROOT . '/storage/uploads');
-
-// View and controller paths
-//define('VIEW_PATH', BASEROOT . '/App/Views');
-//define('CONTROLLER_PATH', BASEROOT . '/App/Controllers');
+define('UPLOAD_PATH', BASEROOT . '/storage');
 
 // Public URL base — must stay a URL, never a C:\ path.
 define('URLROOT', 'http://localhost/newsite');

@@ -1,15 +1,24 @@
 <?php
 declare(strict_types=1);
 
-// 1. Realpath normalises Windows separators; set base root.
+/**
+ * Front controller — every request is rewritten here by .htaccess.
+ *
+ * Flow:
+ *   1. Define BASEROOT (project root on disk)
+ *   2. Bootstrap the app (config, session, helpers, Auth, …)
+ *   3. Hand off to the router (URL → page file)
+ */
+
+// Resolve absolute path (normalises Windows \ vs /)
 $baseRoot = realpath(__DIR__);
 if ($baseRoot === false) {
-    $baseRoot = dirname(__DIR__);
+    $baseRoot = __DIR__;
 }
 define('BASEROOT', $baseRoot);
 
-// 2. Load all files in the Bootstrap directory.
-require BASEROOT.'/Bootstrap/init.php';
+// Load the rest of the application
+require BASEROOT . '/Bootstrap/init.php';
 
-// 3. Start router .
+// Match URL to a page file under page/user or page/admin
 router_dispatch();

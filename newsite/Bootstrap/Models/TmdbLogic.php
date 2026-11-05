@@ -152,7 +152,7 @@ class TmdbLogic
         } elseif ($row["image2"] != '') {
             $img = data_uri(IMAGE_PATH . "/" . $row["image2"], $row['image2']);
         } else {
-            $img = "" . URLROOT . "/page/images/misc/default_avatar.webp";
+            $img = "" . URLROOT . "/page/theme/default/images/misc/default_avatar.webp";
         }
 
         return $img;

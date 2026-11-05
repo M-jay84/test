@@ -21,7 +21,7 @@ class RecoverLogic
         captcha_response($_POST['g-recaptcha-response'] ?? '');
 
         // Get User By Email
-        $users_query = "SELECT id, username, emai FROM `users` WHERE email = ?";
+        $users_query = "SELECT id, username, emaii FROM `users` WHERE email = ?";
         $arr = DB::run($users_query, [$email])->fetch(PDO::FETCH_ASSOC);
         if (!$arr) {
             message(URLROOT, LANG["EMAIL_ADDRESS_NOT_FOUND"]);

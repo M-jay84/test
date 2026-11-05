@@ -55,7 +55,7 @@ define('LANG', array (
 'EMPTY_FILENAME' => 'Empty filename.',
 'UPLOAD' => 'Upload',
 'TORRENT_UPLOAD_EXTERNAL' => "Torrent Uploaded OK:<br /><br />%s was uploaded.<br /><br /><a href='" . URLROOT . "/torrent/%d'>View Uploaded Torrent</a><br /><br />",
-'TORRENT_UPLOAD_LOCAL' => "Torrent Uploaded OK:<br /><br />%s was uploaded.<br /><br />  Please remember to re-download so that your passkey is added and you can seed this torrent.<br /><br /><a href='" . URLROOT . "/download/%d'>Download Now</a><br /><a href='" . URLROOT . "/torrent/%d'>View Uploaded Torrent</a><br /><br />",
+'TORRENT_UPLOAD_LOCAL' => "Torrent Uploaded OK:<br /><br />%s was uploaded.<br /><br />  Please remember to re-download so that your passkey is added and you can seed this torrent.<br /><br /><a href='" . URLROOT . "/torrents/download/%d'>Download Now</a><br /><a href='" . URLROOT . "/torrent/%d'>View Uploaded Torrent</a><br /><br />",
 'TORRENT_UPLOADED' => 'Torrent %s uploaded by %s',
 'UPLOAD_COULD_NOT_BE_COPIED' => 'File Could not be copied',
 'NFO_UPLOAD_SIZE' => 'NFO is too big! Max 65,535 bytes.',

@@ -1,7 +1,19 @@
 <?php
-
 declare(strict_types=1);
 
+/**
+ * Global error / exception handling.
+ *
+ * - PHP warnings/notices → log only
+ * - Fatals / uncaught exceptions → log + themed red error page
+ * - If APP_TESTING / $testing is true → also print exception text
+ */
+
+/**
+ * Register handlers. Call once from init.php.
+ *
+ * @param bool $testing  When true, show exception details on the error page
+ */
 function error_register_handlers(bool $testing = false): void
 {
     $GLOBALS['MBITSY_ERROR_TESTING'] = $testing;
@@ -10,7 +22,7 @@ function error_register_handlers(bool $testing = false): void
     ini_set('display_errors', '0');
     ini_set('display_startup_errors', '0');
     ini_set('log_errors', '1');
- 
+
     if (defined('LOG_PATH')) {
         ini_set('error_log', LOG_PATH . '/error_php.log');
     }
@@ -20,17 +32,30 @@ function error_register_handlers(bool $testing = false): void
     register_shutdown_function('error_handle_shutdown');
 }
 
+/**
+ * Append a line to a log file under LOG_PATH (or system temp).
+ */
 function error_log_message(string $message, string $fileName = 'error_php.log'): void
 {
     $directory = defined('LOG_PATH') ? LOG_PATH : sys_get_temp_dir();
+
     if (!is_dir($directory) && !@mkdir($directory, 0770, true) && !is_dir($directory)) {
         error_log($message);
         return;
     }
-    $target = rtrim($directory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . basename($fileName);
-    if (@error_log($message, 3, $target) === false) error_log($message);
+
+    $target = rtrim($directory, DIRECTORY_SEPARATOR)
+            . DIRECTORY_SEPARATOR
+            . basename($fileName);
+
+    if (@error_log($message, 3, $target) === false) {
+        error_log($message);
+    }
 }
 
+/**
+ * Log an exception. PDO goes to error_database.log, others to error_exceptions.log.
+ */
 function error_log_throwable(Throwable $exception): void
 {
     $file = $exception instanceof PDOException ? 'error_database.log' : 'error_exceptions.log';
@@ -49,37 +74,52 @@ function error_log_throwable(Throwable $exception): void
     error_log_message($message, $file);
 }
 
+/**
+ * Convert serious PHP errors into exceptions; log the rest.
+ */
 function error_handle_php(int $number, string $message, string $file, int $line): bool
 {
     if (!(error_reporting() & $number)) {
         return false;
     }
 
-    $fatalTypes = [E_USER_ERROR, E_RECOVERABLE_ERROR];
-    if (in_array($number, $fatalTypes, true)) {
+    // Promote these to exceptions so the exception handler can show a page
+    if (in_array($number, [E_USER_ERROR, E_RECOVERABLE_ERROR], true)) {
         throw new ErrorException($message, 0, $number, $file, $line);
     }
 
     $levels = [
-        E_NOTICE => 'NOTICE',
-        E_USER_NOTICE => 'NOTICE',
-        E_WARNING => 'WARNING',
-        E_USER_WARNING => 'WARNING',
-        E_DEPRECATED => 'DEPRECATED',
-        E_USER_DEPRECATED => 'DEPRECATED',
-        E_STRICT => 'STRICT',
+        E_NOTICE            => 'NOTICE',
+        E_USER_NOTICE       => 'NOTICE',
+        E_WARNING           => 'WARNING',
+        E_USER_WARNING      => 'WARNING',
+        E_DEPRECATED        => 'DEPRECATED',
+        E_USER_DEPRECATED   => 'DEPRECATED',
+        E_STRICT            => 'STRICT',
     ];
 
     $level = $levels[$number] ?? 'PHP ERROR';
-    error_log_message(sprintf("[%s] [%s] %s\nFile: %s:%d\n\n", date('Y-m-d H:i:s'), $level, $message, $file, $line));
+
+    error_log_message(sprintf(
+        "[%s] [%s] %s\nFile: %s:%d\n\n",
+        date('Y-m-d H:i:s'),
+        $level,
+        $message,
+        $file,
+        $line
+    ));
 
     return true;
 }
 
+/**
+ * Uncaught exception / converted fatal → log + red themed page.
+ */
 function error_handle_exception(Throwable $exception): void
 {
     static $handling = false;
 
+    // Avoid infinite loop if the error page itself throws
     if ($handling) {
         error_log_message('Recursive exception while rendering an error page: ' . $exception);
         error_display_fallback();
@@ -101,22 +141,29 @@ function error_handle_exception(Throwable $exception): void
     $title = function_exists('__') ? __('ERRORS') : 'Error';
 
     try {
-        if (function_exists('theme_header') && function_exists('theme_footer') && function_exists('alert_error')) {
+        // Prefer themed page when helpers are loaded
+        if (
+            function_exists('theme_header')
+            && function_exists('theme_footer')
+            && function_exists('alert_error')
+        ) {
             theme_header($title);
+
             if (function_exists('block_begin')) {
                 block_begin($title);
             }
 
             alert_error($message); // always red
 
-            // Testing: print exception details (still red box)
-            if (!empty($GLOBALS['MBITSY_ERROR_TESTING'])) {
+            // Testing mode: show full exception under the red alert
+            if (!empty($GLOBALS['MBITSY_ERROR_TESTING']) && function_exists('e')) {
                 echo '<pre class="alert alert-error">' . e((string) $exception) . '</pre>';
             }
 
             if (function_exists('block_end')) {
                 block_end();
             }
+
             theme_footer();
             exit(1);
         }
@@ -128,6 +175,9 @@ function error_handle_exception(Throwable $exception): void
     exit(1);
 }
 
+/**
+ * Catch fatals that never reach the normal error handler.
+ */
 function error_handle_shutdown(): void
 {
     $last = error_get_last();
@@ -151,6 +201,9 @@ function error_handle_shutdown(): void
     error_handle_exception($exception);
 }
 
+/**
+ * Plain HTML fallback when the theme cannot render.
+ */
 function error_display_fallback(): void
 {
     if (!headers_sent()) {

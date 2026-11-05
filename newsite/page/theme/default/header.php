@@ -39,7 +39,7 @@ $user       = Auth::user();   // object (guest or member)
             </button>
 
             <a href="<?= url() ?>" class="nav-brand">
-                <img src="<?= url('assets/images/misc/logo.webp') ?>" alt="Logo">
+                <img src="<?= url('page/theme/default/images/misc/logo.webp') ?>" alt="Logo">
             </a>
 
             <?php if ($isLoggedIn): ?>
@@ -78,10 +78,10 @@ $user       = Auth::user();   // object (guest or member)
                             <?php foreach ($messages as $message): ?>
                                 <?php
                                 $avatar = empty($message['avatar'])
-                                    ? url('assets/images/misc/default_avatar.webp')
+                                    ? url('page/theme/default/images/misc/default_avatar.webp')
                                     : $message['avatar'];
                                 ?>
-                                <a href="<?= url("message/{$message['id']}/inbox") ?>" class="dropdown-item">
+                                <a href="<?= url("message/index/{$message['id']}/inbox") ?>" class="dropdown-item">
                                     <div class="d-flex align-items-center gap-2">
                                         <img src="<?= e($avatar) ?>" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" alt="">
                                         <div>
@@ -107,12 +107,12 @@ $user       = Auth::user();   // object (guest or member)
                 <?php
                 $userAvatar = !empty($user->avatar)
                     ? $user->avatar
-                    : url('assets/images/misc/default_avatar.webp');
+                    : url('page/theme/default/images/misc/default_avatar.webp');
                 ?>
                 <div class="dropdown" id="userDropdown">
                     <img src="<?= e($userAvatar) ?>" class="user-avatar" onclick="toggleDropdown('userDropdown')" alt="Avatar">
                     <div class="dropdown-menu">
-                        <a href="<?= url('profile/' . $userId) ?>" class="dropdown-item">
+                        <a href="<?= url('profile/view/' . $userId) ?>" class="dropdown-item">
                             <?= __('PROFILE') ?>
                         </a>
                         <?php if (Auth::isStaff()): ?>
@@ -120,7 +120,7 @@ $user       = Auth::user();   // object (guest or member)
                                 <?= __('STAFF') ?>
                             </a>
                         <?php endif; ?>
-                        <a href="<?= url('logout') ?>" class="dropdown-item">
+                        <a href="<?= url('authorize/logout') ?>" class="dropdown-item">
                             <?= __('LOGOUT') ?>
                         </a>
                     </div>
@@ -128,7 +128,7 @@ $user       = Auth::user();   // object (guest or member)
 
             <?php else: ?>
                 <!-- Guest -->
-                <a href="<?= url('login') ?>" class="ttbtn"><?= __('LOGIN') ?></a>
+                <a href="<?= url('authorize/login') ?>" class="ttbtn"><?= __('LOGIN') ?></a>
             <?php endif; ?>
         </div>
     </div>
@@ -141,7 +141,13 @@ $user       = Auth::user();   // object (guest or member)
             <?php
             $hideSidebars = false;
             if (!$hideSidebars) {
-                // blocks later
+                include BASEROOT . "/page/block/login_block.php";
+                include BASEROOT . "/page/block/maincats_block.php";
+                include BASEROOT . "/page/block/popular_block.php";
+                include BASEROOT . "/page/block/latestuploads_block.php";
+                include BASEROOT . "/page/block/mostactivetorrents_block.php";
+                include BASEROOT . "/page/block/latestimages_block.php";
+                          
             }
             ?>
         </div>

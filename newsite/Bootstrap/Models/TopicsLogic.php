@@ -32,7 +32,7 @@ class TopicsLogic
             $arr1 = DB::run($forums_query, [$forumid])->fetch(PDO::FETCH_ASSOC);
 
             if (!$arr1['name'] || $current_user->class < $arr1["minclassread"] && $arr1["guest_read"] == "no") {
-                message('forum', LANG["FORUMS_NOT_PERMIT"]);
+                message('forum/view', LANG["FORUMS_NOT_PERMIT"]);
             }
 
             $post_query = "SELECT count(id) FROM `forum_posts` WHERE topicid =?";
@@ -100,19 +100,19 @@ class TopicsLogic
         $body = htmlspecialchars_decode($_POST["body"]);
 
         if (!$body || !$subject) {
-            message('forum', LANG["MISSING_FORM_DATA"]);
+            message('forum/view', LANG["MISSING_FORM_DATA"]);
         }
 
         // Make sure sure user has write access in forum
-        $arr = ForumsLogic::getForumAccessLevels($forumid) or message('forum', "Bad forum ID");
+        $arr = ForumsLogic::getForumAccessLevels($forumid) or message('forum/view', "Bad forum ID");
         if ($current_user->class < $arr["write"]) {
-            message('forum', LANG["FORUMS_NOT_PERMIT"]);
+            message('forum/view', LANG["FORUMS_NOT_PERMIT"]);
         }
 
         // Create Topic / Reply
         $topics_query = "INSERT INTO `forum_topics` (userid, forumid, subject) VALUES (?,?,?)";
         DB::run($topics_query, [$current_user->id, $forumid, $subject]);
-        $topicid = DB::lastInsertId() or message('forum', "Topics id n/a");
+        $topicid = DB::lastInsertId() or message('forum/view', "Topics id n/a");
 
         // Insert the new post
         $posts_query = "INSERT INTO forum_posts (topicid,userid,added,body) VALUES (?,?,?,?)";
@@ -129,10 +129,10 @@ class TopicsLogic
         // attachments
         AttachmentsLogic::set_attachment($data);
         // Insert Shout
-        $msg_shout = "New Forum Topic: [url=" . URLROOT . "/post/" . $topicid . "]" . $subject . "[/url] posted by [color=".$current_user->Color."]".$current_user->username."[/color].";
+        $msg_shout = "New Forum Topic: [url=" . URLROOT . "/post/view/" . $topicid . "]" . $subject . "[/url] posted by [color=".$current_user->Color."]".$current_user->username."[/color].";
         $shoutbox_query = "INSERT INTO shoutbox (userid,date,user,message) VALUES (?,?,?,?)";
         DB::run($shoutbox_query, [0, CONFIG['TT_DATE'], 'System', $msg_shout]);
-        redirect("post/$topicid"); // die; todo
+        redirect("post/view/$topicid"); // die; todo
     }
 
     // Delete Topic
@@ -140,11 +140,11 @@ class TopicsLogic
     {
        /*- 
         if (!intval(intval$topicid) || !$data['current_user']->delete_news'] == 'yes') {
-            message('forum', LANG["NO_PERMISSION"));
+            message('forum/view', LANG["NO_PERMISSION"]);
         }
        */
         if ($sure == "0") {
-            message('forum', "Sanity check: You are about to delete a topic. Click <a href='" . URLROOT . "/topic/delete/$topicid/1'>here</a> if you are sure.");
+            message('forum/view', "Sanity check: You are about to delete a topic. Click <a href='" . URLROOT . "/topic/delete/$topicid/1'>here</a> if you are sure.");
         }
 
         $topics_query= "DELETE FROM forum_topics WHERE id' = ?";
@@ -155,27 +155,27 @@ class TopicsLogic
         DB::run($readposts_query, [$topicid]);
 
         AttachmentsLogic::deleteAll($topicid);
-        message('forum', LANG["DEL_COMPLETE"]);
+        message('forum/view', LANG["DEL_COMPLETE"]);
     }
 
     // Rename a Topic Submit
     public static function rename($topicid, $current_user)
     {
         if (!$current_user->delete_news == 'yes' || !$current_user->edit_forum == 'yes') {
-            message('forum', LANG["NO_PERMISSION"]);
+            message('forum/view', LANG["NO_PERMISSION"]);
         }
 
         // Check User Input
         $subject = Input1('subject');
 
         if ($subject == '') {
-            message('forum', LANG["MISSING_FORM_DATA"]);
+            message('forum/view', LANG["MISSING_FORM_DATA"]);
         }
 
         // Update
         $topics_query = "UPDATE forum_topics SET subject = ? WHERE id=?";
         DB::run($topics_query, [$subject,$topicid]);
-        message(("post/$topicid"), LANG["NAME_UPDATED"]);
+        message(("post/view/$topicid"), LANG["NAME_UPDATED"]);
     }
 
     // Move a Topic Submit
@@ -186,7 +186,7 @@ class TopicsLogic
 
         // Check User
         if (!intval($forumid) || !$current_user->delete_news == 'yes' || !$current_user->edit_forum == 'yes') {
-            message('forum', LANG["NO_PERMISSION"]);
+            message('forum/view', LANG["NO_PERMISSION"]);
         }
 
         // Check Permisson To View
@@ -194,17 +194,17 @@ class TopicsLogic
         $arr = DB::run($forums_query, [$forumid])->fetch(PDO::FETCH_ASSOC);
 
         if ($arr->rowCount() != 1) {
-            message('forum', LANG["NOTHING_FOUND"]);
+            message('forum/view', LANG["NOTHING_FOUND"]);
         }
         if ($current_user->class < $arr['minclasswrite']) {
-            message('forum', LANG["NO_PERMISSION"]);
+            message('forum/view', LANG["NO_PERMISSION"]);
         }
 
         // Move Topic
         $forumcats_query = "SELECT subject,forumid FROM `forumcats` WHERE id=?";
         $arr = DB::run($forumcats_query, [$topicid])->fetch(PDO::FETCH_ASSOC);
         if ($arr->rowCount() != 1) {
-            message('forum', LANG["NOTHING_FOUND"]);
+            message('forum/view', LANG["NOTHING_FOUND"]);
         }
         if ($arr["forumid"] != $forumid) {
             $topics_query = "UPDATE forum_topics SET forumid = ? AND moved =? WHERE id=?";
@@ -233,7 +233,7 @@ class TopicsLogic
 
         // Check User
         if (!intval($topicid) || !$current_user->delete_news == 'yes' || !$current_user->edit_forum == 'yes') {
-            message('forum', LANG["NO_PERMISSION"]);
+            message('forum/view', LANG["NO_PERMISSION"]);
         }
 
         // Update

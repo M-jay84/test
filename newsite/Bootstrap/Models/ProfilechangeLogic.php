@@ -21,7 +21,7 @@ class ProfilechangeLogic
         $allowedfiles = array("gif","jpg","png");
 
         if($_FILES['file']['size'] > $maxsize) {
-            message(("profile/$user_id"), LANG["INVAILD_FILE_SIZE_IMAGE"]);
+            message(("profile/view/$user_id"), LANG["INVAILD_FILE_SIZE_IMAGE"]);
         }
 
         if (in_array($ext, $allowedfiles)) {
@@ -29,7 +29,7 @@ class ProfilechangeLogic
             $avatar = URLROOT . "/uploads/avatars/$user_id.$ext";
             $users_query = "UPDATE users SET avatar=? WHERE id=?";
             DB::run($users_query, [$avatar, $user_id]);
-            message(("profile/$user_id"), LANG["UP_AVATAR"] . " OK");
+            message(("profile/view/$user_id"), LANG["UP_AVATAR"] . " OK");
         }
     }
 
@@ -39,11 +39,11 @@ class ProfilechangeLogic
         $chpassword = Input1('chpassword');
         $passagain = Input1('passagain');
         if ((!$chpassword) || (!$passagain)) {
-            message(("profile/$id"), LANG["MISSING_FORM_DATA"]);
+            message(("profile/view/$id"), LANG["MISSING_FORM_DATA"]);
         } elseif (strlen($chpassword) < 6) {
-            message(("profile/$id"), LANG["PASSWORD_SHORT"]);
+            message(("profile/view/$id"), LANG["PASSWORD_SHORT"]);
         } elseif ($chpassword != $passagain) {
-            message(("profile/$id"), LANG["PASSWORDS_NOT_MATCH"]);
+            message(("profile/view/$id"), LANG["PASSWORDS_NOT_MATCH"]);
         }
         $chpassword = password_hash($chpassword, PASSWORD_BCRYPT);
         $secret = mksecret();
@@ -53,7 +53,7 @@ class ProfilechangeLogic
         if ($in > 0) {
             message('authorize/logout', LANG["PASSWORD_CHANGED_OK"]);
         } else {
-            message(("profile/$id"), LANG["ACTION_FAILED"]);
+            message(("profile/view/$id"), LANG["ACTION_FAILED"]);
         }
     }
 
@@ -82,7 +82,7 @@ class ProfilechangeLogic
         // Update User Secret
         $users_query = "UPDATE users SET editsecret = ? WHERE id=?";
         DB::run($users_query, [$sec, $id]);
-        message(("profile/$id"), LANG["EMAIL_CHANGE_SEND"]);
+        message(("profile/view/$id"), LANG["EMAIL_CHANGE_SEND"]);
     }
 
 }

@@ -51,7 +51,7 @@ class AttachmentsLogic
                 if ($extension != 'zip') {
                     $dathumb = UPLOAD_PATH."/thumbnail/$row7[file_hash].jpg";
                     if (!unlink($dathumb)) {
-                        message(("post/$id"), "Could not remove thumbnail = $row7[file_hash].jpg");
+                        message(("post/view/$id"), "Could not remove thumbnail = $row7[file_hash].jpg");
                     }
                 }
             }
@@ -70,7 +70,7 @@ class AttachmentsLogic
                 if ($extension == 'zip' || $extension == 'rar' || $extension == 'php') {
                     $daimage = ATTACHMENT_PATH . "/$row7[file_hash].data";
                     if (file_exists($daimage)) {
-                        print(" <a class='btn btn-sm ttbtn' href=\"" . URLROOT . "/attachment/$row7[id]/" . rawurlencode($row7["file_hash"]) . "\"><i class='fa fa-file-archive-o tticon' ></i>" . LANG['DOWNLOAD'] . "</a><br>");
+                        print(" <a class='btn btn-sm ttbtn' href=\"" . URLROOT . "/attachment/download/$row7[id]/" . rawurlencode($row7["file_hash"]) . "\"><i class='fa fa-file-archive-o tticon' ></i>" . LANG['DOWNLOAD'] . "</a><br>");
                     } else {
                         print("no zip<br>");
                     }
@@ -81,7 +81,7 @@ class AttachmentsLogic
                         <img alt="test image" src="<?php echo data_uri($switchimage, $row7['filename']); ?>" height="100px" width="100px">
                         <?php
                     } else {
-                        print("<a href=\"" . URLROOT . "/attachment/$row7[id]/hash=" . rawurlencode($row7["file_hash"]) . "\"><img src='" . URLROOT . "/thumb/$row7[file_hash].jpg' height='110px' width='110px' border='0' alt='' /></a><br>");
+                        print("<a href=\"" . URLROOT . "/attachment/download/$row7[id]/hash=" . rawurlencode($row7["file_hash"]) . "\"><img src='" . URLROOT . "/thumb/$row7[file_hash].jpg' height='110px' width='110px' border='0' alt='' /></a><br>");
                     }
                 }
             }
@@ -105,7 +105,7 @@ class AttachmentsLogic
 
                 $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'rar', 'php', 'jpeg');
                 if (!in_array($extension, $allowedfileExtensions)) {
-                    message('forum', "Sorry, only zip, rar, php, JPG, JPEG, PNG, GIF files are allowed.");
+                    message('forum/view', "Sorry, only zip, rar, php, JPG, JPEG, PNG, GIF files are allowed.");
                 }
 
                 $targetPath = ATTACHMENT_PATH . "/" . $hash . ".data"; // Target path where file is to be stored

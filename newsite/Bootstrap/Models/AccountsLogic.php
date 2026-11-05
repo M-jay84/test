@@ -245,7 +245,7 @@ public static function login(array $input): array
             if (CONFIG['ACONFIRM']) {
                 $body = LANG["YOUR_ACCOUNT_AT"] . " " . CONFIG['SITENAME'] . " " . LANG["HAS_BEEN_CREATED_YOU_WILL_HAVE_TO_WAIT"] . "\n\n" . CONFIG['SITENAME'] . " " . LANG["ADMIN"];
             } else {
-                $body = LANG["YOUR_ACCOUNT_AT"] . " " . CONFIG['SITENAME'] . " " . LANG["HAS_BEEN_APPROVED_EMAIL"] . "\n\n	" . URLROOT . "/confirm/confirmemail/$id/$data[secret]\n\n" . LANG["HAS_BEEN_APPROVED_EMAIL_AFTER"] . "\n\n	" . LANG["HAS_BEEN_APPROVED_EMAIL_DELETED"] . "\n\n" . URLROOT . " " . LANG["ADMIN"];
+                $body = LANG["YOUR_ACCOUNT_AT"] . " " . CONFIG['SITENAME'] . " " . LANG["HAS_BEEN_APPROVED_EMAIL"] . "\n\n	" . URLROOT . "/profile/confirmemail/$id/$data[secret]\n\n" . LANG["HAS_BEEN_APPROVED_EMAIL_AFTER"] . "\n\n	" . LANG["HAS_BEEN_APPROVED_EMAIL_DELETED"] . "\n\n" . URLROOT . " " . LANG["ADMIN"];
             }
 
             // Confirm Account
@@ -430,7 +430,7 @@ public static function login(array $input): array
         } else {
             $body = LANG['YOUR_ACCOUNT_AT'] . ' ' . CONFIG['SITENAME'] . ' '
                   . LANG['HAS_BEEN_APPROVED_EMAIL'] . "\n\n"
-                  . URLROOT . "/confirm/confirmemail/$id/{$data['secret']}\n\n"
+                  . URLROOT . "/profile/confirmemail/$id/{$data['secret']}\n\n"
                   . LANG['HAS_BEEN_APPROVED_EMAIL_AFTER'] . "\n\n"
                   . LANG['HAS_BEEN_APPROVED_EMAIL_DELETED'] . "\n\n"
                   . URLROOT . ' ' . LANG['ADMIN'];

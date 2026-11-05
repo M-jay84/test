@@ -65,7 +65,7 @@ class UsersLogic
         // Pagination
         $users_query = "SELECT COUNT(*) FROM users WHERE $data[query]";
         $count = DB::run($users_query)->fetchcolumn();
-        list($pager, $limit) = pagination(25, $count, URLROOT . "/members?$data[q]&");
+        list($pager, $limit) = pagination(25, $count, URLROOT . "/users/members?$data[q]&");
         $users_query = "SELECT users.*, groups.level FROM users INNER JOIN `groups` ON groups.group_id=users.class WHERE $data[query] ORDER BY username $limit";
         $results = DB::run($users_query)->fetchAll();
 

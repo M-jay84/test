@@ -1,72 +1,743 @@
-[2026-11-02 09:00:58] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/config/settings.php): Failed to open stream: No such file or directory
-File: C:\xampp\htdocs\newsite\Bootstrap\init.php:21
+[2026-11-03 08:11:03] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\page\user\login.php:6
 
-[2026-11-02 09:00:58] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/config/settings.php): Failed to open stream: No such file or directory
-File: C:\xampp\htdocs\newsite\Bootstrap\init.php:21
+[03-Nov-2026 08:35:58 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 70
+[2026-11-03 08:35:58] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\page\user\login.php:6
 
-[2026-11-02 09:00:59] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/config/settings.php): Failed to open stream: No such file or directory
-File: C:\xampp\htdocs\newsite\Bootstrap\init.php:21
+[03-Nov-2026 09:51:36 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-03 09:51:36] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\page\user\authorize\login.php:11
 
-[2026-11-02 08:01:22] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/language_functions.php): Failed to open stream: No such file or directory
-File: C:\xampp\htdocs\newsite\Bootstrap\init.php:36
+[03-Nov-2026 12:07:43 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-03 12:07:43] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\Bootstrap\functions\legacy_functions.php:28
 
-[2026-11-02 08:02:03] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/router_functions.php): Failed to open stream: No such file or directory
-File: C:\xampp\htdocs\newsite\Bootstrap\init.php:49
+[03-Nov-2026 12:07:51 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-03 12:07:51] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\page\user\authorize\signup.php:15
 
-[2026-11-02 08:02:04] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/router_functions.php): Failed to open stream: No such file or directory
-File: C:\xampp\htdocs\newsite\Bootstrap\init.php:49
+[04-Nov-2026 10:16:01 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:16:01] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\Bootstrap\functions\legacy_functions.php:28
 
-[2026-11-02 08:03:20] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/security_functions.php): Failed to open stream: No such file or directory
-File: C:\xampp\htdocs\newsite\Bootstrap\init.php:40
+[04-Nov-2026 10:17:12 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:17:12] [WARNING] Undefined variable $message
+File: C:\xampp\htdocs\newsite\Bootstrap\Models\BansLogic.php:115
 
-[2026-11-02 08:03:21] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/security_functions.php): Failed to open stream: No such file or directory
-File: C:\xampp\htdocs\newsite\Bootstrap\init.php:40
+[04-Nov-2026 10:17:12 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:17:12] [WARNING] Undefined array key "YOUR_ACCOUNT_AT"
+File: C:\xampp\htdocs\newsite\Bootstrap\Models\AccountsLogic.php:431
 
-[2026-11-02 08:11:35] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/functions/security_functions.php): Failed to open stream: No such file or directory
-File: C:\xampp\htdocs\newsite\Bootstrap\init.php:40
+[04-Nov-2026 10:54:22 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:22] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\Bootstrap\functions\legacy_functions.php:28
 
-[02-Nov-2026 09:20:16 Europe/London] PHP Fatal error:  strict_types declaration must be the very first statement in the script in C:\xampp\htdocs\newsite\page\theme\default\footer.php on line 2
-[2026-11-02 11:21:09] [WARNING] require_once(C:\xampp\htdocs\newsite/Bootstrap/legacy_functions.php): Failed to open stream: No such file or directory
-File: C:\xampp\htdocs\newsite\Bootstrap\init.php:44
+[04-Nov-2026 10:54:23 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:23] [WARNING] Undefined array key "edit_users"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:64
 
-[02-Nov-2026 11:22:20 Europe/London] PHP Fatal error:  Cannot redeclare Url() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:6) in C:\xampp\htdocs\newsite\Bootstrap\functions\legacy_functions.php on line 48
-[02-Nov-2026 17:12:29 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:29 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:29 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:29 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:30 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:32 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:32 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:32 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:32 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:32 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:58 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:58 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:58 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:58 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-[02-Nov-2026 17:12:58 Europe/London] PHP Fatal error:  Cannot redeclare param() (previously declared in C:\xampp\htdocs\newsite\Bootstrap\functions\helper_functions.php:147) in C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php on line 104
-Error-page rendering failed: Error: Class "Bootstrap\Libs\Auth" not found in C:\xampp\htdocs\newsite\page\theme\default\header.php:13
-Stack trace:
-#0 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(44): require()
-#1 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(51): theme_include('header.php')
-#2 C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php(105): theme_header('Errors')
-#3 [internal function]: error_handle_exception(Object(Error))
-#4 {main}Error-page rendering failed: Error: Class "Bootstrap\Libs\Auth" not found in C:\xampp\htdocs\newsite\page\theme\default\header.php:13
-Stack trace:
-#0 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(44): require()
-#1 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(51): theme_include('header.php')
-#2 C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php(105): theme_header('Errors')
-#3 [internal function]: error_handle_exception(Object(Error))
-#4 {main}Error-page rendering failed: Error: Class "Bootstrap\Libs\Auth" not found in C:\xampp\htdocs\newsite\page\theme\default\header.php:13
-Stack trace:
-#0 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(44): require()
-#1 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(51): theme_include('header.php')
-#2 C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php(105): theme_header('Errors')
-#3 [internal function]: error_handle_exception(Object(Error))
-#4 {main}Error-page rendering failed: Error: Class "Bootstrap\Libs\Auth" not found in C:\xampp\htdocs\newsite\page\theme\default\header.php:13
-Stack trace:
-#0 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(44): require()
-#1 C:\xampp\htdocs\newsite\Bootstrap\functions\style_functions.php(51): theme_include('header.php')
-#2 C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php(105): theme_header('Errors')
-#3 [internal function]: error_handle_exception(Object(Error))
-#4 {main}
+[04-Nov-2026 10:54:23 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:23] [WARNING] Undefined array key "TORRENT0"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:69
+
+[04-Nov-2026 10:54:28 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:28] [WARNING] Undefined array key "edit_users"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:64
+
+[04-Nov-2026 10:54:28 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:28] [WARNING] Undefined array key "TORRENT0"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:69
+
+[04-Nov-2026 10:54:31 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:31] [WARNING] Undefined array key "view_torrents"
+File: C:\xampp\htdocs\newsite\page\block\navigate_block.php:10
+
+[04-Nov-2026 10:54:31 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:31] [WARNING] Undefined array key "view_torrents"
+File: C:\xampp\htdocs\newsite\page\block\navigate_block.php:10
+
+[04-Nov-2026 10:54:31 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:31] [WARNING] Undefined array key "NO_USERS_ONLINE"
+File: C:\xampp\htdocs\newsite\page\block\usersonline_block.php:22
+
+[04-Nov-2026 10:54:31 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:31] [WARNING] Undefined array key "invites"
+File: C:\xampp\htdocs\newsite\page\block\invite_block.php:3
+
+[04-Nov-2026 10:54:31 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:31] [WARNING] Undefined array key "invitees"
+File: C:\xampp\htdocs\newsite\page\block\invite_block.php:12
+
+[04-Nov-2026 10:54:31 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:31] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[04-Nov-2026 10:54:31 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:31] [WARNING] Undefined array key "edit_users"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:37
+
+[04-Nov-2026 10:54:31 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:31] [WARNING] Undefined array key "edit_users"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:64
+
+[04-Nov-2026 10:54:31 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:31] [WARNING] Undefined array key "TORRENT0"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:69
+
+[04-Nov-2026 10:54:34 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:34] [WARNING] Undefined array key "NO_USERS_ONLINE"
+File: C:\xampp\htdocs\newsite\page\block\usersonline_block.php:22
+
+[04-Nov-2026 10:54:34 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:54:34] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[04-Nov-2026 10:57:37 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:57:37] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[04-Nov-2026 10:57:37 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:57:37] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[04-Nov-2026 10:57:37 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:57:37] [WARNING] Undefined array key "NO_USERS_ONLINE"
+File: C:\xampp\htdocs\newsite\page\block\usersonline_block.php:22
+
+[04-Nov-2026 10:57:37 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-04 10:57:37] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 04:58:25 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:25] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\Bootstrap\functions\legacy_functions.php:28
+
+[05-Nov-2026 04:58:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:26] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\page\user\home.php:9
+
+[05-Nov-2026 04:58:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:26] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:26] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:26] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 04:58:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:26] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:26] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:26] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 04:58:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:26] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:26] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:26] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 04:58:43 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:43] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:43 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:43] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:43 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:43] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 04:58:45 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:45] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:45 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:45] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:45 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:45] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 04:58:53 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:53] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:53 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:53] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:53 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:53] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 04:58:56 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:56] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:56 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:56] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:56 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:56] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 04:58:59 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:59] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:59 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:59] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:58:59 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:58:59] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 04:59:06 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:59:06] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:59:06 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:59:06] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:59:06 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:59:06] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 04:59:15 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:59:15] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:59:15 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:59:15] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:59:15 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:59:15] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 04:59:45 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:59:45] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:59:45 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:59:45] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:59:46 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:59:46] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 04:59:54 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:59:54] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:59:54 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:59:54] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 04:59:54 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 04:59:54] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 05:00:03 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:03] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\page\user\profile\view.php:12
+
+[05-Nov-2026 05:00:03 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:03] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:00:03 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:03] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:00:03 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:03] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 05:00:23 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:23] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:00:23 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:23] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:00:23 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:23] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 05:00:27 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:27] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:00:27 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:27] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:00:27 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:27] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 05:00:52 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:52] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:00:52 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:52] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:00:52 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:00:52] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 05:01:11 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:01:11] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:01:11 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:01:11] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:01:11 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:01:11] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 05:01:39 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:01:39] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:01:39 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:01:39] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:01:39 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:01:39] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 05:01:52 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:01:52] [WARNING] Undefined variable $history
+File: C:\xampp\htdocs\newsite\Bootstrap\Models\MessagesLogic.php:150
+
+[05-Nov-2026 05:01:52 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:01:52] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:01:52 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:01:52] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 05:01:52 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 05:01:52] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:05:40 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:40] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\Bootstrap\functions\legacy_functions.php:28
+
+[05-Nov-2026 10:05:40 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:40] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\page\home.php:9
+
+[05-Nov-2026 10:05:40 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:40] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:05:40 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:40] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:05:41 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:41] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:05:41 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:41] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:05:41 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:41] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:05:41 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:41] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:05:52 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:52] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:05:52 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:52] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:05:52 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:52] [WARNING] Undefined array key "edit_users"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:64
+
+[05-Nov-2026 10:05:52 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:52] [WARNING] Undefined array key "TORRENT0"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:69
+
+[05-Nov-2026 10:05:54 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:54] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:05:54 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:54] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:05:54 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:54] [WARNING] Undefined array key "edit_users"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:64
+
+[05-Nov-2026 10:05:54 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:05:54] [WARNING] Undefined array key "TORRENT0"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:69
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "avatar"
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:6
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [DEPRECATED] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:6
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "maxslots"
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:12
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [DEPRECATED] number_format(): Passing null to parameter #1 ($num) of type float is deprecated
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:12
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "downloaded"
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:13
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "downloaded"
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:24
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "uploaded"
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:26
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "level"
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:28
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "privacy"
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:30
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [DEPRECATED] Using null as an array offset is deprecated, use an empty string instead
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:30
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key ""
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:30
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "seedbonus"
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:32
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "control_panel"
+File: C:\xampp\htdocs\newsite\page\block\login_block.php:42
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "view_torrents"
+File: C:\xampp\htdocs\newsite\page\block\navigate_block.php:10
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "view_torrents"
+File: C:\xampp\htdocs\newsite\page\block\navigate_block.php:10
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "invites"
+File: C:\xampp\htdocs\newsite\page\block\invite_block.php:3
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "invitees"
+File: C:\xampp\htdocs\newsite\page\block\invite_block.php:12
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "edit_users"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:37
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "edit_users"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:64
+
+[05-Nov-2026 10:06:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:02] [WARNING] Undefined array key "TORRENT0"
+File: C:\xampp\htdocs\newsite\page\block\statistics_block.php:69
+
+[05-Nov-2026 10:06:05 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:05] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:06:05 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:05] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:06:05 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:05] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:06:05 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:05] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:06:05 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:05] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:06:05 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:05] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:06:10 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:10] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:06:10 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:10] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:06:10 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:06:10] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:07:13 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:07:13] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:07:13 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:07:13] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:07:13 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:07:13] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:07:15 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:07:15] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:07:15 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:07:15] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:07:15 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:07:15] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:07:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:07:26] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\page\torrents\browse.php:8
+
+[05-Nov-2026 10:07:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:07:26] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:07:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:07:26] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:07:26 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:07:26] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:09:50 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:09:50] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:09:50 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:09:50] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:09:50 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:09:50] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:13:51 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:13:51] [WARNING] Undefined variable $viewFile
+File: C:\xampp\htdocs\newsite\page\admin\admin_header.php:328
+
+[05-Nov-2026 10:13:51 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:13:51] [WARNING] http_response_code(): Cannot set response code - headers already sent (output started at C:\xampp\htdocs\newsite\page\admin\admin_header.php:14)
+File: C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php:131
+
+[05-Nov-2026 10:13:51 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:13:51] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:13:51 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:13:51] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:13:51 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:13:51] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:18:35 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:35] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:18:35 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:35] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:18:35 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:35] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:18:41 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:41] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:18:41 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:41] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:18:41 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:41] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:18:53 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:53] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:18:53 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:53] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:18:53 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:53] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:18:56 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:56] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:18:56 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:56] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:18:56 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:56] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:18:56 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:56] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:18:56 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:56] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:18:56 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:56] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:18:58 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:58] [WARNING] The use statement with non-compound name 'PDO' has no effect
+File: C:\xampp\htdocs\newsite\page\profile\view.php:12
+
+[05-Nov-2026 10:18:58 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:58] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:18:58 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:58] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:18:58 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:18:58] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:19:01 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:19:01] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:19:01 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:19:01] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:19:01 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:19:01] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:19:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:19:02] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:19:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:19:02] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:19:02 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:19:02] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:19:05 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:19:05] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:19:05 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:19:05] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:19:05 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:19:05] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+
+[05-Nov-2026 10:19:05 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:19:05] [WARNING] Undefined variable $catsrow
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:19:05 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:19:05] [WARNING] Trying to access array offset on null
+File: C:\xampp\htdocs\newsite\page\block\maincats_block.php:11
+
+[05-Nov-2026 10:19:05 Europe/London] PHP Deprecated:  Constant E_STRICT is deprecated since 8.4, the error level was removed in C:\xampp\htdocs\newsite\Bootstrap\functions\error_functions.php on line 98
+[2026-11-05 10:19:05] [WARNING] Undefined array key "cat"
+File: C:\xampp\htdocs\newsite\page\block\search_block.php:11
+

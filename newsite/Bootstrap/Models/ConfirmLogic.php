@@ -49,11 +49,11 @@ class ConfirmLogic
 
         // Set Secret
         $secret = mksecret();
-        $users_query = "UPDATE users SET secret=? AND status =? WHERE id=? AND secret=?  status=? ";
-        $stmt = DB::run($users_query, [$secret, 'confirmed', $id, $row['secret'], 'pending']);
-        if ($stmt == 0) {
-            message(URLROOT, LANG["SIGNUP_UNABLE"]);
-        }
+        DB::run(
+    "UPDATE users SET secret = ?, status = ? WHERE id = ? AND secret = ? AND status = ?",
+    [$secret, 'confirmed', $id, $row['secret'], 'pending']
+);
+       
         message('authorize/login', LANG["ACCOUNT_ACTIVATED"]);
     }
 

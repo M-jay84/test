@@ -114,7 +114,7 @@ class Ip
         $ipq = DB::run($user_query, [$ip])->fetchColumn();
 
         if ($ipq >= CONFIG['ACCOUNTMAX']) {
-            showMessage('login', LANG["IP_USED"]);
+            message('authorize/login', LANG["IP_USED"]);
         }
     }
 

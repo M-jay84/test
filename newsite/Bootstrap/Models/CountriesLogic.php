@@ -16,9 +16,9 @@ class CountriesLogic
         $countries_query = "SELECT name,flagpic FROM `countries` WHERE id=? LIMIT 1";
         $carr = DB::run($countries_query, [$country])->fetch(PDO::FETCH_ASSOC);
         if ($carr) {
-            $country = $pic == 1 ? "<img src='" . URLROOT . "/page/images/languages/$carr[flagpic]' title='" . htmlspecialchars($carr['name']) . "' alt='" . htmlspecialchars($carr['name']) . "' />" : htmlspecialchars($carr['name']);
+            $country = $pic == 1 ? "<img src='" . URLROOT . "/page/theme/default/images/languages/$carr[flagpic]' title='" . htmlspecialchars($carr['name']) . "' alt='" . htmlspecialchars($carr['name']) . "' />" : htmlspecialchars($carr['name']);
         } else {
-            $country = $pic == 1 ? "<img src='" . URLROOT . "/page/images/languages/unknown.webp' alt='Unknown' />" : "<b>Unknown</b>";
+            $country = $pic == 1 ? "<img src='" . URLROOT . "/page/theme/default/images/languages/unknown.webp' alt='Unknown' />" : "<b>Unknown</b>";
         }
         return $country;
     }

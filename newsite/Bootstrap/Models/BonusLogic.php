@@ -62,7 +62,7 @@ class BonusLogic
                     if ($res == 0) {
                         message(("bonus"), LANG["No HnR found for this user."]);
                     }
-                    LogsLogic::write("A HnR for <a href='profile/" . $uid . "'>" . coloredname($current_user->id) . "</a> has been removed");
+                    LogsLogic::write("A HnR for <a href='profile/view/" . $uid . "'>" . coloredname($current_user->id) . "</a> has been removed");
                     $new_modcomment = date("d-m-Y \à H:i") . " - ";
                     $new_modcomment .= "" . coloredname($current_user->id) . " has cleared H&R for " . $row['cost'] . " points \n";
                     $modcom = $new_modcomment;

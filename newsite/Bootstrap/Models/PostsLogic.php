@@ -46,7 +46,7 @@ class PostsLogic
         // Get Post Data
         $posts_query = "SELECT count(id) FROM `forum_posts` WHERE topicid = ?";
         $count =  DB::run($posts_query, [$topicid])->fetchColumn();
-        list($pager, $limit) = pagination(15, $count, URLROOT . "/post/$topicid?");
+        list($pager, $limit) = pagination(15, $count, URLROOT . "/post/view/$topicid?");
         $posts_query =  "SELECT forum_posts.id,
                         forum_posts.topicid,
                         forum_posts.userid,
@@ -73,7 +73,7 @@ class PostsLogic
         // Get Topic Data
         $topics_query = "SELECT * FROM `forum_topics` WHERE id = ?";
         $arr = DB::run($topics_query, [$topicid])->fetch(PDO::FETCH_ASSOC);
-        $levels = ForumsLogic::getForumAccessLevels($arr['forumid']) or message('forum', 'issue with access');
+        $levels = ForumsLogic::getForumAccessLevels($arr['forumid']) or message('forum/view', 'issue with access');
         $maypost = $current_user->class >= $levels["write"] ? true : false;
 
         // Update Topic Views
@@ -87,7 +87,7 @@ class PostsLogic
         $forums_query = "SELECT * FROM `forum_forums` WHERE id = ?";
         $arr2 = DB::run($forums_query, [$arr['forumid']])->fetch(PDO::FETCH_ASSOC);
         if (!$arr2 || $current_user->class < $arr2["minclassread"] && $arr2["guest_read"] == "no") {
-            message('forum', LANG["NO_PERMISSION"]);
+            message('forum/view', LANG["NO_PERMISSION"]);
         }
 
         // Update Last Read
@@ -125,12 +125,12 @@ class PostsLogic
     public static function deletePost($postid, $data, $sure = 0)
     {        // Check User
         if (!$data['current_user']->delete_news == 'yes' || !intval($postid)) {
-            message('forum', LANG["NO_PERMISSION"]);
+            message('forum/view', LANG["NO_PERMISSION"]);
         }
         
 	    // Double Check
         if ($sure) {
-		    message('forum', "Sanity check: You are about to delete a post. Click <a href='" . URLROOT . "/post/delete/$postid/1'>here</a> if you are sure.");
+		    message('forum/view', "Sanity check: You are about to delete a post. Click <a href='" . URLROOT . "/post/delete/$postid/1'>here</a> if you are sure.");
         }
 
         $posts_query = "SELECT 'topicid' FROM `forum_posts` WHERE id = ?";
@@ -141,7 +141,7 @@ class PostsLogic
         $arr = DB::run($posts_query, [$topicid])->fetchColumn();
         if ($arr == 1) {
             $msg = sprintf(LANG["FORUMS_DEL_POST_ONLY_POST"], $topicid);
-            message('forum', $msg);
+            message('forum/view', $msg);
         }
 
         // Delete post
@@ -149,7 +149,7 @@ class PostsLogic
         DB::run($posts_query, [$postid]);
         AttachmentsLogic::deleteAll($topicid, true);
         PostsLogic::updateTopicLastPost($topicid);
-        message(("post/$topicid"), LANG["DEL_COMPLETE"]);
+        message(("post/view/$topicid"), LANG["DEL_COMPLETE"]);
     }
 
     public static function addPost($topicid, $current_user) // todo
@@ -157,22 +157,22 @@ class PostsLogic
         $body = htmlspecialchars_decode($_POST["body"]);
 
         if (!$body) {
-            message('forum', LANG["MISSING_FORM_DATA"]);
+            message('forum/view', LANG["MISSING_FORM_DATA"]);
         }
 
-        $forumid = PostsLogic::getTopicForum($topicid) or message('forum', "Bad topic ID");
+        $forumid = PostsLogic::getTopicForum($topicid) or message('forum/view', "Bad topic ID");
 
         // Make sure sure user has write access in forum
-        $arr = ForumsLogic::getForumAccessLevels($forumid) or message('forum', "Bad forum ID");
+        $arr = ForumsLogic::getForumAccessLevels($forumid) or message('forum/view', "Bad forum ID");
         if ($current_user->class < $arr["write"]) {
-            message('forum', LANG["FORUMS_NOT_PERMIT"]);
+            message('forum/view', LANG["FORUMS_NOT_PERMIT"]);
         }
 
         //Make sure topic exists and is unlocked
         $topics_query = "SELECT * FROM `forum_topics` WHERE id = ?";
         $arr = DB::run($topics_query, [$topicid])->fetch(PDO::FETCH_ASSOC);
         if ($arr["locked"] == 'yes') {
-            message('forum', LANG["LOCKED"]);
+            message('forum/view', LANG["LOCKED"]);
         }
         //Get forum ID
         $forumid = $arr["forumid"];
@@ -191,7 +191,7 @@ class PostsLogic
         // Update topic last post
         PostsLogic::updateTopicLastPost($topicid);
 
-        message("post/$topicid/last/#post$postid", LANG["SUCCESS"]);
+        message("post/view/$topicid/last/#post$postid", LANG["SUCCESS"]);
     }
 
     // Post Edit Form Submit
@@ -205,19 +205,19 @@ class PostsLogic
 
         // Check Correct Input
         if ($body == "") {
-            message('forum', LANG["MISSING_FORM_DATA"]);
+            message('forum/view', LANG["MISSING_FORM_DATA"]);
         }
 
         // Get Topic Data
         $posts_query = "SELECT * FROM `forum_posts` WHERE id = ?";
         $arr = DB::run($posts_query, [$postid])->fetch(PDO::FETCH_ASSOC);
         if (!$arr) {
-            message('forum', LANG["MISSING_ID"]. $postid);
+            message('forum/view', LANG["MISSING_ID"]. $postid);
         }
             
         // Check User
         if ($current_user->id != $arr["userid"] && !$current_user->delete_news == 'yes' && !$current_user->edit_forum == 'yes') {
-            message('forum', LANG["NO_PERMISSION"]);
+            message('forum/view', LANG["NO_PERMISSION"]);
         }
 
         // Edit Post
@@ -227,7 +227,7 @@ class PostsLogic
         $data['topicid'] = $arr['topicid'];
         $data['postid'] = $postid;
         AttachmentsLogic::set_attachment($data);
-        message(("post/$arr[topicid]/$_POST[page]/#post$postid"), "Post was edited successfully.");
+        message(("post/view/$arr[topicid]/$_POST[page]/#post$postid"), "Post was edited successfully.");
     }
     
 }
