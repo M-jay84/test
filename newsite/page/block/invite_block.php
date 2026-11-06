@@ -18,7 +18,7 @@ if ((!empty(CONFIG['INVITEONLY']) || !empty(CONFIG['ENABLEINVITES'])) && Auth::c
     <div class="text-center">
         <?= sprintf(__('YOU_HAVE_INVITES'), $invites) ?>
         <?php if ($invites > 0) : ?>
-            <a href="<?= url('invite/home') ?>" class="btn ttbtn"><?= e(__('INVITE')) ?></a>
+            <a href="<?= url('invite') ?>" class="btn ttbtn"><?= e(__('INVITE')) ?></a>
         <?php endif; ?>
         <?php if ($invitees > 0) : ?>
             <a href="<?= url('invite/tree/' . (int) Auth::id()) ?>" class="btn ttbtn"><?= e(__('INVITED')) ?></a>

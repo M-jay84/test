@@ -219,7 +219,7 @@ class MessagesLogic
         // Pagination
         $messages_query = "SELECT COUNT(*) FROM messages WHERE location in ('in', 'both')";
         $count = DB::run($messages_query)->fetchColumn();
-        list($pager, $limit) = pagination(40, $count, url('message/admin?'));
+        list($pager, $limit) = pagination(40, $count, '/adminmessage&');
         $messages_query = "SELECT * FROM messages WHERE location in ('in', 'both') ORDER BY id DESC $limit";
         $stmt = DB::run($messages_query)->fetchAll();
 

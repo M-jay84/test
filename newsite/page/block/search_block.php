@@ -15,7 +15,7 @@ if (!Auth::check()) {
 block_begin(__('SEARCH'));
 $search = (string) get('search', '');
 ?>
-<form method="get" action="<?= url('torrents/browse') ?>">
+<form method="get" action="<?= url('browse') ?>">
     <input type="text" name="keyword" style="width:95%" class="form-control"
            value="<?= e($search) ?>" placeholder="<?= e(__('SEARCH')) ?>"><br>
     <select name="cat" style="width:95%" class="form-select">

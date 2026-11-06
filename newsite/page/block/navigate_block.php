@@ -30,7 +30,7 @@ if (Auth::check()) {
             if ($canUploadLink) {
                 echo '<a href="' . url('upload/torrent') . '"><b>' . e(__('UPLOAD')) . '</b></a><br>';
             }
-            echo '<a href="' . url('torrents/browse') . '"><b>' . e(__('SEARCH_TORRENTS')) . '</b></a><br>';
+            echo '<a href="' . url('browse') . '"><b>' . e(__('SEARCH_TORRENTS')) . '</b></a><br>';
         }
         ?>
         <a href="<?= url('forum/view') ?>"><b><?= e(__('FORUMS')) ?></b></a><br>

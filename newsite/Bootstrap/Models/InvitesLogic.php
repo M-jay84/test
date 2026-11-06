@@ -80,7 +80,7 @@ class InvitesLogic
     public static function submitInvite()
     {
         // Check User Input
-        $url = Input1('pending') == 0 ? '/invite/home' : '/invite/home/pending';
+        $url = Input1('pending') == 0 ? '/admininvite' : '/admininvite/pending';
         $ids = multiIds('users');
         
         $users_query = "SELECT u.id, u.invited_by, i.invitees FROM users u LEFT JOIN users i ON u.invited_by = i.id WHERE u.status = 'pending' AND u.invited_by != '0' AND u.id IN ($ids)";
@@ -103,7 +103,7 @@ class InvitesLogic
         // Pagination
         $users_query = "SELECT count(id) FROM `users` WHERE status = ? AND invited_by !=";
         $count = DB::run($users_query, ['pending',0])->fetchColumn();
-        list($pager, $limit) = pagination(25, $count, URLROOT.'/invite/home/pending?');
+        list($pager, $limit) = pagination(25, $count, URLROOT.'/admininvite/pending?');
         $users_query = "SELECT u.id, u.username, u.email, u.added, u.invited_by, i.username as inviter FROM users u LEFT JOIN users i ON u.invited_by = i.id WHERE u.status = 'pending' AND u.invited_by != '0' ORDER BY u.added DESC $limit";
         $stmt = DB::run($users_query);
         $array = ['invites'=>$stmt,'count'=>$count,'pager'=>$pager];
@@ -117,7 +117,7 @@ class InvitesLogic
         // Pagination
         $users_query = "SELECT count(id) FROM `users` WHERE status=? AND invited_by !=?";
         $count = DB::run($users_query, ['confirmed',0])->fetchColumn();
-        list($pager, $limit) = pagination(25, $count, URLROOT.'/invite/home?');
+        list($pager, $limit) = pagination(25, $count, URLROOT.'/admininvite?');
         $users_query = "SELECT u.id, u.username, u.email, u.added, u.last_access, u.class, u.invited_by, i.username as inviter FROM users u 
 		LEFT JOIN users i ON u.invited_by = i.id 
 		WHERE u.status = 'confirmed' AND u.invited_by != '0' ORDER BY u.added DESC $limit";

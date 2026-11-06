@@ -243,7 +243,7 @@ if (!empty(CONFIG['MEMBERSONLY']) && !Auth::check()) {
 } else {
     $res = TorrentsLogic::getAll('WHERE visible = ? AND banned = ?', ['yes', 'no']);
     if (($res['count'] ?? 0) > 0) {
-        echo '<div class="text-center"><a href="' . url('torrents/browse') . '">' . e(__('BROWSE_TORRENTS')) . '</a></div>';
+        echo '<div class="text-center"><a href="' . url('browse') . '">' . e(__('BROWSE_TORRENTS')) . '</a></div>';
         torrenttable($res['stmt'] ?? []);
     } else {
         echo e(__('NO_TORRENT_FOUND'));

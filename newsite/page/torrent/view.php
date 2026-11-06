@@ -41,7 +41,7 @@ render_flash();
 block_begin($page_title);
 ?>
 <p>
-    <a href="<?= url('torrents/download/' . (int) $torrent['id']) ?>">
+    <a href="<?= url('download/' . (int) $torrent['id']) ?>">
         <button type="button" class="btn btn-sm ttbtn"><i class="fa fa-download" style="color:green"></i> <?= e(__('DOWNLOAD')) ?></button>
     </a>
     <?php if (($torrent['external'] ?? '') === 'yes') : ?>

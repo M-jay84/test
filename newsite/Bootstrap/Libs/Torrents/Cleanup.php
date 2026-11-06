@@ -141,7 +141,7 @@ class Cleanup
                     DB::run($torrents_query, [1, $row['id']]);
                     $log_query = "INSERT INTO `log` (added, txt) VALUES (?,?)";
                     DB::run($log_query,
-                    [CONFIG['TT_DATE'], "Freeleech added on  <a href='" . URLROOT . "/torrent/view/$row[id]'>$row[name]</a> because it is bigger than " . CONFIG['FREELEECHGB'] . ""]);
+                    [CONFIG['TT_DATE'], "Freeleech added on  <a href='torrent/$row[id]'>$row[name]</a> because it is bigger than " . CONFIG['FREELEECHGB'] . ""]);
                 }
             }
         }
@@ -325,7 +325,7 @@ class Cleanup
                     DB::run($warnings_query, [$user, 'HnR']);
                     $log_query = "INSERT INTO `log` (added, txt) VALUES (?,?)";
                     DB::run($log_query,
-                    [CONFIG['TT_DATE'], LANG["CLEANUP_THE_MEMBER"] . " <a href='" . URLROOT . "/profile/view/" . $user . "'>" . $h[0] . "</a> " . LANG["CLEANUP_HAS_BEEN_BANNED_REASON"] . " " . $count . " H&R."]);
+                    [CONFIG['TT_DATE'], LANG["CLEANUP_THE_MEMBER"] . " <a href='account-details.php?id=" . $user . "'>" . $h[0] . "</a> " . LANG["CLEANUP_HAS_BEEN_BANNED_REASON"] . " " . $count . " H&R."]);
 
                     $sitename = URLROOT;
                     $body = file_get_contents(VIEW_PATH . "/email/hitnrunban.php");
@@ -383,7 +383,7 @@ class Cleanup
             MessagesLogic::newinsert(['sender'=>0, 'receiver'=>$arr['id'], 'added'=>CONFIG['TT_DATE'],'msg'=>$msgg,'subject'=> 'You have been demoted to Leecher']);
             $log_query = "INSERT INTO `log` (added, txt) VALUES (?,?)";
             DB::run($log_query,
-                    [CONFIG['TT_DATE'], "<a href=" . URLROOT . "/profile/view/$arr[id]><b>$username</b></a> has been demoted by System to <b>Leecher</b> class"]);
+                    [CONFIG['TT_DATE'], "<a href=/account-details.php?id=$arr[id]><b>$username</b></a> has been demoted by System to <b>Leecher</b> class"]);
         }
         
         // auto promote to class 3

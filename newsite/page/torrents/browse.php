@@ -24,14 +24,14 @@ $PARENT_CAT   = $browse['search']['parent_cat'] ?? '';
 $WHERE_CAT_IN = $browse['search']['wherecatina'] ?? [];
 $CATS         = $browse['cats'] ?? [];
 $KEYWORD      = $browse['search']['keyword'] ?? '';
-$V_url        = url('torrents/browse') . '?' . ltrim((string) $URL, '&');
+$V_url        = url('browse') . '?' . ltrim((string) $URL, '&');
 
 theme_header(__('BROWSE_TORRENTS'));
 render_flash();
 block_begin(__('BROWSE_TORRENTS'));
 ?>
 <div class="tt_blockcenter rounded">
-    <form method="get" action="<?= url('torrents/browse') ?>">
+    <form method="get" action="<?= url('browse') ?>">
         <p class="text-center">
             <input type="text" name="keyword" placeholder="<?= e(__('SEARCH')) ?>" size="40"
                    value="<?= e(stripslashes((string) $KEYWORD)) ?>"><br>
@@ -45,14 +45,14 @@ block_begin(__('BROWSE_TORRENTS'));
                 }
                 $checked = in_array($cat['id'], $WHERE_CAT_IN, false) || $getCat === (int) $cat['id']
                     ? ' checked' : '';
-                echo '<a href="' . url('torrents/browse?cat=' . (int) $cat['id']) . '">'
+                echo '<a href="' . url('browse?cat=' . (int) $cat['id']) . '">'
                    . e($cat['parent_cat'] . ' - ' . $cat['name']) . '</a> '
                    . '<input name="c' . (int) $cat['id'] . '" type="checkbox"' . $checked . ' value="1"> ';
                 $i++;
             }
             ?>
             <br><br>
-            <a href="<?= url('torrents/browse') ?>" class="ttbtn"><?= e(__('RESET')) ?></a>
+            <a href="<?= url('browse') ?>" class="ttbtn"><?= e(__('RESET')) ?></a>
             <button type="submit" class="ttbtn"><?= e(__('GO')) ?></button>
         </p>
 
@@ -63,10 +63,10 @@ block_begin(__('BROWSE_TORRENTS'));
             )->fetchAll(PDO::FETCH_ASSOC);
             ?>
             <br><b><?= e(__('YOU_ARE_IN')) ?>:</b>
-            <a href="<?= url('torrents/browse?parent_cat=' . rawurlencode($PARENT_CAT)) ?>"><?= e($PARENT_CAT) ?></a><br>
+            <a href="<?= url('browse?parent_cat=' . rawurlencode($PARENT_CAT)) ?>"><?= e($PARENT_CAT) ?></a><br>
             <b><?= e(__('SUB_CATS')) ?>:</b>
             <?php foreach ($subcats as $sub) : ?>
-                - <a href="<?= url('torrents/browse?cat=' . (int) $sub['id']) ?>"><?= e($sub['name']) ?></a>
+                - <a href="<?= url('browse?cat=' . (int) $sub['id']) ?>"><?= e($sub['name']) ?></a>
             <?php endforeach; ?>
         <?php endif; ?>
 

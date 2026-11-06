@@ -26,7 +26,7 @@ class CatagoriesLogic
         } else {
             // Select Cat 2 Move Kept Torrent Too
             message('admincategorie', 
-                "<form method='post' action='" .  URLROOT . "/categorie/delete/$id/sure'>                                 
+                "<form method='post' action='" .  URLROOT . "/admincategorie/delete/$id/sure'>                                 
                 <div class='tt_blockcenter rounded'>
                 <b>Category ID to move all Torrent To: </b>
                 <input type='text' name='newcat' /> (Cat ID)<br><br>
