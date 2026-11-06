@@ -8,7 +8,7 @@ $current_user = Auth::user();
 $id = (int) param(0, 0);
 
 if (!Auth::check() && !empty(CONFIG['MEMBERSONLY'])) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 if (!Auth::isStaff()) {

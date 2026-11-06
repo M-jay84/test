@@ -28,7 +28,7 @@ class LogsLogic
         $where = $search != '' ? "WHERE txt LIKE '$search%'" : '';
         $log_query = "SELECT COUNT(*) FROM log $where";
         $count = DB::run($log_query)->fetchColumn();
-        list($pager, $limit) = pagination(25, $count,url('adminlog?'));
+        list($pager, $limit) = pagination(25, $count,url('log/view?'));
         $log_query = "SELECT id, added, txt FROM log $where ORDER BY id DESC $limit";
         $logs = DB::run($log_query)->fetchAll();
         return array('logs' => $logs, 'pager' => $pager);

@@ -7,7 +7,7 @@ use Bootstrap\Models\UploadLogic;
 $current_user = Auth::user();
 
 if (!Auth::check() && !empty(CONFIG['MEMBERSONLY'])) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 if (($current_user->can_upload ?? '') !== 'yes') {
     redirect('home', __('NO_PERMISSION'), 'warning');

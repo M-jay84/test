@@ -9,7 +9,7 @@ use Bootstrap\Models\TorrentLangLogic;
 $current_user = Auth::user();
 
 if (!Auth::check() && !empty(CONFIG['MEMBERSONLY'])) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 // Fixed inverted can_upload check
 if (($current_user->can_upload ?? '') !== 'yes') {

@@ -12,7 +12,7 @@ use Bootstrap\Models\ReportsLogic;
 $current_user = Auth::user();
 
 if (!Auth::check()) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 if (!is_post()) {

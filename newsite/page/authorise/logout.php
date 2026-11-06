@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 /**
  * Logout — no model needed beyond Auth.
- * URL: /authorize/logout
+ * URL: /authorise/logout
  */
 
 use Bootstrap\Libs\Auth;

@@ -13,7 +13,7 @@ $current_user = Auth::user();
 $id = (int) param(0, 0);
 
 if (!Auth::check()) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 if ($id < 1) {

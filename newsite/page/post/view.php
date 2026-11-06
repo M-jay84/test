@@ -187,7 +187,7 @@ render_flash();
         });
         </script>
 
-        <form method="post" action="<?= url('report') ?>">
+        <form method="post" action="<?= url('report/submit') ?>">
             <?= csrf_field() ?>
             <div class="modal fade" id="reportModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">

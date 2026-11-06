@@ -324,7 +324,7 @@ function captcha_response($captcha): void
     }
 
     if (!$captcha) {
-        redirect('authorize/login', __('CAPTCHA'), 'warning');
+        redirect('authorise/login', __('CAPTCHA'), 'warning');
     }
 
     $verifyResponse = @file_get_contents(
@@ -335,7 +335,7 @@ function captcha_response($captcha): void
 
     $responseData = json_decode((string) $verifyResponse);
     if (empty($responseData->success)) {
-        redirect('authorize/login', __('CAPTCHA'), 'warning');
+        redirect('authorise/login', __('CAPTCHA'), 'warning');
     }
 }
 
@@ -521,7 +521,7 @@ function get_tags($id): string
     foreach (['type1', 'type2', 'type3'] as $key) {
         if (!empty($tag[$key])) {
             $t = e($tag[$key]);
-            $html .= " <a href='" . e(url('tag/' . $tag[$key])) . "'><span class='badge border ttbtn'>{$t}</span></a>";
+            $html .= " <a href='" . e(url('tag/index/' . $tag[$key])) . "'><span class='badge border ttbtn'>{$t}</span></a>";
         }
     }
     return $html;
@@ -955,7 +955,7 @@ function torrenttable($res, string $columns = ''): void
                 case 'category':
                     echo '<td>';
                     if (!empty($row['cat_name'])) {
-                        echo '<center><a href="' . e(url('browse?cat=' . $row['category'])) . '">';
+                        echo '<center><a href="' . e(url('torrents/browse?cat=' . $row['category'])) . '">';
                         if (!empty($row['cat_pic'])) {
                             echo '<i class="fa ' . e($row['cat_pic']) . '" style="font-size:22px;" title="' . e($row['cat_name']) . '"></i>';
                         } else {
@@ -983,12 +983,12 @@ function torrenttable($res, string $columns = ''): void
                     if (($row['sticky'] ?? '') === 'yes') {
                         $type .= " <i class='fa fa-thumb-tack' title='" . e(__('STICKY')) . "'></i>";
                     }
-                    echo '<td nowrap="nowrap"><a href="' . e(url("torrent/{$id}/hit")) . '"><b>' . $smallname . '</b></a>' . $type;
+                    echo '<td nowrap="nowrap"><a href="' . e(url("torrent/view/{$id}/hit")) . '"><b>' . $smallname . '</b></a>' . $type;
                     echo get_tags($id) . '</td>';
                     break;
 
                 case 'dl':
-                    echo '<td><a href="' . e(url("download/{$id}")) . '"><i class="fa fa-download" style="font-size:22px;color:green" title="' . e(__('DOWNLOADED')) . '"></i></a></td>';
+                    echo '<td><a href="' . e(url("torrents/download/{$id}")) . '"><i class="fa fa-download" style="font-size:22px;color:green" title="' . e(__('DOWNLOADED')) . '"></i></a></td>';
                     break;
 
                 case 'magnet':
@@ -1142,7 +1142,7 @@ function toptorrent(array $data): string
             : '---';
         $html .= '<tr>';
         $html .= "<td>{$num}</td>";
-        $html .= '<td><a href="' . e(url('torrent/' . $a['id'] . '/hit')) . '"><b>' . e($a['name']) . '</b></a></td>';
+        $html .= '<td><a href="' . e(url('torrent/view/' . $a['id'] . '/hit')) . '"><b>' . e($a['name']) . '</b></a></td>';
         $html .= '<td>' . number_format((int) ($a['times_completed'] ?? 0)) . '</td>';
         $html .= '<td>' . mksize($a['data'] ?? 0) . '</td>';
         $html .= '<td>' . number_format((int) ($a['seeders'] ?? 0)) . '</td>';
@@ -1459,7 +1459,7 @@ function usermenu(int $id, string $page = ''): void
 /** Torrent detail sub-navigation. */
 function torrentmenu(int $id, string $external = 'no'): void
 {
-    echo '<a href="' . e(url('torrent/' . $id)) . '"><button type="button" class="' . e(activelink('torrent')) . '">' . e(__('BACK')) . '</button></a> ';
+    echo '<a href="' . e(url('torrent/view/' . $id)) . '"><button type="button" class="' . e(activelink('torrent')) . '">' . e(__('BACK')) . '</button></a> ';
     if ($external !== 'yes') {
         echo '<a href="' . e(url('peer/view/torrent/' . $id)) . '"><button type="button" class="' . e(activelink('peer/view/torrent/' . $id)) . '">' . e(__('PEERS')) . '</button></a>';
     }

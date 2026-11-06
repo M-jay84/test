@@ -14,7 +14,7 @@ $id   = (int) param(0, 0);
 $type = (string) param(1, 'user');
 
 if (!Auth::check()) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 if ($id < 1) {

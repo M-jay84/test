@@ -36,16 +36,15 @@ function alert_type(string $type): string
  * Build a site URL from a path.
  *
  * url()              → http://localhost/newsite
- * url('login')       → http://localhost/newsite/login
- * url('/login')      → http://localhost/newsite/login
+ * url('authorise/login')       → http://localhost/newsite/login
+ * url('authorise/login')      → http://localhost/newsite/login
  *
  * If $path is already absolute (http/https) or already starts with URLROOT,
  * it is returned unchanged (no doubling).
  */
+
 function url(string $path = ''): string
 {
-    $path = trim($path);
-
     // Already a full URL
     if ($path !== '' && (str_starts_with($path, 'http://') || str_starts_with($path, 'https://'))) {
         return $path;

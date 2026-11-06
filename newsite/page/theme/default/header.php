@@ -116,11 +116,11 @@ $user       = Auth::user();   // object (guest or member)
                             <?= __('PROFILE') ?>
                         </a>
                         <?php if (Auth::isStaff()): ?>
-                            <a href="<?= url('admincp') ?>" class="dropdown-item">
+                            <a href="<?= url('admin/admincp') ?>" class="dropdown-item">
                                 <?= __('STAFF') ?>
                             </a>
                         <?php endif; ?>
-                        <a href="<?= url('authorize/logout') ?>" class="dropdown-item">
+                        <a href="<?= url('authorise/logout') ?>" class="dropdown-item">
                             <?= __('LOGOUT') ?>
                         </a>
                     </div>
@@ -128,7 +128,7 @@ $user       = Auth::user();   // object (guest or member)
 
             <?php else: ?>
                 <!-- Guest -->
-                <a href="<?= url('authorize/login') ?>" class="ttbtn"><?= __('LOGIN') ?></a>
+                <a href="<?= url('authorise/login') ?>" class="ttbtn"><?= __('LOGIN') ?></a>
             <?php endif; ?>
         </div>
     </div>

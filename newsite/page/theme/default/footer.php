@@ -29,7 +29,7 @@
             <div>
                 &copy; <a href="<?= url() ?>"><?= e(CONFIG['SITENAME'] ?? 'Site') ?></a><br>
                 RSS
-                <a href="<?= url('rss') ?>"><i class="fa fa-rss" style="color:#3b82f6"></i></a>
+                <a href="<?= url('rss/view') ?>"><i class="fa fa-rss" style="color:#3b82f6"></i></a>
                 <a href="<?= url('rss/custom') ?>"><i class="fa fa-rss-square" style="color:#60a5fa"></i></a>
             </div>
             <div style="text-align:right">

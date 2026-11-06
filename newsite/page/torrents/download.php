@@ -20,7 +20,7 @@ if ($torrentId < 1) {
 
 // Guests need a passkey in the URL when members-only
 if (!Auth::check() && $key === '' && !empty(CONFIG['MEMBERSONLY'])) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 $passkey = $key !== '' ? $key : (string) ($current_user->passkey ?? '');

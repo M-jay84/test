@@ -180,7 +180,7 @@ public static function login(array $input): array
 
         // Check Message Error
         if ($message != "") {
-            message('authorize/login', $message);
+            message('authorise/login', $message);
         }
 
         // No Message So Proceed
@@ -200,7 +200,7 @@ public static function login(array $input): array
                 DB::run($shoutbox_query, [0, CONFIG['TT_DATE'], 'System', "new user: " . $data['username'] . " has joined."]);
 
                 // Invite Activated
-                message('authorize/login', LANG["ACCOUNT_ACTIVATED"]);
+                message('authorise/login', LANG["ACCOUNT_ACTIVATED"]);
             }
 
             // Check To Confirm
@@ -252,9 +252,9 @@ public static function login(array $input): array
             if (CONFIG['CONFIRMEMAIL'] || CONFIG['ACONFIRM']) {
                 $TTMail = new TTMail();
                 $TTMail->Send($data['email'], "Your " . CONFIG['SITENAME'] . " User Account", $body, "", "-f" . CONFIG['SITEEMAIL'] . "");
-                message('authorize/login', LANG["A_CONFIRMATION_EMAIL_HAS_BEEN_SENT"] . " (" . htmlspecialchars($data['email']) . "). " . LANG["ACCOUNT_CONFIRM_SENT_TO_ADDY_REST"] . " <br/ >");
+                message('authorise/login', LANG["A_CONFIRMATION_EMAIL_HAS_BEEN_SENT"] . " (" . htmlspecialchars($data['email']) . "). " . LANG["ACCOUNT_CONFIRM_SENT_TO_ADDY_REST"] . " <br/ >");
             } else {
-                message('authorize/login', LANG["ACCOUNT_ACTIVATED"]);
+                message('authorise/login', LANG["ACCOUNT_ACTIVATED"]);
             }
         }
     }
@@ -383,7 +383,7 @@ public static function login(array $input): array
             self::sendWelcomePM($invite_row);
             self::postShout($data['username']);
 
-            message('authorize/login', LANG['ACCOUNT_ACTIVATED']);
+            message('authorise/login', LANG['ACCOUNT_ACTIVATED']);
         }
 
         // ---------- Normal signup path ----------
@@ -447,13 +447,13 @@ public static function login(array $input): array
             );
 
             message(
-                'authorize/login',
+                'authorise/login',
                 LANG['A_CONFIRMATION_EMAIL_HAS_BEEN_SENT'] . ' (' . htmlspecialchars($data['email']) . '). '
                 . LANG['ACCOUNT_CONFIRM_SENT_TO_ADDY_REST'] . ' <br>'
             );
         }
 
-        message('authorize/login', LANG['ACCOUNT_ACTIVATED']);
+        message('authorise/login', LANG['ACCOUNT_ACTIVATED']);
     }
 
     // ------------------------------------------------------------------

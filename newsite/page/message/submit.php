@@ -4,7 +4,7 @@ use Bootstrap\Libs\Auth;
 use Bootstrap\Models\MessagesLogic;
 
 if (!Auth::check()) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 if (!is_post() || !csrf_verify()) {
     redirect('message/create', __('NOTHING_FOUND'), 'warning');

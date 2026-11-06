@@ -83,7 +83,7 @@ define('CONFIG', [
     // Browse / UI
     // -----------------------------------------------------------------
     // Pages where sidebars can be hidden
-    'ISURL' => ['authorize/login', 'authorize/logout', 'authorize/signup', 'authorize/contact', 'authorize/recover', 'authorize/recover/confirm'],
+    'ISURL' => ['authorise/login', 'authorise/logout', 'authorise/signup', 'authorise/contact', 'authorise/recover', 'authorise/recover/confirm'],
 
     // Columns shown on torrent tables
     'TORRENTTABLE_COLUMNS' => 'category,name,dl,magnet,uploader,tube,tmdb,comments,nfo,size,completed,seeders,leechers,health,external,added,speed,wait,rating,admin',

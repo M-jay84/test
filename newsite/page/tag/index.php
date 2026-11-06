@@ -12,7 +12,7 @@ $current_user = Auth::user();
 $name = (string) param(0, '');
 
 if (!Auth::check() && !empty(CONFIG['MEMBERSONLY'])) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 if (($current_user->view_torrents ?? '') !== 'yes' && !empty(CONFIG['MEMBERSONLY'])) {
@@ -27,7 +27,7 @@ render_flash();
 block_begin(__('SEARCH'));
 ?>
 <div class="text-center">
-    <a href="<?= url('browse') ?>"><?= e(__('BROWSE_TORRENTS')) ?></a>
+    <a href="<?= url('torrents/browse') ?>"><?= e(__('BROWSE_TORRENTS')) ?></a>
 </div>
 <?php
 torrenttable($TAGS);

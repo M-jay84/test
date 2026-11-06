@@ -7,7 +7,7 @@ use Bootstrap\Models\BonusLogic;
 $current_user = Auth::user();
 
 if (!Auth::check()) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 $BONUS          = BonusLogic::getAll();

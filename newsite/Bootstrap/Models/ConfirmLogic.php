@@ -54,7 +54,7 @@ class ConfirmLogic
     [$secret, 'confirmed', $id, $row['secret'], 'pending']
 );
        
-        message('authorize/login', LANG["ACCOUNT_ACTIVATED"]);
+        message('authorise/login', LANG["ACCOUNT_ACTIVATED"]);
     }
 
 }

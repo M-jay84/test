@@ -7,7 +7,7 @@ use Bootstrap\Models\TorrentsLogic;
 $current_user = Auth::user();
 
 if (!Auth::check() && !empty(CONFIG['MEMBERSONLY'])) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 // Fixed inverted check from old code
 if (($current_user->delete_torrents ?? '') !== 'yes') {

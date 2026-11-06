@@ -26,7 +26,7 @@ public static function forum_guard(): object
         redirect('home', __('FORUM_AVAILABLE'), 'warning');
     }
     if (empty(CONFIG['FORUMS_GUESTREAD']) && !\Bootstrap\Libs\Auth::check()) {
-        redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+        redirect('authorise/login', __('NO_PERMISSION'), 'warning');
     }
     if (($user->forumbanned ?? '') === 'yes' || ($user->view_forum ?? '') === 'no') {
         // staff override optional:
@@ -207,13 +207,13 @@ public static function forum_guard(): object
     public static function deleteCats($id, $action = 0)
     {
         if ($action == 0) {
-            message('adminforumcat', "Are You Sure <a href='".URLROOT."/adminforumcat/delete/$id/1'>Remove Cat $id</a>");
+            message('forumcat/admin', "Are You Sure <a href='".URLROOT."/forumcat/delete/$id/1'>Remove Cat $id</a>");
         }
 
         $forumcats_query = "SELECT * FROM `forumcats` WHERE id=?";
         $v = DB::run($forumcats_query, [$id])->fetch(PDO::FETCH_ASSOC);
         if (!$v) {
-            message('adminforumcat', LANG["FORUM_INVALID_CAT"]);
+            message('forumcat/admin', LANG["FORUM_INVALID_CAT"]);
         }
         $forumcats_query = "DELETE FROM `forumcats` WHERE id' = ?";
         DB::run($forumcats_query, [$id]);
@@ -234,7 +234,7 @@ public static function forum_guard(): object
             DB::run($forums_query, [$row['id']]);
         }
         
-        message('adminforumcat', LANG["DEL_COMPLETE"]);
+        message('forumcat/admin', LANG["DEL_COMPLETE"]);
     }
 
     // Admin Get Cats
@@ -261,7 +261,7 @@ public static function forum_guard(): object
             $forumcats_query = "UPDATE forumcats SET sort =? WHERE sort=? AND category=? AND id!=?";
             DB::run($forumcats_query, [$_GET["sort"], $_GET["sort"] + 1, $id]);
         }
-        message('adminforumcat', LANG["MOVED"]);
+        message('forumcat/admin', LANG["MOVED"]);
     }
 
     // Admin Reorder Forums
@@ -291,7 +291,7 @@ public static function forum_guard(): object
         $id = Input1('id');
         
         if ($name == "") {
-            message('adminforumcat', LANG["MISSING_FORM_DATA"]);
+            message('forumcat/admin', LANG["MISSING_FORM_DATA"]);
         }
         
         // Admin Insert Forum Cat
@@ -299,14 +299,14 @@ public static function forum_guard(): object
             $forumcats_query = "INSERT INTO `forumcats` (name,sort) VALUES (?,?)";
             $res =  DB::run($forumcats_query, [$name, intval($sort)]);
             if (!empty($res)) {
-                message('adminforumcat', LANG["SUCCESS"]);
+                message('forumcat/admin', LANG["SUCCESS"]);
             } else {
-                message('adminforumcat', LANG["ACTION_FAILED"]);
+                message('forumcat/admin', LANG["ACTION_FAILED"]);
             }
         } else {
             $forumcats_query = "UPDATE forumcats SET sort = ? AND name = ? WHERE id=?";
             DB::run($forumcats_query, [$sort, $name, $id]);
-            message('adminforumcat', "<center><b>" . LANG["UPDATE_COMPLETE"] . "</b></center>");
+            message('forumcat/admin', "<center><b>" . LANG["UPDATE_COMPLETE"] . "</b></center>");
         }
     }
 
@@ -432,13 +432,13 @@ public static function forum_guard(): object
     public static function delete($id, $sure = 0)
     {
         if ($sure != 'sure') {
-            message('adminforum', "Are You Sure <a href='".URLROOT."/adminforum/delete/$id/sure'>Remove Forum $id</a>");
+            message('forum/admin', "Are You Sure <a href='".URLROOT."/forum/delete/$id/sure'>Remove Forum $id</a>");
         }
 
         $forums_query = "SELECT * FROM `forum_forums` WHERE id=? ";
         $v =  DB::run($forums_query, [$id])->fetch(PDO::FETCH_ASSOC);
         if (!$v) {
-            message('adminforum', LANG["FORUM_INVALID"]);
+            message('forum/admin', LANG["FORUM_INVALID"]);
         }
         $forums_query = "DELETE FROM `forum_forums` WHERE id' = ?";
         DB::run($forums_query, [$id]);
@@ -448,6 +448,6 @@ public static function forum_guard(): object
         DB::run($readposts_query, [$id]);
         $posts_query = "DELETE FROM `forum_posts` WHERE topicid' = ?";
         DB::run($posts_query, [$id]);
-        message('adminforumcat', LANG["DEL_COMPLETE"]);
+        message('forumcat/admin', LANG["DEL_COMPLETE"]);
     }
 }

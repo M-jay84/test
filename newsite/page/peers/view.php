@@ -14,7 +14,7 @@ $type = router_sanitize((string) param(0, '')); // or plain string if you prefer
 $id   = (int) param(1, 0);
 
 if (!Auth::check()) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 if ($id < 1 && $type !== 'admin') {
@@ -67,7 +67,7 @@ if ($canSee) :
             ?>
             <tr>
                 <td>
-                    <a href="<?= url('torrent/' . (int) $arr['torrent'] . '/hit') ?>">
+                    <a href="<?= url('torrent/view/' . (int) $arr['torrent'] . '/hit') ?>">
                         <b><?= e($arr['name'] ?? '') ?></b>
                     </a>
                 </td>

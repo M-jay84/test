@@ -8,7 +8,7 @@ $current_user = Auth::user();
 $id = (int) param(0, 0);
 
 if (!Auth::check()) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 if (($current_user->view_torrents ?? '') !== 'yes' && !empty(CONFIG['MEMBERSONLY'])) {
     redirect('home', __('NO_TORRENT_VIEW'), 'warning');

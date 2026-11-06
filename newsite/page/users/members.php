@@ -8,7 +8,7 @@ use Bootstrap\Models\UsersLogic;
 $current_user = Auth::user();
 
 if (!Auth::check()) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 if (($current_user->view_users ?? '') !== 'yes' && !Auth::isStaff()) {

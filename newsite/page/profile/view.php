@@ -15,7 +15,7 @@ $current_user = Auth::user();
 $id = (int) param(0, 0);
 
 if (!Auth::check()) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 if ($id < 1) {
@@ -115,21 +115,21 @@ usermenu($ID);
         <?= e(__('UPLOADED')) ?>: <?= mksize($USER['uploaded'] ?? 0) ?><br>
         <?= e(__('DOWNLOADED')) ?>: <?= mksize($USER['downloaded'] ?? 0) ?><br>
         <?= e(__('RATIO')) ?>: <?= get_ratio_color($HTML['userratio']) ?><br>
-        <?= e(__('BONUS')) ?>: <a href="<?= url('bonus') ?>"><?= e((string) ($USER['seedbonus'] ?? '0')) ?></a><br>
+        <?= e(__('BONUS')) ?>: <a href="<?= url('bonus/view') ?>"><?= e((string) ($USER['seedbonus'] ?? '0')) ?></a><br>
         <?= e(__('HNR')) ?>: <?= (int) ($COUNT['numhnr'] ?? 0) ?><br>
         <?php
         $days = max(1, (CONFIG['TT_TIME'] - strtotime((string) $USER['added'])) / 86400);
         ?>
         <?= e(__('AVG_DAILY_DL')) ?>: <?= mksize(($USER['downloaded'] ?? 0) / $days) ?><br>
         <?= e(__('AVG_DAILY_UL')) ?>: <?= mksize(($USER['uploaded'] ?? 0) / $days) ?><br>
-        <?= e(__('TORRENTS')) ?>: <a href="<?= url('snatch/' . (int) $USER['id'] . '/user') ?>"><?= number_format((int) ($COUNT['numtorrents'] ?? 0)) ?></a><br>
-        <?= e(__('COMMENTS')) ?>: <a href="<?= url('comment/' . (int) $USER['id'] . '/user') ?>"><?= number_format((int) ($COUNT['numcomments'] ?? 0)) ?></a><br>
+        <?= e(__('TORRENTS')) ?>: <a href="<?= url('snatch/index/' . (int) $USER['id'] . '/user') ?>"><?= number_format((int) ($COUNT['numtorrents'] ?? 0)) ?></a><br>
+        <?= e(__('COMMENTS')) ?>: <a href="<?= url('comment/view/' . (int) $USER['id'] . '/user') ?>"><?= number_format((int) ($COUNT['numcomments'] ?? 0)) ?></a><br>
         <?= e(__('POSTS')) ?>: <a href="<?= url('post/user/' . (int) $USER['id']) ?>"><?= number_format((int) ($COUNT['numforumposts'] ?? 0)) ?></a><br>
     </div>
     <p>
         <span style="float:right;">
             <?php if (($current_user->edit_users ?? '') === 'yes') : ?>
-                <a href="<?= url('snatch/' . (int) $USER['id'] . '/user') ?>"><i class="fa fa-history fa-2x" title="<?= e(__('SNATCH')) ?>"></i></a>
+                <a href="<?= url('snatch/index/' . (int) $USER['id'] . '/user') ?>"><i class="fa fa-history fa-2x" title="<?= e(__('SNATCH')) ?>"></i></a>
             <?php endif; ?>
             <?php if ((int) $current_user->id === $ID || (int) $current_user->class > (int) CONFIG['_UPLOADER']) : ?>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa fa-pencil fa-2x" title="<?= e(__('EDIT')) ?>"></i></a>

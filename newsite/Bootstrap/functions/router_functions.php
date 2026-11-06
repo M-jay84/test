@@ -5,9 +5,9 @@ declare(strict_types=1);
  * File-based router.
  *
  * How URLs map to files:
- *   /                 → page/authorize/home.php
- *   /login            → page/authorize/login.php
- *   /account/view/3   → page/authorize/account/view.php   + param(0) = "3"
+ *   /                 → page/authorise/home.php
+ *   /authorise/login  → page/authorise/login.php
+ *   /account/view/3   → page/authorise/account/view.php   + param(0) = "3"
  *   /account-signup   → optional: treat as account/signup
  *
  * Search order: page
@@ -20,6 +20,11 @@ declare(strict_types=1);
 function router_dispatch(): void
 {
     $segments = router_get_url();
+
+    // Public spelling is /authorise/*; the existing folder remains /page/authorise/.
+    if (($segments[0] ?? '') === 'authorise') {
+        $segments[0] = 'authorise';
+    }
 
     // Allow a single hyphenated segment: account-signup → account/signup
     if (count($segments) === 1 && str_contains($segments[0], '-')) {
@@ -50,7 +55,7 @@ function router_dispatch(): void
  *
  * Example:
  *   segments = ['account', 'view', '3']
- *   file     = page/authorize/view.php
+ *   file     = page/authorise/view.php
  *   params   = ['3']
  */
 function router_resolve_file(array $segments, array &$params): ?string

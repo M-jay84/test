@@ -9,7 +9,7 @@ $id     = (int) param(0, 0);
 $action = (string) param(1, ''); // e.g. bump, hit
 
 if (!Auth::check() && !empty(CONFIG['MEMBERSONLY'])) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 if ($id < 1) {
     redirect('browse', __('MISSING_ID'), 'warning');
@@ -41,7 +41,7 @@ render_flash();
 block_begin($page_title);
 ?>
 <p>
-    <a href="<?= url('download/' . (int) $torrent['id']) ?>">
+    <a href="<?= url('torrents/download/' . (int) $torrent['id']) ?>">
         <button type="button" class="btn btn-sm ttbtn"><i class="fa fa-download" style="color:green"></i> <?= e(__('DOWNLOAD')) ?></button>
     </a>
     <?php if (($torrent['external'] ?? '') === 'yes') : ?>

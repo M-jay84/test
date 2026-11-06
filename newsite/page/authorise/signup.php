@@ -5,7 +5,7 @@ declare(strict_types=1);
  * Signup view (controller merged into the page).
  * Logic: AccountsLogic::register() / checkinvite()
  * Extra: CountriesLogic::dropdown()
- * URL: /authorize/signup
+ * URL: /authorise/signup
  */
 
 use Bootstrap\Libs\Auth;
@@ -24,13 +24,13 @@ if (!empty(CONFIG['IPCHECK']) && method_exists(Ip::class, 'checkIP')) {
 // ---------- POST ----------
 if (is_post()) {
     if (!csrf_verify()) {
-        redirect('authorize/signup', 'Invalid request', 'warning');
+        redirect('authorise/signup', 'Invalid request', 'warning');
     }
 
     $result = AccountsLogic::register($_POST);
 
     if (!empty($result['error'])) {
-        redirect('authorize/signup', $result['error'], 'warning');
+        redirect('authorise/signup', $result['error'], 'warning');
     }
 
     // Success handled inside the model
@@ -48,7 +48,7 @@ block_begin(__('SIGNUP'));
 
 echo '<p class="text-center">' . e(__('COOKIES')) . '</p>';
 
-form_start(url('authorize/signup'), 'post');
+form_start(url('authorise/signup'), 'post');
 echo csrf_field();
 
 // Keep invite tokens when registering via invite link
@@ -106,8 +106,8 @@ button(__('SIGNUP'));
 echo '</div>';
 
 echo '<div class="p-2 text-center">';
-echo '<a href="' . url('authorize/login') . '">' . e(__('LOGIN')) . '</a> | ';
-echo '<a href="' . url('authorize/recover') . '">' . e(__('RECOVER')) . '</a>';
+echo '<a href="' . url('authorise/login') . '">' . e(__('LOGIN')) . '</a> | ';
+echo '<a href="' . url('authorise/recover') . '">' . e(__('RECOVER')) . '</a>';
 echo '</div>';
 
 form_end();

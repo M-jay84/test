@@ -7,7 +7,7 @@ use Bootstrap\Models\SnatchedLogic;
 $current_user = Auth::user();
 
 if (!Auth::check()) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 if (is_post()) {
@@ -48,7 +48,7 @@ block_begin(__('TRADE'));
             $smallname = htmlspecialchars(CutName($row['name'] ?? '', 40));
             ?>
             <tr>
-                <td><a href="<?= url('torrent/' . (int) $row['tid']) ?>"><b><?= $smallname ?></b></a></td>
+                <td><a href="<?= url('torrent/view/' . (int) $row['tid']) ?>"><b><?= $smallname ?></b></a></td>
                 <td><span style="color:#27B500"><?= mksize($row['uploaded'] ?? 0) ?></span></td>
                 <td><span style="color:#FF2200"><?= mksize($row['download'] ?? 0) ?></span></td>
                 <td><?= !empty($row['last_time']) ? e(get_elapsed_time($row['last_time'])) : '---' ?></td>

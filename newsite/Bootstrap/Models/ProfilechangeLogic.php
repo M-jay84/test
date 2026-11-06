@@ -51,7 +51,7 @@ class ProfilechangeLogic
         $users_query = "UPDATE users SET password = ? AND secret=? WHERE id=?";
         $in = DB::run($users_query, [$chpassword,$secret,$id]);
         if ($in > 0) {
-            message('authorize/logout', LANG["PASSWORD_CHANGED_OK"]);
+            message('authorise/logout', LANG["PASSWORD_CHANGED_OK"]);
         } else {
             message(("profile/view/$id"), LANG["ACTION_FAILED"]);
         }

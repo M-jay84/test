@@ -98,7 +98,7 @@ class Ip
         foreach ($res as $row) {
             if (self::ipInRange($ip, $row['first'], $row['last'])) {
                 header("HTTP/1.1 403 Forbidden");
-                echo '<html><head><title>Forbidden</title></head><body><h1>Forbidden</h1>Unauthorized IP address.</body></html>';
+                echo '<html><head><title>Forbidden</title></head><body><h1>Forbidden</h1>Unauthorised IP address.</body></html>';
                 exit;
             }
         }
@@ -114,7 +114,7 @@ class Ip
         $ipq = DB::run($user_query, [$ip])->fetchColumn();
 
         if ($ipq >= CONFIG['ACCOUNTMAX']) {
-            message('authorize/login', LANG["IP_USED"]);
+            message('authorise/login', LANG["IP_USED"]);
         }
     }
 

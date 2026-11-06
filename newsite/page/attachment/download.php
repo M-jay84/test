@@ -14,7 +14,7 @@ $id   = (int) param(0, 0);
 $hash = (string) param(1, '');
 
 if (!Auth::check() && !empty(CONFIG['MEMBERSONLY'])) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 if ($id < 1 || $hash === '') {

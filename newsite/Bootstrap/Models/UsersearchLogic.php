@@ -84,7 +84,7 @@ class UsersearchLogic
         // Pagination
         $users_query = "SELECT COUNT(`id`) FROM `users` $where";
         $count = DB::run($users_query)->fetchcolumn();
-        list($pager, $limit) = pagination(25, $count, URLROOT . "/adminusersearch&");
+        list($pager, $limit) = pagination(25, $count, URLROOT . "/users/search&");
         $users_query = "SELECT * FROM `users` $where $limit";
         $sql = DB::run($users_query)->fetchAll();
 

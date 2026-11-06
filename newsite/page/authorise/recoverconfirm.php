@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 /**
  * Set new password from recovery link.
- * URL: /authorize/recoverconfirm/{id}/{secret}
+ * URL: /authorise/recoverconfirm/{id}/{secret}
  */
 
 use Bootstrap\Libs\Auth;
@@ -17,12 +17,12 @@ $id     = (int) param(0, 0);
 $secret = (string) param(1, '');
 
 if ($id < 1 || strlen($secret) !== 20) {
-    redirect('authorize/recover', __('NOTHING_FOUND'), 'warning');
+    redirect('authorise/recover', __('NOTHING_FOUND'), 'warning');
 }
 
 if (is_post()) {
     if (!csrf_verify()) {
-        redirect('authorize/recoverconfirm/' . $id . '/' . $secret, 'Invalid request', 'warning');
+        redirect('authorise/recoverconfirm/' . $id . '/' . $secret, 'Invalid request', 'warning');
     }
     RecoverLogic::changePassword($id, $secret);
     return;
@@ -33,7 +33,7 @@ render_flash();
 
 block_begin(__('RECOVER'));
 
-form_start(url("authorize/recoverconfirm/{$id}/{$secret}"), 'post');
+form_start(url("authorise/recoverconfirm/{$id}/{$secret}"), 'post');
 echo csrf_field();
 form_input('password', __('NEW_PASSWORD'), '', 'password', __('NEW_PASSWORD'), true);
 form_input('password1', __('REPEAT'), '', 'password', __('REPEAT'), true);

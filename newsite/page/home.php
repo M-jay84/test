@@ -28,9 +28,9 @@ block_end();
 // ----- Auth -----
 block_begin('Auth');
 echo '<ul>';
-echo '<li><a class="ttbtn" href="' . url('authorize/login') . '">Login</a> — form, CSRF, remember me, green/yellow flash</li>';
-echo '<li><a class="ttbtn" href="' . url('authorize/logout') . '">Logout</a> — clear session + flash</li>';
-echo '<li><a class="ttbtn" href="' . url('authorize/signup') . '">Sign Up</a> — form, CSRF, green/yellow flash</li>';
+echo '<li><a class="ttbtn" href="' . url('authorise/login') . '">Login</a> — form, CSRF, remember me, green/yellow flash</li>';
+echo '<li><a class="ttbtn" href="' . url('authorise/logout') . '">Logout</a> — clear session + flash</li>';
+echo '<li><a class="ttbtn" href="' . url('authorise/signup') . '">Sign Up</a> — form, CSRF, green/yellow flash</li>';
 echo '</ul>';
 block_end();
 
@@ -243,7 +243,7 @@ if (!empty(CONFIG['MEMBERSONLY']) && !Auth::check()) {
 } else {
     $res = TorrentsLogic::getAll('WHERE visible = ? AND banned = ?', ['yes', 'no']);
     if (($res['count'] ?? 0) > 0) {
-        echo '<div class="text-center"><a href="' . url('browse') . '">' . e(__('BROWSE_TORRENTS')) . '</a></div>';
+        echo '<div class="text-center"><a href="' . url('torrents/browse') . '">' . e(__('BROWSE_TORRENTS')) . '</a></div>';
         torrenttable($res['stmt'] ?? []);
     } else {
         echo e(__('NO_TORRENT_FOUND'));

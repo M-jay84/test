@@ -59,7 +59,7 @@ if (Auth::check()) {
     <div class="text-center">
         <a href="<?= url('profile/view/' . $uid) ?>" class="btn ttbtn"><?= e(__('ACCOUNT')) ?></a>
         <?php if (($user->control_panel ?? $_SESSION['control_panel'] ?? '') === 'yes') : ?>
-            <a href="<?= url('admincp') ?>" class="btn ttbtn"><?= e(__('STAFFCP')) ?></a>
+            <a href="<?= url('admin/admincp') ?>" class="btn ttbtn"><?= e(__('STAFFCP')) ?></a>
         <?php endif; ?>
     </div>
     <?php
@@ -69,7 +69,7 @@ if (Auth::check()) {
     block_begin(__('LOGIN'));
     ?>
     <div class="justify-content-md-center">
-        <form method="post" action="<?= url('authorize/login') ?>">
+        <form method="post" action="<?= url('authorise/login') ?>">
             <?= csrf_field() ?>
             <b><?= e(__('USERNAME')) ?>:</b>
             <input type="text" class="form-control" name="username" required>
@@ -80,9 +80,9 @@ if (Auth::check()) {
                 <button type="submit" class="btn btn-sm ttbtn"><?= e(__('LOGIN')) ?></button>
             </div>
             <p class="text-center">
-                [<a href="<?= url('authorize/signup') ?>"><?= e(__('SIGNUP')) ?></a>]
+                [<a href="<?= url('authorise/signup') ?>"><?= e(__('SIGNUP')) ?></a>]
                 /
-                [<a href="<?= url('authorize/recover') ?>"><?= e(__('RECOVER')) ?></a>]
+                [<a href="<?= url('authorise/recover') ?>"><?= e(__('RECOVER')) ?></a>]
             </p>
         </form>
     </div>

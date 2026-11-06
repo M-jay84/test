@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * Login view (controller merged into the page).
  * Logic: AccountsLogic::login()
- * URL: /authorize/login
+ * URL: /authorise/login
  */
 
 use Bootstrap\Libs\Auth;
@@ -18,14 +18,14 @@ if (Auth::check()) {
 // ---------- POST ----------
 if (is_post()) {
     if (!csrf_verify()) {
-        redirect('authorize/login', 'Invalid request', 'warning');
+        redirect('authorise/login', 'Invalid request', 'warning');
     }
 
     $result = AccountsLogic::login($_POST);
 
     if (!empty($result['error'])) {
         // Model returned a validation / login error
-        redirect('authorize/login', $result['error'], 'warning');
+        redirect('authorise/login', $result['error'], 'warning');
     }
 
     // Success: model already redirected (redirect / message)
@@ -42,7 +42,7 @@ if (!empty(CONFIG['MEMBERSONLY'])) {
     echo '<p class="text-center"><b>' . e(__('MEMBERS_ONLY')) . '</b></p>';
 }
 
-form_start(url('authorize/login'), 'post');
+form_start(url('authorise/login'), 'post');
 echo csrf_field(); // name="_token" — model/csrf must match
 
 form_input('username', __('USERNAME'), '', 'text', __('USERNAME'), true);
@@ -64,8 +64,8 @@ echo '<p class="text-center"><i>' . e(__('COOKIES')) . '</i></p>';
 echo '</div>';
 
 echo '<div class="p-2 text-center">';
-echo '<a href="' . url('authorize/signup') . '">' . e(__('SIGNUP')) . '</a> | ';
-echo '<a href="' . url('authorize/recover') . '">' . e(__('RECOVER')) . '</a>';
+echo '<a href="' . url('authorise/signup') . '">' . e(__('SIGNUP')) . '</a> | ';
+echo '<a href="' . url('authorise/recover') . '">' . e(__('RECOVER')) . '</a>';
 echo '</div>';
 
 form_end();

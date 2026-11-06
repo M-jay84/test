@@ -11,7 +11,7 @@ if (!in_array($type, ['inbox', 'outbox'], true)) {
 }
 
 if (!Auth::check()) {
-    redirect('authorize/login', __('NO_PERMISSION'), 'warning');
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
 $messages  = MessagesLogic::msgPagination($type, (int) $current_user->id);
