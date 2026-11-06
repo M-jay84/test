@@ -428,3 +428,259 @@ function modal_end(): void
 {
     echo '</div></div></div></div>';
 }
+
+function modalScript(): string
+{
+    return <<<'HTML'
+<script>
+document.addEventListener('click', function(event) {
+
+    const openButton = event.target.closest('[data-modal-open]');
+
+    if (openButton) {
+        const id = openButton.dataset.modalOpen;
+        const modal = document.getElementById(id);
+
+        if (modal) {
+            modal.hidden = false;
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+
+            const firstInput = modal.querySelector(
+                'input:not([type="hidden"]), select, textarea, button'
+            );
+
+            if (firstInput) firstInput.focus();
+        }
+    }
+
+    const closeButton = event.target.closest('[data-modal-close]');
+
+    if (closeButton) {
+        const modal = closeButton.closest('.modal');
+
+        if (modal) {
+            modal.hidden = true;
+            modal.setAttribute('aria-hidden', 'true');
+
+            if (!document.querySelector('.modal:not([hidden])')) {
+                document.body.classList.remove('modal-open');
+            }
+        }
+    }
+});
+
+document.addEventListener('keydown', function(event) {
+
+    if (event.key === 'Escape') {
+        document.querySelectorAll('.modal:not([hidden])')
+            .forEach(function(modal) {
+                modal.hidden = true;
+                modal.setAttribute('aria-hidden', 'true');
+            });
+
+        document.body.classList.remove('modal-open');
+    }
+});
+</script>
+HTML;
+}
+
+function modal(array $config): string
+{
+    $id = $config['id'] ?? 'modal';
+    $title = $config['title'] ?? '';
+
+    $formId = $config['formId'] ?? $id . 'Form';
+
+    $html = '<div class="modal"'
+          . ' id="' . styleEscape($id) . '"'
+          . ' role="dialog"'
+          . ' aria-modal="true"'
+          . ' aria-labelledby="' . styleEscape($id) . 'Title"'
+          . ' aria-hidden="true" hidden>';
+
+    $html .= '<div class="modal-backdrop" data-modal-close></div>';
+
+    $html .= '<div class="modal-dialog">';
+
+    $html .= '<div class="modal-header">';
+
+    $html .= '<h2 id="' . styleEscape($id) . 'Title">'
+          . styleEscape($title)
+          . '</h2>';
+
+    $html .= '<button type="button" data-modal-close '
+          . 'aria-label="Close">&times;</button>';
+
+    $html .= '</div>';
+
+    $html .= '<div class="modal-body">';
+
+    $content = $config['content'] ?? [];
+
+    if (is_string($content)) {
+        $html .= styleEscape($content);
+    } else {
+        foreach ($content as $item) {
+
+            $type = $item['type'] ?? 'text';
+
+            switch ($type) {
+
+                case 'form':
+
+                    $item['id'] = $item['id'] ?? $formId;
+
+                    $html .= form($item);
+                    break;
+
+                case 'heading':
+
+                    $html .= '<h3>'
+                          . styleEscape($item['content'] ?? '')
+                          . '</h3>';
+                    break;
+
+                case 'text':
+
+                    $html .= '<p>'
+                          . styleEscape($item['content'] ?? '')
+                          . '</p>';
+                    break;
+
+                case 'divider':
+
+                    $html .= '<hr>';
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    $html .= '</div>';
+
+    if (!empty($config['footer'])) {
+
+        $html .= '<div class="modal-footer">';
+
+        foreach ($config['footer'] as $item) {
+
+            $type = $item['type'] ?? 'button';
+
+            if ($type === 'submit') {
+
+                $html .= button([
+                    'type' => 'submit',
+                    'form' => $item['form'] ?? $formId,
+                    'label' => $item['label'] ?? 'Save',
+                    'class' => $item['class'] ?? 'btn btn-primary'
+                ]);
+
+            } elseif ($type === 'close') {
+
+                $html .= button([
+                    'type' => 'close',
+                    'label' => $item['label'] ?? 'Cancel',
+                    'class' => $item['class'] ?? 'btn btn-secondary'
+                ]);
+
+            } else {
+
+                $html .= button($item);
+            }
+        }
+
+        $html .= '</div>';
+    }
+
+    $html .= '</div></div>';
+
+    return $html;
+}
+
+function pagination(
+    int $currentPage,
+    int $totalPages,
+    string $baseUrl,
+    string $parameter = 'page'
+): string {
+
+    if ($totalPages <= 1) {
+        return '';
+    }
+
+    $buildUrl = function (int $page) use ($baseUrl, $parameter): string {
+        $separator = str_contains($baseUrl, '?') ? '&' : '?';
+
+        return $baseUrl . $separator .
+            rawurlencode($parameter) . '=' . $page;
+    };
+
+    $html = '<nav class="pagination" aria-label="Pagination">';
+
+    if ($currentPage > 1) {
+        $html .= '<a href="' . styleEscape($buildUrl($currentPage - 1))
+              . '" rel="prev">Previous</a>';
+    }
+
+    for ($page = 1; $page <= $totalPages; $page++) {
+
+        if ($page === $currentPage) {
+            $html .= '<span aria-current="page" class="active">'
+                  . $page . '</span>';
+        } else {
+            $html .= '<a href="' . styleEscape($buildUrl($page)) . '">'
+                  . $page . '</a>';
+        }
+    }
+
+    if ($currentPage < $totalPages) {
+        $html .= '<a href="' . styleEscape($buildUrl($currentPage + 1))
+              . '" rel="next">Next</a>';
+    }
+
+    $html .= '</nav>';
+
+    return $html;
+}
+
+function dropdown(
+    array $data,
+    $selected = null,
+    string $valueKey = 'id',
+    string $labelKey = 'name',
+    ?array $default = null
+): string {
+
+    $html = '';
+
+    if ($default !== null && ($selected === null || $selected === '')) {
+        $html .= '<option value="' . styleEscape($default['value'] ?? '') . '">'
+              . styleEscape($default['label'] ?? '')
+              . "</option>\n";
+    }
+
+    foreach ($data as $row) {
+
+        $value = $row[$valueKey] ?? '';
+        $label = $row[$labelKey] ?? '';
+
+        $isSelected = (
+            $selected !== null &&
+            (string) $value === (string) $selected
+        );
+
+        $html .= '<option value="' . styleEscape($value) . '"';
+
+        if ($isSelected) {
+            $html .= ' selected';
+        }
+
+        $html .= '>' . styleEscape($label) . "</option>\n";
+    }
+
+    return $html;
+}
