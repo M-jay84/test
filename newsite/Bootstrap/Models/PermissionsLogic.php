@@ -1,63 +1,81 @@
 <?php
+declare(strict_types=1);
 
 namespace Bootstrap\Models;
 
 use Bootstrap\Libs\DB;
-use Bootstrap\Libs\Validate;
+use PDO;
 
-/*
-* Permission Table Data
-*/
 class PermissionsLogic
 {
-
-    // Admin Delete Permissions
-    public static function delete($id)
+    public static function getAll(): array
     {
-        // Protect Permissions
-        if ($id == 1) {
-            message('permission', LANG["YOU_CANT_DEL_THIS_GRP"]);
+        return DB::run(
+            'SELECT * FROM permissions ORDER BY permission_id'
+        )->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function delete(int $id): never
+    {
+        if ($id === 1) {
+            redirect('permissions/view', __('YOU_CANT_DEL_THIS_GRP'), 'warning');
+        }
+        if ($id < 1) {
+            redirect('permissions/view', __('MISSING_ID'), 'warning');
         }
 
-        $permissions_query = "DELETE FROM `permissions` WHERE permission_id' = ?";
-        DB::run($permissions_query, [$id]);
-        message('adminpermission', LANG["DEL_COMPLETE"]);
+        DB::run('DELETE FROM permissions WHERE permission_id = ?', [$id]);
+        redirect('permissions/view', __('DEL_COMPLETE'), 'success');
     }
 
-    // Admin Delete Catagorie
-    public static function getAll()
+    public static function insertOrUpdate(): never
     {
-        $permissions_query = "SELECT * FROM `permissions` ORDER BY permission_id";
-        $permissions = DB::run($permissions_query); 
-        return $permissions;
-    }
+        $groupId = input_int('permission_id', 0);
+        $name    = input_string('permission_name');
 
-    // Admin Add/Update Permissions
-    public static function insertOrUpdate()
-    {
-        $group_id = Input1('permission_id', 'int');
-        
-        if (!$group_id) {
-            $permissions_query = "INSERT INTO `permissions` (permission_name,view_torrents,edit_torrents,delete_torrents,view_users,edit_users,delete_users,
-                view_news,edit_news,delete_news,view_forum,edit_forum',delete_forum,can_upload,can_download) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            DB::run($permissions_query,
-            [$_POST["permission_name"],
-            $_POST["view_torrents"], $_POST["edit_torrents"], $_POST["delete_torrents"],
-           $_POST["view_users"], $_POST["edit_users"], $_POST["delete_users"],
-            $_POST["view_news"], $_POST["edit_news"], $_POST["delete_news"],
-            $_POST["view_forum"], $_POST["edit_forum"], $_POST["delete_forum"],
-            $_POST["can_upload"], $_POST["can_download"]]);
+        $fields = [
+            'view_torrents', 'edit_torrents', 'delete_torrents',
+            'view_users', 'edit_users', 'delete_users',
+            'view_news', 'edit_news', 'delete_news',
+            'view_forum', 'edit_forum', 'delete_forum',
+            'can_upload', 'can_download',
+        ];
+
+        $vals = [];
+        foreach ($fields as $f) {
+            $v = input_string($f);
+            $vals[] = ($v === 'yes') ? 'yes' : 'no';
+        }
+
+        if ($name === '') {
+            redirect('permissions/view', __('MISSING_FORM_DATA'), 'warning');
+        }
+
+        if ($groupId < 1) {
+            DB::run(
+                'INSERT INTO permissions (
+                    permission_name, view_torrents, edit_torrents, delete_torrents,
+                    view_users, edit_users, delete_users,
+                    view_news, edit_news, delete_news,
+                    view_forum, edit_forum, delete_forum,
+                    can_upload, can_download
+                ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                array_merge([$name], $vals)
+            );
         } else {
-            $permissions_query = "UPDATE permissions SET permission_name=? AND view_torrents=? AND edit_torrents=? AND delete_torrents=? AND view_users=?
-             AND edit_users=? AND delete_users=? AND view_news=? AND edit_news=? AND delete_news=? AND view_forum=?
-             AND edit_forum=? AND delete_forum=? AND can_upload=? AND can_download=?
-             WHERE permission_id=?";
-            DB::run($permissions_query, [$_POST["permission_name"], $_POST["view_torrents"], $_POST["edit_torrents"], $_POST["delete_torrents"],
-                $_POST["view_users"], $_POST["edit_users"], $_POST["delete_users"], $_POST["view_news"], $_POST["edit_news"], $_POST["delete_news"],
-                $_POST["view_forum"], $_POST["edit_forum"], $_POST["delete_forum"], $_POST["can_upload"], $_POST["can_download"], $group_id]);
+            DB::run(
+                'UPDATE permissions SET
+                    permission_name = ?,
+                    view_torrents = ?, edit_torrents = ?, delete_torrents = ?,
+                    view_users = ?, edit_users = ?, delete_users = ?,
+                    view_news = ?, edit_news = ?, delete_news = ?,
+                    view_forum = ?, edit_forum = ?, delete_forum = ?,
+                    can_upload = ?, can_download = ?
+                 WHERE permission_id = ?',
+                array_merge([$name], $vals, [$groupId])
+            );
         }
 
-        message('adminpermission', LANG["ACTION_COMPLETE"]);
+        redirect('permissions/view', __('ACTION_COMPLETE'), 'success');
     }
-
 }

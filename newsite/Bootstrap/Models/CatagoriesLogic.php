@@ -12,73 +12,55 @@ use Bootstrap\Models\TorrentsLogic;
 class CatagoriesLogic
 {
 
-    // Admin Delete Catagorie
-    public static function deleteAndUpdateTorrent($id, $sure = 0)
-    {
-        if ($sure) {
-            // Move Any Torrents to Other Cat & Delete Cat
-            $newcatid = Input1('newcat', 'int');
-            $torrents_query = "UPDATE torrents SET category = ? WHERE category=?";
-            DB::run($torrents_query, [$newcatid, $id]); //move torrents to a new cat
-            $categories_query = "DELETE FROM `categories` WHERE id = ?";
-            DB::run($categories_query, [$id]);
-            message('admincategorie', LANG["DEL_COMPLETE"]);
-        } else {
-            // Select Cat 2 Move Kept Torrent Too
-            message('admincategorie', 
-                "<form method='post' action='" .  URLROOT . "/categorie/delete/$id/sure'>                                 
-                <div class='tt_blockcenter rounded'>
-                <b>Category ID to move all Torrent To: </b>
-                <input type='text' name='newcat' /> (Cat ID)<br><br>
-                <p class='text-center'>
-                    <input type='submit' class='btn btn-sm ttbtn' value='".LANG["SUBMIT"]."' />
-                </div>
-                </p>", 30);
-        }
-
+ public static function deleteAndUpdateTorrent(int $id, bool $sure = false): never
+{
+    if (!$sure) {
+        redirect('categorie/delete/' . $id, __('CONFIRM_DELETE'), 'warning');
     }
 
-    // Admin Delete Catagorie
-    public static function getAll()
-    {
-        $categories_query = "SELECT * FROM `categories` ORDER BY parent_cat ASC, sort_index ASC";
-        $cats = DB::run($categories_query);
-        return $cats;
+    $newcatid = input_int('newcat');
+    if ($newcatid < 1) {
+        redirect('categorie/delete/' . $id, __('MISSING_FORM_DATA'), 'warning');
     }
 
-    // Admin Add/Edit Catagorie
-    public static function insertOrUpdate()
-    {
-        $parent_cat = Input1('parent_cat');
-        $name = Input1('name');
-        $sort_index = Input1('sort_index');
-        $image = Input1('image');
-        $id = Input1('id');
+    DB::run('UPDATE torrents SET category = ? WHERE category = ?', [$newcatid, $id]);
+    DB::run('DELETE FROM categories WHERE id = ?', [$id]);
+    redirect('categorie/view', __('DEL_COMPLETE'), 'success');
+}
 
-        // Check Correct Input
-        if ($parent_cat == "" || $name == "") {
-            message('admincategorie/add', LANG["MISSING_FORM_DATA"]);
-        }
-        
-        if (!$id) {
-            // Insert Categorie
+public static function getAll(): array
+{
+    return DB::run(
+        'SELECT * FROM categories ORDER BY parent_cat ASC, sort_index ASC'
+    )->fetchAll();
+}
 
-            $categories_query = "INSERT INTO `categories` (name,parent_cat,sort_index,image) VALUES (?,?,?,?)";
-            $ins =  DB::run($categories_query,
-            [$name, $parent_cat, $sort_index, $image]);
+public static function insertOrUpdate(): never
+{
+    $parent_cat = input_string('parent_cat');
+    $name       = input_string('name');
+    $sort_index = input_string('sort_index');
+    $image      = input_string('image');
+    $id         = input_int('id');
 
-            if ($ins) {
-                message('admincategorie', LANG["SUCCESS"]);
-            } else {
-                message('admincategorie/add', LANG["ACTION_FAILED"]);
-            }
-        } else {
-            // Update
-            $categories_query = "UPDATE categories SET parent_cat = ? AND name = ? AND sort_index = ?  AND image = ? WHERE id=?";
-            DB::run($categories_query, [$parent_cat, $name, $sort_index, $image, $id]);
-            message('admincategorie', LANG["SUCCESS"]);
-        }
+    if ($parent_cat === '' || $name === '') {
+        redirect('categorie/view', __('MISSING_FORM_DATA'), 'warning');
     }
+
+    if ($id < 1) {
+        DB::run(
+            'INSERT INTO categories (name, parent_cat, sort_index, image) VALUES (?,?,?,?)',
+            [$name, $parent_cat, $sort_index, $image]
+        );
+    } else {
+        DB::run(
+            'UPDATE categories SET parent_cat = ?, name = ?, sort_index = ?, image = ? WHERE id = ?',
+            [$parent_cat, $name, $sort_index, $image, $id]
+        );
+    }
+
+    redirect('categorie/view', __('SUCCESS'), 'success');
+}
 
     // Get Parent
     public static function getCatByParent()

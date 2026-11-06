@@ -21,7 +21,6 @@ if ($id < 1) {
     redirect('home', __('MISSING_ID'), 'warning');
 }
 
-// Original condition was inverted; tighten as needed
 if (
     ($current_user->view_torrents ?? '') !== 'yes'
     && $id !== (int) $current_user->id
@@ -67,10 +66,12 @@ block_begin(__('SNATCH_RESULT'));
         </thead>
         <tbody>
         <?php foreach ($SNATCHED as $row) :
-            $userratio = ($row['download'] ?? 0) > 0
-                ? number_format(($row['upload'] ?? 0) / $row['download'], 1)
+            $upload   = (int) ($row['upload'] ?? 0);
+            $download = (int) ($row['download'] ?? 0);
+            $userratio = $download > 0
+                ? number_format($upload / $download, 1)
                 : '---';
-            // Keep your original yes/no colour logic (it looked inverted — verify against DB values)
+
             $complete = (($row['completed'] ?? '') === 'yes')
                 ? '<span style="color:#27B500"><b>' . e(__('YES')) . '</b></span>'
                 : '<span style="color:#FF1200"><b>' . e(__('NO')) . '</b></span>';
@@ -80,19 +81,21 @@ block_begin(__('SNATCH_RESULT'));
             $hnr = (($row['hnr'] ?? '') === 'yes')
                 ? '<span style="color:#FF1200"><b>' . e(__('YES')) . '</b></span>'
                 : '<span style="color:#27B500"><b>' . e(__('NO')) . '</b></span>';
+
             $seedtime = !empty($row['last_time']) ? get_elapsed_time($row['last_time']) : '---';
+
             $name = ($COLS === 'user')
-                ? htmlspecialchars(CutName($row['name'] ?? '', 35))
-                : coloredname((int) ($row['id'] ?? 0));
+                ? e(CutName((string) ($row['name'] ?? ''), 35))
+                : coloredname((int) ($row['id'] ?? $row['uid'] ?? 0));
             ?>
             <tr>
                 <td><b><?= $name ?></b></td>
-                <td><span style="color:#27B500"><?= mksize($row['upload'] ?? 0) ?></span></td>
-                <td><span style="color:#FF1200"><?= mksize($row['download'] ?? 0) ?></span></td>
+                <td><span style="color:#27B500"><?= mksize($upload) ?></span></td>
+                <td><span style="color:#FF1200"><?= mksize($download) ?></span></td>
                 <td><?= get_ratio_color($userratio) ?></td>
                 <td><?= e(user_timezone_date(date('Y-m-d H:i:s', (int) ($row['start_time'] ?? 0)))) ?></td>
                 <td><?= e(user_timezone_date(date('Y-m-d H:i:s', (int) ($row['upload_time'] ?? 0)))) ?></td>
-                <td><?= e($seedtime) ?></td>
+                <td><?= e((string) $seedtime) ?></td>
                 <td><?= $complete ?></td>
                 <td><?= $seeding ?></td>
                 <td><?= $hnr ?></td>

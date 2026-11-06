@@ -1,11 +1,6 @@
 <?php
 declare(strict_types=1);
 
-/**
- * POST-only: report user / torrent / forum / etc.
- * Form fields: id, type, reason, (postid for forum)
- */
-
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\ReportsLogic;
 
@@ -19,8 +14,6 @@ if (!is_post()) {
     redirect('home', __('NOTHING_SELECTED'), 'warning');
 }
 
-if (!csrf_verify()) {
-    redirect('home', 'Invalid request', 'warning');
-}
+csrf_verify() || redirect('home', __('INVALID_REQUEST'), 'warning');
 
 ReportsLogic::reportItem($current_user);

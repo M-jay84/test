@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
+
 use Bootstrap\Models\ShoutboxLogic;
 
 $SHOUTS = ShoutboxLogic::shouts(80);
+$defaultAv = url('page/theme/default/images/misc/default_avatar.webp');
 
 theme_header(__('HISTORY'));
 render_flash();
@@ -10,9 +12,7 @@ block_begin(__('HISTORY'));
 ?>
 <table class="table table-striped">
 <?php foreach ($SHOUTS as $row) :
-    $av = !empty($row['avatar'])
-        ? $row['avatar']
-        : url('page/theme/default/images/misc/default_avatar.webp');
+    $av = !empty($row['avatar']) ? (string) $row['avatar'] : $defaultAv;
     ?>
     <tr>
         <td style="width:25%">

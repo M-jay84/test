@@ -14,21 +14,20 @@ use PDO;
 */
 class CommentsLogic
 {
-    // Fetch Torrent Details
-    public static function delete($id, $userid, $type = '')
-    {
-        if ($type == "torrent") {
-            $torrents_query = "SELECT torrent FROM `comments`  WHERE id=?";
-            $row = DB::run($torrents_query, [$id])->fetch(PDO::FETCH_ASSOC);
-            if ($row["torrent"] > 0) {
-                TorrentsLogic::updateComments($id, 'sub');
-            }
+public static function delete(int $id, int $userid, string $type = ''): never
+{
+    if ($type === 'torrent') {
+        $row = DB::run('SELECT torrent FROM comments WHERE id = ?', [$id])->fetch(\PDO::FETCH_ASSOC);
+        if ($row && (int) $row['torrent'] > 0) {
+            TorrentsLogic::updateComments($id, 'sub');
         }
-        $comments_query = "DELETE FROM `comments` WHERE id' = ?";
-        DB::run($comments_query, [$id]);
-        LogsLogic::write(coloredname($userid) . " has deleted comment: ID: $id");
-        message("comment", LANG["DEL_COMPLETE"]);
-	}
+    }
+
+    DB::run('DELETE FROM comments WHERE id = ?', [$id]);
+    LogsLogic::write(coloredname($userid) . " has deleted comment: ID: $id");
+    redirect('comment/admin', __('DEL_COMPLETE'), 'success');
+}
+
 
     // Admin Get All
     public static function grabAll()
@@ -105,38 +104,29 @@ class CommentsLogic
 
     }
 
-    // Add/Edit Comment
-    public static function action($targetid, $id, $type = '')
-    {
-        // Check User Input
-        $comment_id = Input1('comment_id', 'int');
-        $text = Input1('text');
+   public static function action(int $targetid, int $userid, string $type = ''): never
+{
+    $comment_id = input_int('comment_id');
+    $text       = input_string('text'); // or keep richer body if you store HTML intentionally
 
-        // Check Correct Input
-        if (!$text) {
-            message("comment/$targetid/$type", LANG["MISSING_FORM_DATA"]);
-        }
-
-        if ($type == "torrent") {
-            TorrentsLogic::updateComments($targetid, 'add');
-        }
-
-        if (!$comment_id) {
-            // Insert Comment
-            $comments_query = "INSERT INTO `comments` (user,$type,added,text,type) VALUES (?,?,?,?,?)";
-            $ins =  DB::run($comments_query,
-            [$id,$targetid, CONFIG['TT_DATE'], $text, $type]);
-            
-            if ($ins) {
-                message("comment/$targetid/$type", LANG["SUCCESS"]);
-            } else {
-                message("comment/$targetid/$type", LANG["ACTION_FAILED"]);
-            }
-        } else {
-            $comments_query = "UPDATE comments SET text = ? WHERE id=?";
-            DB::run($comments_query, [$text, $comment_id]);
-            LogsLogic::write(coloredname($id) . " has edited comment: ID:$comment_id");
-            message("comment/$targetid/$type", LANG["UPDATE_COMPLETE"]);
-        }
+    if ($text === '') {
+        redirect("comment/view/{$targetid}/{$type}", __('MISSING_FORM_DATA'), 'warning');
     }
+
+    if ($type === 'torrent') {
+        TorrentsLogic::updateComments($targetid, 'add');
+    }
+
+    if ($comment_id < 1) {
+        DB::run(
+            "INSERT INTO comments (user, {$type}, added, text, type) VALUES (?,?,?,?,?)",
+            [$userid, $targetid, CONFIG['TT_DATE'], $text, $type]
+        );
+        redirect("comment/view/{$targetid}/{$type}", __('SUCCESS'), 'success');
+    }
+
+    DB::run('UPDATE comments SET text = ? WHERE id = ?', [$text, $comment_id]);
+    LogsLogic::write(coloredname($userid) . " has edited comment: ID:$comment_id");
+    redirect("comment/view/{$targetid}/{$type}", __('UPDATE_COMPLETE'), 'success');
+}
 }

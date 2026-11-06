@@ -217,7 +217,7 @@ class UsersLogic
                     $subject = "Warning for inactive account on $sitename";
 
                     // Send Email
-                    $body = file_get_contents(VIEW_PATH . "/email/changeemail.php");
+                    $body = file_get_contents(BASEROOT . "/page/email/changeemail.php");
                     $body = str_replace("%username%", $username, $body);
                     $body = str_replace("%sitename%", $sitename, $body);
                     $body = str_replace("%siteurl%", $siteurl, $body);
@@ -236,4 +236,6 @@ class UsersLogic
 
             }
 	}
+
+
 }

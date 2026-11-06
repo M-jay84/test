@@ -80,7 +80,7 @@ $extraJs = [
     'page/theme/default/js/usersearch.js',
 ];
 foreach ($extraJs as $js) {
-    $full = BASEROOT . '/public/' . $js; // adjust path if needed
+    $full = BASEROOT . '/' . $js; // adjust path if needed
     if (is_file($full)) {
         require $full;
     }

@@ -15,13 +15,10 @@ if ($id < 1) {
     redirect('home', __('NOTHING_SELECTED'), 'warning');
 }
 
-// Prefer POST + reason from warning page form
 if (!is_post()) {
     redirect('profile/view/' . $id, __('NOTHING_SELECTED'), 'warning');
 }
 
-if (!csrf_verify()) {
-    redirect('profile/view/' . $id, 'Invalid request', 'warning');
-}
+csrf_verify() || redirect('profile/view/' . $id, __('INVALID_REQUEST'), 'warning');
 
 ProfileLogic::deleteprofile($id, $current_user);

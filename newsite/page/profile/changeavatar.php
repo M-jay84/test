@@ -1,11 +1,6 @@
 <?php
 declare(strict_types=1);
 
-/**
- * URL: /profile/changeavatar/{user_id}
- * Form: multipart, field name="file"
- */
-
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\ProfilechangeLogic;
 
@@ -24,12 +19,14 @@ if (!Auth::isStaff() && (int) $current_user->id !== $userId) {
     redirect('profile/view/' . $userId, __('NO_PERMISSION'), 'warning');
 }
 
-if (empty($_FILES['file']['name'])) {
-    redirect('profile/view/' . $userId, __('ACTION_FAILED'), 'warning');
+if (!is_post()) {
+    redirect('profile/view/' . $userId, __('MISSING_FORM_DATA'), 'warning');
 }
 
-if (!csrf_verify()) {
-    redirect('profile/view/' . $userId, 'Invalid request', 'warning');
+csrf_verify() || redirect('profile/view/' . $userId, __('INVALID_REQUEST'), 'warning');
+
+if (empty($_FILES['file']['name'])) {
+    redirect('profile/view/' . $userId, __('ACTION_FAILED'), 'warning');
 }
 
 ProfilechangeLogic::addavatar($userId);

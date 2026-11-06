@@ -11,21 +11,23 @@ $current_user = Auth::user();
 if (!Auth::check() && !empty(CONFIG['MEMBERSONLY'])) {
     redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
-// Fixed inverted can_upload check
+
 if (($current_user->can_upload ?? '') !== 'yes') {
     redirect('home', __('NO_PERMISSION'), 'warning');
 }
+
 if (!empty(CONFIG['UPLOADERSONLY']) && !Auth::isStaff()) {
     redirect('home', __('UPLOAD_ONLY_FOR_UPLOADERS'), 'warning');
 }
 
-$announce_urls = explode(',', rtrim(URLROOT, '/') . (CONFIG['ANNOUNCELIST'] ?? ''));
-// Prefer a cleaner list if ANNOUNCELIST is full URLs:
-// $announce_urls = array_filter(array_map('trim', explode(',', (string) (CONFIG['ANNOUNCELIST'] ?? ''))));
+$announce_urls = array_filter(array_map('trim', explode(',', (string) (CONFIG['ANNOUNCELIST'] ?? ''))));
+if ($announce_urls === []) {
+    $announce_urls = [rtrim(URLROOT, '/') . '/announce.php'];
+}
 
-$CATAGORYS = CatagoriesLogic::genreList();
-$TAGS      = TagsLogic::getAll();
-$LANGUAGES = TorrentLangLogic::langList();
+$categories = CatagoriesLogic::genreList();
+$tags       = TagsLogic::getAll();
+$languages  = TorrentLangLogic::langList(); // HTML from model
 
 theme_header(__('UPLOAD'));
 render_flash();
@@ -33,16 +35,17 @@ render_flash();
 <p class="tt_blockcenter rounded text-center p-3">
     <b><?= e(__('RULE')) ?></b><br>
     <b><?= stripslashes((string) (CONFIG['UPLOADRULES'] ?? '')) ?></b>
-</p><br>
+</p>
+<br>
 
 <div class="tt_blockcenter rounded p-2">
-    <form name="upload" enctype="multipart/form-data" action="<?= url('upload/submit') ?>" method="post">
+    <form name="upload" enctype="multipart/form-data" action="<?= e(url('upload/submit')) ?>" method="post">
         <?= csrf_field() ?>
 
         <div class="text-center">
             <?= e(__('ANNOUNCE_URL')) ?><br>
             <?php foreach ($announce_urls as $value) : ?>
-                <b><?= e(trim($value)) ?></b><br>
+                <b><?= e($value) ?></b><br>
             <?php endforeach; ?>
             <?php if (!empty(CONFIG['ALLOWEXTERNAL'])) : ?>
                 <p><b><?= e(__('THIS_SITE_ACCEPTS_EXTERNAL')) ?></b></p>
@@ -68,19 +71,21 @@ render_flash();
         <?php if (!empty(CONFIG['_TMDBswitch'])) : ?>
             <dl class="row p-4">
                 <dt class="col-sm-2"><?= e(__('TMDB')) ?></dt>
-                <dd class="col-sm-10"><input class="form-control fullwidth" type="text" name="tmdb" placeholder="TMDB Link"></dd>
+                <dd class="col-sm-10"><input class="form-control fullwidth" type="text" name="tmdb" placeholder="<?= e(__('TMDB')) ?>"></dd>
             </dl>
         <?php endif; ?>
+
         <?php if (!empty(CONFIG['_OMDBswitch'])) : ?>
             <dl class="row p-4">
                 <dt class="col-sm-2"><?= e(__('IMDB')) ?></dt>
-                <dd class="col-sm-10"><input class="form-control fullwidth" type="text" name="imdb" placeholder="IMDB Link"></dd>
+                <dd class="col-sm-10"><input class="form-control fullwidth" type="text" name="imdb" placeholder="<?= e(__('IMDB')) ?>"></dd>
             </dl>
         <?php endif; ?>
+
         <?php if (!empty(CONFIG['YOU_TUBE'])) : ?>
             <dl class="row p-2">
                 <dt class="col-sm-2"><?= e(__('YOUTUBE')) ?></dt>
-                <dd class="col-sm-10"><input class="form-control fullwidth" type="text" name="tube" placeholder="Youtube Link"></dd>
+                <dd class="col-sm-10"><input class="form-control fullwidth" type="text" name="tube" placeholder="<?= e(__('YOUTUBE')) ?>"></dd>
             </dl>
         <?php endif; ?>
 
@@ -94,7 +99,7 @@ render_flash();
         </dl>
 
         <div class="text-center">
-            <?= e(__('MAX_FILE_SIZE')) ?>: <?= mksize((int) (CONFIG['IMAGEMAXFILESIZE'] ?? 0)) ?><br>
+            <?= e(__('MAX_FILE_SIZE')) ?>: <?= e(mksize((int) (CONFIG['IMAGEMAXFILESIZE'] ?? 0))) ?><br>
             <?= e(__('ACCEPTED_FORMATS')) ?>:
             <?= e(implode(', ', array_unique((array) (CONFIG['ALLOWEDIMAGETYPES'] ?? [])))) ?>
         </div>
@@ -102,9 +107,9 @@ render_flash();
         <div class="form p-4">
             <select name="type" class="form-select fullwidth">
                 <option value="0"><?= e(__('CATEGORY')) ?></option>
-                <?php foreach ($CATAGORYS as $row) : ?>
+                <?php foreach ($categories as $row) : ?>
                     <option value="<?= (int) $row['id'] ?>">
-                        <?= e($row['parent_cat'] . ': ' . $row['name']) ?>
+                        <?= e(($row['parent_cat'] ?? '') . ': ' . ($row['name'] ?? '')) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -113,13 +118,13 @@ render_flash();
         <div class="form p-4">
             <select class="form-select" id="validationTags" name="tags[]" multiple>
                 <option selected disabled hidden value=""><?= e(__('CHOSE_TAG')) ?></option>
-                <?php foreach ($TAGS as $row) : ?>
-                    <option value="<?= e($row['name']) ?>"><?= e($row['name']) ?></option>
+                <?php foreach ($tags as $row) : ?>
+                    <option value="<?= e($row['name'] ?? '') ?>"><?= e($row['name'] ?? '') ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
 
-        <div class="form p-4"><?= $LANGUAGES /* HTML from model */ ?></div>
+        <div class="form p-4"><?= $languages ?></div>
 
         <?php if ((int) ($current_user->class ?? 0) > (int) (CONFIG['_VIP'] ?? 0)) : ?>
             <div class="form p-4">

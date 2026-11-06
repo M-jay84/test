@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use Bootstrap\Libs\Auth;
 use Bootstrap\Models\ForumsLogic;
 
-$current_user = ForumsLogic::forum_guard(); // or inline the checks above
+$current_user = ForumsLogic::forum_guard();
 $FORUMS = ForumsLogic::getCatForums();
 
 theme_header(__('FORUM'));
@@ -19,27 +18,28 @@ foreach ($FORUMS as $country_id => $cat_info) :
     <table class="table table-striped">
         <thead class="tt_blockhead">
             <tr>
-                <th class="col-6"><?= e($cat_info['c_name'] ?? '') ?></th>
+                <th class="col-6"><?= e((string) ($cat_info['c_name'] ?? '')) ?></th>
                 <th class="col-2"><?= e(__('TOPICS')) ?></th>
                 <th class="col-2"><?= e(__('POSTS')) ?></th>
                 <th class="col-2"><?= e(__('LAST')) ?></th>
             </tr>
         </thead>
         <tbody>
-        <?php
-        foreach ($cat_info['c_forums'] ?? [] as $forum_id => $forum_info) :
+        <?php foreach ($cat_info['c_forums'] ?? [] as $forum_id => $forum_info) :
             $lastpostid = get_forum_last_post((int) $forum_id);
             $detail = lastpostdetails($lastpostid);
             ?>
             <tr>
                 <td>
-                    <?= $detail['img'] ?>&nbsp;
-                    <a href="<?= url('topic/view/' . (int) $forum_id) ?>"><b><?= e($forum_info['f_name'] ?? '') ?></b></a><br>
-                    <small>- <?= format_comment($forum_info['f_description'] ?? '') ?></small>
+                    <?= $detail['img'] ?? '' ?>&nbsp;
+                    <a href="<?= e(url('topic/view/' . (int) $forum_id)) ?>">
+                        <b><?= e((string) ($forum_info['f_name'] ?? '')) ?></b>
+                    </a><br>
+                    <small>- <?= format_comment((string) ($forum_info['f_description'] ?? '')) ?></small>
                 </td>
                 <td><?= (int) ($forum_info['topic_count'] ?? 0) ?></td>
                 <td><?= (int) ($forum_info['post_count'] ?? 0) ?></td>
-                <td><?= $detail['lastpost'] ?></td>
+                <td><?= $detail['lastpost'] ?? '' ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

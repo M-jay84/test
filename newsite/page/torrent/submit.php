@@ -13,7 +13,6 @@ if (!Auth::check() && !empty(CONFIG['MEMBERSONLY'])) {
 if ($id < 1 || !is_post()) {
     redirect('torrent/view/' . max($id, 0), __('ACTION_FAILED'), 'warning');
 }
-if (!csrf_verify()) {
-    redirect('torrent/view/' . $id, 'Invalid request', 'warning');
-}
+csrf_verify() || redirect('torrent/view/' . $id, __('INVALID_REQUEST'), 'warning');
+
 TorrentsLogic::submitIdDetails($id, $current_user);

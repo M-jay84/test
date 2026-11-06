@@ -11,12 +11,12 @@ if (!is_post() || !csrf_verify()) {
     redirect('torrents/admin', __('NOTHING_SELECTED'), 'warning');
 }
 
-$ids = $_POST['ids'] ?? [];
+$ids = post('ids', []);
 if (!is_array($ids) || $ids === []) {
     redirect('torrents/admin', __('NOTHING_SELECTED'), 'warning');
 }
 
-$uid = (int) Auth::user()->id;
+$uid = (int) Auth::id();
 foreach ($ids as $id) {
     TorrentsLogic::deleteTorrent((int) $id, $uid);
 }

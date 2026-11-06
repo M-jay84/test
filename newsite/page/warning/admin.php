@@ -2,25 +2,24 @@
 declare(strict_types=1);
 
 use Bootstrap\Libs\Auth;
-use Bootstrap\Libs\DB;
 use Bootstrap\Models\WarningsLogic;
 
 if (!Auth::isStaff()) {
     redirect('home', __('NO_PERMISSION'), 'warning');
 }
 
-$warnings  = WarningsLogic::getAll();
-$PAGER     = $warnings['pager'] ?? '';
-$COUNT     = $warnings['count'] ?? 0;
-$WARNINGS  = $warnings['stmt'] ?? [];
+$data     = WarningsLogic::getAll();
+$pager    = $data['pager'] ?? '';
+$count    = (int) ($data['count'] ?? 0);
+$warnings = $data['stmt'] ?? [];
 
 theme_admin_header(__('WARNINGS'));
 render_flash();
 block_begin(__('WARNINGS'));
 ?>
-<p class="text-center"><?= sprintf(__('X_USERS_WARNED'), (int) $COUNT) ?></p>
+<p class="text-center"><?= e(sprintf(__('X_USERS_WARNED'), $count)) ?></p>
 
-<form id="deleteall" method="post" action="<?= url('warning/adminsubmit') ?>">
+<form id="deleteall" method="post" action="<?= e(url('warning/adminsubmit')) ?>">
     <?= csrf_field() ?>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -35,11 +34,9 @@ block_begin(__('WARNINGS'));
                 </tr>
             </thead>
             <tbody>
-            <?php foreach ($WARNINGS as $row) :
-                $countUserWarn = (int) DB::run(
-                    'SELECT COUNT(id) FROM warnings WHERE userid = ? AND active = ?',
-                    [(int) $row['id'], 'yes']
-                )->fetchColumn();
+            <?php foreach ($warnings as $row) :
+                // Prefer warn_count from model once getAll() joins/counts it
+                $warnCount = (int) ($row['warn_count'] ?? 0);
                 ?>
                 <tr>
                     <td><?= coloredname((int) $row['id']) ?></td>
@@ -47,8 +44,8 @@ block_begin(__('WARNINGS'));
                     <td><?= e(user_timezone_date($row['added'] ?? '')) ?></td>
                     <td><?= e(user_timezone_date($row['last_access'] ?? '')) ?></td>
                     <td>
-                        <a href="<?= url('warning/index/' . (int) $row['id']) ?>">
-                            <?= number_format($countUserWarn) ?>
+                        <a href="<?= e(url('warning/index/' . (int) $row['id'])) ?>">
+                            <?= number_format($warnCount) ?>
                         </a>
                     </td>
                     <td><input type="checkbox" name="ids[]" value="<?= (int) $row['id'] ?>"></td>
@@ -61,7 +58,7 @@ block_begin(__('WARNINGS'));
         <button type="submit" class="btn btn-sm ttbtn"><?= e(__('DEL')) ?></button>
     </div>
 </form>
-<?= $PAGER ?>
+<?= $pager ?>
 <?php
 block_end();
 theme_admin_footer();

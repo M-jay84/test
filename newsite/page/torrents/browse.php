@@ -2,10 +2,8 @@
 declare(strict_types=1);
 
 use Bootstrap\Libs\Auth;
-use Bootstrap\Libs\DB;
 use Bootstrap\Models\TorrentsLogic;
 use Bootstrap\Models\TorrentLangLogic;
-use PDO;
 
 $current_user = Auth::user();
 
@@ -23,56 +21,52 @@ $URL          = $browse['search']['url'] ?? '';
 $PARENT_CAT   = $browse['search']['parent_cat'] ?? '';
 $WHERE_CAT_IN = $browse['search']['wherecatina'] ?? [];
 $CATS         = $browse['cats'] ?? [];
+$SUBCATS      = $browse['subcats'] ?? []; // model should fill when parent_cat set
 $KEYWORD      = $browse['search']['keyword'] ?? '';
 $V_url        = url('torrents/browse') . '?' . ltrim((string) $URL, '&');
+$getCat       = (int) get('cat', 0);
 
 theme_header(__('BROWSE_TORRENTS'));
 render_flash();
 block_begin(__('BROWSE_TORRENTS'));
 ?>
 <div class="tt_blockcenter rounded">
-    <form method="get" action="<?= url('torrents/browse') ?>">
+    <form method="get" action="<?= e(url('torrents/browse')) ?>">
         <p class="text-center">
             <input type="text" name="keyword" placeholder="<?= e(__('SEARCH')) ?>" size="40"
                    value="<?= e(stripslashes((string) $KEYWORD)) ?>"><br>
             <?php
             $i = 0;
             $catsperrow = 5;
-            $getCat = (int) get('cat', 0);
             foreach ($CATS as $cat) {
                 if ($i && $i % $catsperrow === 0) {
                     echo '<br><br>';
                 }
                 $checked = in_array($cat['id'], $WHERE_CAT_IN, false) || $getCat === (int) $cat['id']
                     ? ' checked' : '';
-                echo '<a href="' . url('torrents/browse?cat=' . (int) $cat['id']) . '">'
+                echo '<a href="' . e(url('torrents/browse?cat=' . (int) $cat['id'])) . '">'
                    . e($cat['parent_cat'] . ' - ' . $cat['name']) . '</a> '
                    . '<input name="c' . (int) $cat['id'] . '" type="checkbox"' . $checked . ' value="1"> ';
                 $i++;
             }
             ?>
             <br><br>
-            <a href="<?= url('torrents/browse') ?>" class="ttbtn"><?= e(__('RESET')) ?></a>
+            <a href="<?= e(url('torrents/browse')) ?>" class="ttbtn"><?= e(__('RESET')) ?></a>
             <button type="submit" class="ttbtn"><?= e(__('GO')) ?></button>
         </p>
 
-        <?php if ($PARENT_CAT) :
-            $subcats = DB::run(
-                'SELECT id, name, parent_cat FROM categories WHERE parent_cat = ? ORDER BY name',
-                [$PARENT_CAT]
-            )->fetchAll(PDO::FETCH_ASSOC);
-            ?>
+        <?php if ($PARENT_CAT) : ?>
             <br><b><?= e(__('YOU_ARE_IN')) ?>:</b>
-            <a href="<?= url('torrents/browse?parent_cat=' . rawurlencode($PARENT_CAT)) ?>"><?= e($PARENT_CAT) ?></a><br>
+            <a href="<?= e(url('torrents/browse?parent_cat=' . rawurlencode((string) $PARENT_CAT))) ?>"><?= e((string) $PARENT_CAT) ?></a><br>
             <b><?= e(__('SUB_CATS')) ?>:</b>
-            <?php foreach ($subcats as $sub) : ?>
-                - <a href="<?= url('torrents/browse?cat=' . (int) $sub['id']) ?>"><?= e($sub['name']) ?></a>
+            <?php foreach ($SUBCATS as $sub) : ?>
+                - <a href="<?= e(url('torrents/browse?cat=' . (int) $sub['id'])) ?>"><?= e($sub['name']) ?></a>
             <?php endforeach; ?>
         <?php endif; ?>
 
         <div class="tt_blockcenter rounded p-2">
             <div class="text-center">
-                <a data-bs-toggle="collapse" data-bs-target="#collapseExample">More Search</a>
+                <a data-bs-toggle="collapse" data-bs-target="#collapseExample"><?= e(__('MORE_SEARCH')) ?></a>
             </div>
             <div class="collapse" id="collapseExample">
                 <div class="input-group mb-3">
@@ -117,11 +111,13 @@ block_begin(__('BROWSE_TORRENTS'));
     <div class="text-end"><?= e(__('SORT_BY')) ?>:
         <select name="sort" onchange="window.location='<?= e($V_url) ?>sort='+this.value+'&order='+document.forms['sort'].order.value">
             <?php
-            $sortOpts = ['id' => 'ADDED', 'name' => 'NAME', 'comments' => 'COMMENTS', 'size' => 'SIZE',
-                'times_completed' => 'COMPLETED', 'seeders' => 'SEEDERS', 'leechers' => 'LEECHERS'];
+            $sortOpts = [
+                'id' => 'ADDED', 'name' => 'NAME', 'comments' => 'COMMENTS', 'size' => 'SIZE',
+                'times_completed' => 'COMPLETED', 'seeders' => 'SEEDERS', 'leechers' => 'LEECHERS',
+            ];
             foreach ($sortOpts as $val => $langKey) :
                 ?>
-                <option value="<?= $val ?>" <?= (string) get('sort') === $val ? 'selected' : '' ?>><?= e(__($langKey)) ?></option>
+                <option value="<?= e($val) ?>" <?= (string) get('sort') === $val ? 'selected' : '' ?>><?= e(__($langKey)) ?></option>
             <?php endforeach; ?>
         </select>
         <select name="order" onchange="window.location='<?= e($V_url) ?>order='+this.value+'&sort='+document.forms['sort'].sort.value">

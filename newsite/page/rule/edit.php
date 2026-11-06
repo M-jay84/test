@@ -18,8 +18,6 @@ if (!is_post()) {
     redirect('rule', __('NOTHING_SELECTED'), 'warning');
 }
 
-if (!csrf_verify()) {
-    redirect('rule', 'Invalid request', 'warning');
-}
+csrf_verify() || redirect('rule', __('INVALID_REQUEST'), 'warning');
 
-RulesLogic::insertOrUpdate($current_user->username);
+RulesLogic::insertOrUpdate((string) $current_user->username);

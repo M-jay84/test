@@ -4,7 +4,6 @@ declare(strict_types=1);
 /**
  * Admin – message spy + mass PM
  * URL: /message/admin
- * Class check: old code was `!$current_user->class > 6` (always false). Fixed to class > 6.
  */
 
 use Bootstrap\Libs\Auth;
@@ -17,17 +16,15 @@ if (!Auth::check() || (int) ($current_user->class ?? 0) <= 6) {
 }
 
 if (is_post()) {
-    if (!csrf_verify()) {
-        redirect('message/admin', 'Invalid request', 'warning');
-    }
+    csrf_verify() || redirect('message/admin', __('INVALID_REQUEST'), 'warning');
     MessagesLogic::multiPM((int) $current_user->id);
     return;
 }
 
-$messages  = MessagesLogic::getAll();
-$MESSAGES  = $messages['res'] ?? [];
-$PAGER     = $messages['pager'] ?? '';
-$GROUPS    = $messages['groups'] ?? [];
+$data     = MessagesLogic::getAll();
+$MESSAGES = $data['res'] ?? [];
+$PAGER    = $data['pager'] ?? '';
+$GROUPS   = $data['groups'] ?? [];
 
 theme_admin_header(__('MESSAGE'));
 render_flash();
@@ -41,7 +38,7 @@ block_begin(__('MESSAGE'));
 </div>
 <?php endif; ?>
 
-<form id="delete" method="post" action="<?= url('message/admindelete') ?>">
+<form id="delete" method="post" action="<?= e(url('message/admindelete')) ?>">
     <?= csrf_field() ?>
     <div class="table-responsive p-1">
         <table class="table table-striped">
@@ -77,7 +74,7 @@ block_begin(__('MESSAGE'));
 <?php if ((int) $current_user->id === 1) : ?>
 <p class="text-center"><?= e(__('MESSAGE_SPY')) ?></p>
 
-<form id="submit" method="post" action="<?= url('message/admin') ?>">
+<form id="submit" method="post" action="<?= e(url('message/admin')) ?>">
     <?= csrf_field() ?>
     <div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">
@@ -93,7 +90,7 @@ block_begin(__('MESSAGE'));
 
                     <div class="input-group mb-3">
                         <?= e(__('SENDER')) ?>
-                        <?= e((string) $current_user->username) ?>
+                        <?= e((string) ($current_user->username ?? '')) ?>
                         <input name="sender" type="radio" value="self" checked>
                         &nbsp;<?= e(__('SYSTEM')) ?>
                         <input name="sender" type="radio" value="system">

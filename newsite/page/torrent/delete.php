@@ -9,11 +9,11 @@ $current_user = Auth::user();
 if (!Auth::check() && !empty(CONFIG['MEMBERSONLY'])) {
     redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
-// Fixed inverted check from old code
 if (($current_user->delete_torrents ?? '') !== 'yes') {
-    redirect('browse', __('NO_PERMISSION'), 'warning');
+    redirect('torrents/browse', __('NO_PERMISSION'), 'warning');
 }
 if (!is_post() || !csrf_verify()) {
-    redirect('browse', __('NO_PERMISSION'), 'warning');
+    redirect('torrents/browse', __('INVALID_REQUEST'), 'warning');
 }
+
 TorrentsLogic::delete($current_user);

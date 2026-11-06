@@ -9,9 +9,7 @@ if (!Auth::isStaff()) {
 }
 
 if (is_post()) {
-    if (!csrf_verify()) {
-        redirect('permissions/view', 'Invalid request', 'warning');
-    }
+    csrf_verify() || redirect('permissions/view', __('INVALID_REQUEST'), 'warning');
     PermissionsLogic::insertOrUpdate();
     return;
 }
@@ -52,7 +50,7 @@ block_begin(__('GROUPS'));
                 <td><?= e($row['can_upload'] ?? '') ?></td>
                 <td><?= e($row['can_download'] ?? '') ?></td>
                 <td>
-                    <a href="<?= url('permissions/delete/' . (int) ($row['permission_id'] ?? 0)) ?>"><i class="fa fa-trash"></i></a>
+                    <a href="<?= e(url('permissions/delete/' . (int) ($row['permission_id'] ?? 0))) ?>"><i class="fa fa-trash"></i></a>
                     <a href="javascript:;" class="groupAttr" data-bs-toggle="modal" data-bs-target="#groupModal"
                        <?php
                        foreach ([
@@ -84,7 +82,7 @@ document.querySelectorAll('.groupAttr').forEach(function (el) {
 });
 </script>
 
-<form method="post" action="<?= url('permissions/view') ?>">
+<form method="post" action="<?= e(url('permissions/view')) ?>">
     <?= csrf_field() ?>
     <div class="modal fade" id="groupModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">
@@ -104,7 +102,7 @@ document.querySelectorAll('.groupAttr').forEach(function (el) {
                     foreach ($yesNo as $field => $langKey) :
                         ?>
                         <?= e(__($langKey)) ?>
-                        <select name="<?= $field ?>" id="<?= $field ?>" class="form-select">
+                        <select name="<?= e($field) ?>" id="<?= e($field) ?>" class="form-select">
                             <option value="yes"><?= e(__('YES')) ?></option>
                             <option value="no"><?= e(__('NO')) ?></option>
                         </select><br>

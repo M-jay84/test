@@ -8,12 +8,12 @@ if (!Auth::isStaff()) {
     redirect('home', __('NO_PERMISSION'), 'warning');
 }
 
-$reports  = ReportsLogic::pagination();
-$REPORTS  = $reports['stmt'] ?? [];
-$PAGER    = $reports['pager'] ?? '';
-$type     = (string) get('type', '');
+$reports   = ReportsLogic::pagination();
+$REPORTS   = $reports['stmt'] ?? [];
+$PAGER     = $reports['pager'] ?? '';
+$type      = (string) get('type', '');
 $completed = (string) get('completed', '0');
-$base     = url('report/view');
+$base      = url('report/view');
 
 theme_admin_header(__('REPORT'));
 render_flash();
@@ -25,7 +25,7 @@ block_begin(__('REPORT'));
     <select name="type" onchange="window.location='<?= e($base) ?>?type='+this.value+'&completed='+document.forms['sort'].completed.value">
         <option value=""><?= e(__('ALL')) ?></option>
         <?php foreach (['user' => 'USERS', 'torrent' => 'TORRENT', 'comment' => 'COMMENT', 'forum' => 'FORUM'] as $val => $lk) : ?>
-            <option value="<?= $val ?>" <?= $type === $val ? 'selected' : '' ?>><?= e(__($lk)) ?></option>
+            <option value="<?= e($val) ?>" <?= $type === $val ? 'selected' : '' ?>><?= e(__($lk)) ?></option>
         <?php endforeach; ?>
     </select>
     <b><?= e(__('COMPLETED')) ?>:</b>
@@ -36,7 +36,7 @@ block_begin(__('REPORT'));
 </p>
 </form>
 
-<form method="post" action="<?= url('report/submit') ?>">
+<form method="post" action="<?= e(url('report/submit')) ?>">
     <?= csrf_field() ?>
     <div class="table-responsive p-3">
         <table class="table table-striped">

@@ -7,10 +7,6 @@ declare(strict_types=1);
 
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\InvitesLogic;
-use PDO;
-
-$current_user = Auth::user();
-$id = (int) param(0, 0);
 
 if (!Auth::check()) {
     redirect('authorise/login', __('NO_PERMISSION'), 'warning');
@@ -20,17 +16,22 @@ if (empty(CONFIG['INVITEONLY']) && empty(CONFIG['ENABLEINVITES'])) {
     redirect('home', __('INVITES_DISABLED_MSG'), 'warning');
 }
 
+$id = (int) param(0, 0);
 if ($id < 1) {
     redirect('home', __('MISSING_ID'), 'warning');
 }
 
 $invites = InvitesLogic::InviteTree($id);
 
-$TITLE   = $invites['title'] ?? __('INVITES');
-$INVITES = $invites['res'];      // PDOStatement
-$COUNT   = (int) ($invites['num'] ?? 0);
+// Prefer model returning rows array; fall back if still a statement
+$TITLE = strip_tags((string) ($invites['title'] ?? __('INVITES')));
+$ROWS  = $invites['rows'] ?? [];
 
-theme_header(strip_tags((string) $TITLE));
+if ($ROWS === [] && isset($invites['res']) && $invites['res'] instanceof \PDOStatement) {
+    $ROWS = $invites['res']->fetchAll(\PDO::FETCH_ASSOC);
+}
+
+theme_header($TITLE);
 render_flash();
 block_begin($TITLE);
 ?>
@@ -49,37 +50,35 @@ block_begin($TITLE);
             </tr>
         </thead>
         <tbody>
-        <?php
-        // Prefer foreach if model returns fetchAll; keep loop if still a statement
-        while ($arr = $INVITES->fetch(PDO::FETCH_ASSOC)) {
-            $userratio = ($arr['downloaded'] ?? 0) > 0
-                ? number_format(($arr['uploaded'] ?? 0) / $arr['downloaded'], 1)
+        <?php foreach ($ROWS as $arr) :
+            $downloaded = (float) ($arr['downloaded'] ?? 0);
+            $uploaded   = (float) ($arr['uploaded'] ?? 0);
+            $userratio  = $downloaded > 0
+                ? number_format($uploaded / $downloaded, 1)
                 : '---';
             $warned = (($arr['warned'] ?? '') === 'yes')
                 ? '<span style="color:red"><b>' . e(__('YES')) . '</b></span>'
                 : '<span style="color:limegreen"><b>' . e(__('NO')) . '</b></span>';
-            $added = substr((string) $arr['added'], 0, 10);
-            $last  = substr((string) $arr['last_access'], 0, 10);
-            if (($arr['added'] ?? '') === '0000-00-00 00:00:00') {
+            $added = substr((string) ($arr['added'] ?? ''), 0, 10);
+            $last  = substr((string) ($arr['last_access'] ?? ''), 0, 10);
+            if (($arr['added'] ?? '') === '0000-00-00 00:00:00' || $added === '') {
                 $added = '---';
             }
-            if (($arr['last_access'] ?? '') === '0000-00-00 00:00:00') {
+            if (($arr['last_access'] ?? '') === '0000-00-00 00:00:00' || $last === '') {
                 $last = '---';
             }
             ?>
             <tr>
-                <td><b><?= coloredname((int) $arr['id']) ?></b></td>
-                <td><?= e(get_user_class_name($arr['class'])) ?></td>
+                <td><b><?= coloredname((int) ($arr['id'] ?? 0)) ?></b></td>
+                <td><?= e(get_user_class_name($arr['class'] ?? 0)) ?></td>
                 <td><?= e($added) ?></td>
                 <td><?= e($last) ?></td>
-                <td><?= mksize($arr['downloaded'] ?? 0) ?></td>
-                <td><?= mksize($arr['uploaded'] ?? 0) ?></td>
+                <td><?= mksize((int) $downloaded) ?></td>
+                <td><?= mksize((int) $uploaded) ?></td>
                 <td><?= get_ratio_color($userratio) ?></td>
                 <td><?= $warned ?></td>
             </tr>
-            <?php
-        }
-        ?>
+        <?php endforeach; ?>
         </tbody>
     </table>
 </div>

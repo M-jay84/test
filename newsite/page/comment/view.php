@@ -1,20 +1,15 @@
 <?php
 declare(strict_types=1);
 
-/**
- * URL: /comment/view/{id}/{type}
- */
-
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\CommentsLogic;
-
-$current_user = Auth::user();
-$id   = (int) param(0, 0);
-$type = (string) param(1, 'torrent');
 
 if (!Auth::check()) {
     redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
+
+$id   = (int) param(0, 0);
+$type = (string) param(1, 'torrent');
 
 if ($id < 1) {
     redirect('home', __('MISSING_ID'), 'warning');
@@ -26,21 +21,20 @@ $ROW       = $comments['row'] ?? [];
 $COMMENT   = $comments['res'] ?? [];
 $PAGER     = $comments['pager'] ?? '';
 $COUNT     = (int) ($comments['count'] ?? 0);
-$TYPE      = $type;
-$TARGET_ID = $id;
 
 theme_header(is_string($TITLE) ? strip_tags($TITLE) : __('COMMENTS'));
 render_flash();
-block_begin($TITLE);
+block_begin(is_string($TITLE) ? strip_tags($TITLE) : __('COMMENTS'));
 
-if ($TYPE !== 'user') :
+if ($type !== 'user') :
 ?>
     <p class="text-center">
         <a type="button" class="model_form ttbtn btn-sm" data-bs-toggle="modal" data-bs-target="#addModal"><?= e(__('ADD')) ?></a>
     </p>
-<?php endif;
+<?php
+endif;
 
-if ($TYPE === 'news') :
+if ($type === 'news') :
 ?>
     <div class="tt_blockcenter rounded p-3">
         <div class="text-center">
@@ -52,15 +46,14 @@ if ($TYPE === 'news') :
 endif;
 
 if ($COUNT > 0) {
-    commenttable($COMMENT, $TYPE);
+    commenttable($COMMENT, $type);
 } else {
     echo '<br><center><b>' . e(__('NOCOMMENTS')) . '</b></center><br>';
 }
 
 echo $PAGER;
 ?>
-
-<form id="submit" method="post" action="<?= url("comment/submit/{$TARGET_ID}/{$TYPE}") ?>">
+<form id="submit" method="post" action="<?= e(url("comment/submit/{$id}/{$type}")) ?>">
     <?= csrf_field() ?>
     <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">

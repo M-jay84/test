@@ -50,28 +50,34 @@ class RatingsLogic
     }
 
     // Add Rating
-    public static function addRating($id, $userid)
-    {
-        // Check User Input
-        $rating = Input1('rating', 'int');
+ public static function addRating(int $id, int $userid): void
+{
+    $rating = input_int('rating', 0);
 
-        if ($rating <= 0 || $rating > 5) {
-            message(("torrent/$id"), LANG["INVAILD_RATING"]);
-        }
-        
-        $ratings_query = "INSERT INTO `ratings` (torrentd, user, rating, added) VALUES (?,?,?,?)";
-        $res = DB::run($ratings_query, [$id, $userid , $rating, CONFIG['TT_DATE']]);
-        if ($res) {
-            if ($res->errorCode() == 1062) {
-                message(("torrent/$id"), LANG["YOU_ALREADY_RATED_TORRENT"]);
-            } else {
-                message(("torrent/$id"), LANG["ACTION_FAILED"]);
-            }
-        }
-        
-        $torrents_query = "UPDATE torrents SET numratings = numratings + 1, ratingsum = ratingsum + $rating WHERE id = $id";
-        DB::run($torrents_query);
-        message(("torrent/$id"), LANG["RATING_THANK"]);
+    if ($rating < 1 || $rating > 5) {
+        redirect('torrent/' . $id, __('INVAILD_RATING'), 'warning');
     }
+
+    $exists = DB::run(
+        'SELECT id FROM ratings WHERE torrent = ? AND user = ?',
+        [$id, $userid]
+    )->fetchColumn();
+
+    if ($exists) {
+        redirect('torrent/' . $id, __('YOU_ALREADY_RATED_TORRENT'), 'warning');
+    }
+
+    DB::run(
+        'INSERT INTO ratings (torrent, user, rating, added) VALUES (?, ?, ?, ?)',
+        [$id, $userid, $rating, CONFIG['TT_DATE']]
+    );
+
+    DB::run(
+        'UPDATE torrents SET numratings = numratings + 1, ratingsum = ratingsum + ? WHERE id = ?',
+        [$rating, $id]
+    );
+
+    redirect('torrent/' . $id, __('RATING_THANK'), 'success');
+}
     
 }

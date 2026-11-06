@@ -9,7 +9,6 @@ declare(strict_types=1);
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\AttachmentsLogic;
 
-$current_user = Auth::user();
 $id   = (int) param(0, 0);
 $hash = (string) param(1, '');
 
@@ -17,26 +16,26 @@ if (!Auth::check() && !empty(CONFIG['MEMBERSONLY'])) {
     redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
-if ($id < 1 || $hash === '') {
-    redirect('home', __('NOTHING_FOUND'), 'warning');
-}
-
+// Model should validate row + hash, build path, redirect on fail
 $attachment = AttachmentsLogic::downloadAttachment($id, $hash);
-$file     = $attachment['file'] ?? '';
-$filename = $attachment['filename'] ?? 'download';
-$ext      = $attachment['extension'] ?? 'octet-stream';
+
+$file     = (string) ($attachment['file'] ?? '');
+$filename = (string) ($attachment['filename'] ?? 'download');
+$ext      = (string) ($attachment['extension'] ?? 'octet-stream');
 
 if ($file === '' || !is_file($file)) {
     redirect('home', __('NO_FILE', $hash), 'warning');
 }
 
-// Clear buffers so the file is not corrupted
 while (ob_get_level() > 0) {
     ob_end_clean();
 }
 
-header('Content-Disposition: attachment; filename="' . str_replace('"', '', $filename) . '"');
+$safeName = str_replace(['"', "\r", "\n"], '', $filename);
+$safeExt  = preg_replace('/[^a-z0-9.+-]/i', '', $ext) ?: 'octet-stream';
+
+header('Content-Disposition: attachment; filename="' . $safeName . '"');
 header('Content-Length: ' . (string) filesize($file));
-header('Content-Type: application/' . preg_replace('/[^a-z0-9.+-]/i', '', $ext));
+header('Content-Type: application/' . $safeExt);
 readfile($file);
 exit;

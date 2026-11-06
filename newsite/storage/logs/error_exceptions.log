@@ -1,8 +1,0 @@
-[2026-11-05 10:13:51] [APPLICATION] Path must not be empty
-File: C:\xampp\htdocs\newsite\page\admin\admin_header.php:328
-Trace:
-#0 C:\xampp\htdocs\newsite\page\admin\admincp.php(10): require()
-#1 C:\xampp\htdocs\newsite\Bootstrap\functions\router_functions.php(44): require('C:\\xampp\\htdocs...')
-#2 C:\xampp\htdocs\newsite\index.php(24): router_dispatch()
-#3 {main}
-

@@ -4,32 +4,38 @@ declare(strict_types=1);
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\MessagesLogic;
 
-$current_user = Auth::user();
+if (!Auth::check()) {
+    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
+}
+
 $type = (string) param(0, 'inbox');
 if (!in_array($type, ['inbox', 'outbox'], true)) {
     $type = 'inbox';
 }
 
-if (!Auth::check()) {
-    redirect('authorise/login', __('NO_PERMISSION'), 'warning');
-}
+$data     = MessagesLogic::msgPagination($type, (int) Auth::id());
+$MESSAGES = $data['messages'] ?? [];
+$PAGER    = $data['pager'] ?? '';
+$TYPE     = $type;
+$caption  = $type === 'outbox' ? __('OUTBOX') : __('INBOX');
 
-$messages  = MessagesLogic::msgPagination($type, (int) $current_user->id);
-$MESSAGES  = $messages['messages'] ?? [];
-$PAGER     = $messages['pager'] ?? '';
-$TYPE      = $type;
-
-theme_header(ucfirst($type));
+theme_header($caption);
 render_flash();
-block_begin(ucfirst($type));
+block_begin($caption);
 ?>
-<form id="messages" method="post" action="<?= url('message/delete/' . $TYPE) ?>">
+<form id="messages" method="post" action="<?= e(url('message/delete/' . $TYPE)) ?>">
     <?= csrf_field() ?>
     <div class="table-responsive rounded">
         <p class="text-center">
-            <a href="<?= url('message/mailbox/inbox') ?>"><button type="button" class="<?= e(activelink('inbox', 'inbox')) ?>"><?= e(__('INBOX')) ?></button></a>
-            <a href="<?= url('message/mailbox/outbox') ?>"><button type="button" class="<?= e(activelink('outbox', 'outbox')) ?>"><?= e(__('OUTBOX')) ?></button></a>
-            <a href="<?= url('message/create') ?>"><button type="button" class="<?= e(activelink('message/create')) ?>"><?= e(__('COMPOSE')) ?></button></a>
+            <a href="<?= e(url('message/mailbox/inbox')) ?>">
+                <button type="button" class="<?= e(activelink('inbox', 'inbox')) ?>"><?= e(__('INBOX')) ?></button>
+            </a>
+            <a href="<?= e(url('message/mailbox/outbox')) ?>">
+                <button type="button" class="<?= e(activelink('outbox', 'outbox')) ?>"><?= e(__('OUTBOX')) ?></button>
+            </a>
+            <a href="<?= e(url('message/create')) ?>">
+                <button type="button" class="<?= e(activelink('message/create')) ?>"><?= e(__('COMPOSE')) ?></button>
+            </a>
         </p>
         <table class="table table-striped">
             <thead>
@@ -47,12 +53,12 @@ block_begin(ucfirst($type));
                 $msgdetails = msgdetails($TYPE, $arr);
                 ?>
                 <tr>
-                    <td><input type="checkbox" name="del[]" value="<?= (int) $arr['id'] ?>"></td>
+                    <td><input type="checkbox" name="del[]" value="<?= (int) ($arr['id'] ?? 0) ?>"></td>
                     <td><?= $msgdetails['unread'] ?></td>
                     <td><?= $msgdetails['sender'] ?></td>
                     <td><?= $msgdetails['receiver'] ?></td>
                     <td><?= $msgdetails['subject'] ?></td>
-                    <td><?= e($msgdetails['added']) ?></td>
+                    <td><?= e($msgdetails['added'] ?? '') ?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * URL: /warning/index/{user_id}  or  /warning/{user_id}
+ * URL: /warning/index/{user_id}
  */
 
 use Bootstrap\Libs\Auth;
@@ -19,27 +19,26 @@ if ($userId < 1) {
     redirect('home', __('MISSING_ID'), 'warning');
 }
 
-if (!Auth::isStaff() && (int) $current_user->id !== $userId) {
+if (!Auth::isStaff() && (int) ($current_user->id ?? 0) !== $userId) {
     redirect('home', __('NO_PERMISSION'), 'warning');
 }
 
-$WARNINGS = WarningsLogic::getByUserId($userId);
-$USER_ID  = $userId;
-$TITLE    = (__('USER_DETAILS_FOR') !== 'USER_DETAILS_FOR' ? __('USER_DETAILS_FOR') : '')
-          . strip_tags(coloredname($userId));
+$warnings = WarningsLogic::getByUserId($userId);
+$title    = __('USER_DETAILS_FOR') . ' ' . strip_tags(coloredname($userId));
 
-theme_header($TITLE);
+theme_header($title);
 render_flash();
-block_begin($TITLE);
-usermenu($USER_ID, 'warning');
+block_begin($title);
+usermenu($userId, 'warning');
 
 if (Auth::isStaff()) :
 ?>
     <p class="text-center">
-        <a type="button" class="model_form ttbtn btn-sm" data-bs-toggle="modal" data-bs-target="#addModal"><?= e(__('ADD')) ?></a>
+        <a type="button" class="model_form ttbtn btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
+            <?= e(__('ADD')) ?>
+        </a>
     </p>
-
-    <form id="deleteall" method="post" action="<?= url('warning/delete/' . $USER_ID) ?>">
+    <form id="deleteall" method="post" action="<?= e(url('warning/delete/' . $userId)) ?>">
         <?= csrf_field() ?>
 <?php endif; ?>
 
@@ -60,7 +59,7 @@ if (Auth::isStaff()) :
             </tr>
         </thead>
         <tbody>
-        <?php foreach ($WARNINGS as $row) :
+        <?php foreach ($warnings as $row) :
             $added  = user_timezone_date($row['added'] ?? '');
             $expiry = user_timezone_date($row['expiry'] ?? '');
             $addedDate  = strpos($added, ' ') !== false ? substr($added, 0, strpos($added, ' ')) : $added;
@@ -90,7 +89,7 @@ if (Auth::isStaff()) :
 
 <?php if (($current_user->delete_users ?? '') === 'yes' && ($current_user->control_panel ?? '') === 'yes') : ?>
     <div class="tt_blockcenter rounded p-3">
-        <form method="post" action="<?= url('profile/delete/' . $USER_ID) ?>">
+        <form method="post" action="<?= e(url('profile/delete/' . $userId)) ?>">
             <?= csrf_field() ?>
             <div class="text-center">
                 <p><b><?= e(__('DELETE_USER')) ?></b></p>
@@ -105,18 +104,19 @@ if (Auth::isStaff()) :
 <?php endif; ?>
 
 <?php if (($current_user->edit_users ?? '') === 'yes' && ($current_user->control_panel ?? '') === 'yes') : ?>
-    <form id="submit" method="post" action="<?= url('warning/submit/' . $USER_ID) ?>">
+    <form id="submit" method="post" action="<?= e(url('warning/submit/' . $userId)) ?>">
         <?= csrf_field() ?>
         <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="text-center">
-                            <textarea class="form-control" cols="40" rows="5" name="reason" placeholder="<?= e(__('REASON')) ?>"></textarea>
+                            <textarea class="form-control" cols="40" rows="5" name="reason"
+                                      placeholder="<?= e(__('REASON')) ?>"></textarea>
                         </div>
                         <div class="input-group mb-3">
-                            <input class="form-control" type="number" name="expiry" placeholder="Days">
-                            <input class="form-control" type="text" name="type" placeholder="Type">
+                            <input class="form-control" type="number" name="expiry" placeholder="<?= e(__('DAYS')) ?>">
+                            <input class="form-control" type="text" name="type" placeholder="<?= e(__('TYPE')) ?>">
                         </div>
                     </div>
                     <div class="modal-footer">

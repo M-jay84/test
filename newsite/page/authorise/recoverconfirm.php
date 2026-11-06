@@ -1,11 +1,6 @@
 <?php
 declare(strict_types=1);
 
-/**
- * Set new password from recovery link.
- * URL: /authorise/recoverconfirm/{id}/{secret}
- */
-
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\RecoverLogic;
 
@@ -21,16 +16,14 @@ if ($id < 1 || strlen($secret) !== 20) {
 }
 
 if (is_post()) {
-    if (!csrf_verify()) {
-        redirect('authorise/recoverconfirm/' . $id . '/' . $secret, 'Invalid request', 'warning');
-    }
+    csrf_verify()
+        || redirect('authorise/recoverconfirm/' . $id . '/' . $secret, __('INVALID_REQUEST'), 'warning');
     RecoverLogic::changePassword($id, $secret);
     return;
 }
 
 theme_header(__('RECOVER'));
 render_flash();
-
 block_begin(__('RECOVER'));
 
 form_start(url("authorise/recoverconfirm/{$id}/{$secret}"), 'post');

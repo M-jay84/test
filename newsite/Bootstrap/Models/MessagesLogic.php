@@ -1,237 +1,309 @@
 <?php
+declare(strict_types=1);
 
 namespace Bootstrap\Models;
 
-use PDO;
 use Bootstrap\Libs\DB;
 use Bootstrap\Libs\TTMail;
-use Bootstrap\Libs\Validate;
-use Bootstrap\Models\GroupsLogic;
-use Bootstrap\Models\LogsLogic;
+use PDO;
 
-/*
-* Messages Table Data
-*/
 class MessagesLogic
 {
-    // Add Message
-    public static function newinsert($data)
+    public static function newinsert(array $data): void
     {
         DB::insert('messages', $data);
-        // email notif
-        $users_query = "SELECT id, username, acceptpms, notifs, email FROM `users`  WHERE id = ?";
-        $user = DB::run($users_query, [$data['receiver']])->fetch(PDO::FETCH_ASSOC);
 
-        if (strpos($user['notifs'], '[pm]') !== false) {
-            $url = URLROOT;
-            $body = "You have received a PM\n\nYou can use the URL below to view the message (you may have to login).\n\n$url/message/mailbox\n\n".CONFIG['SITENAME']."";
-            $TTMail = new TTMail();
-            $TTMail->Send($user["email"], "You have received a PM", $body, "From: " . CONFIG['SITEEMAIL'] . "", "-f" . CONFIG['SITEEMAIL'] . "");
+        $user = DB::run(
+            'SELECT id, username, acceptpms, notifs, email FROM users WHERE id = ?',
+            [(int) ($data['receiver'] ?? 0)]
+        )->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+            return;
+        }
+
+        if (str_contains((string) ($user['notifs'] ?? ''), '[pm]')) {
+            $link = url('message/mailbox/inbox');
+            $body = "You have received a PM\n\n"
+                . "You can use the URL below to view the message (you may have to login).\n\n"
+                . $link . "\n\n"
+                . (CONFIG['SITENAME'] ?? '');
+
+            $mail = new TTMail();
+            $mail->Send(
+                (string) $user['email'],
+                'You have received a PM',
+                $body,
+                'From: ' . CONFIG['SITEEMAIL'],
+                '-f' . CONFIG['SITEEMAIL']
+            );
         }
     }
 
-    // Get Messages
-    public static function msgPagination($type, $id)
+    public static function msgPagination(string $type, int $id): array
     {
-        switch ($type) {
-            case 'inbox':
-                $where = "`receiver` = ".$id." AND `location` IN ('in','both') ORDER BY added DESC";
-                $messages_query = "SELECT COUNT(*) FROM messages WHERE $where";
-                $count = DB::run($messages_query)->fetchColumn();
-                list($pagerbuttons, $limit) = pagination(25, $count, URLROOT."/message/mailbox/inbox&");
-                break;
-            case 'outbox':
-                $where = "`sender` = ".$id." AND `location` IN ('out','both') ORDER BY added DESC";
-                $messages_query = "SELECT COUNT(*) FROM messages WHERE $where";
-                $count= DB::run($messages_query)->fetchColumn();
-                list($pagerbuttons, $limit) = pagination(25, $count, URLROOT."/message/mailbox/outbox&");
-                break;
+        if ($type === 'outbox') {
+            $where  = 'sender = ? AND location IN (\'out\',\'both\')';
+            $pageUrl = url('message/mailbox/outbox?');
+        } else {
+            $type   = 'inbox';
+            $where  = 'receiver = ? AND location IN (\'in\',\'both\')';
+            $pageUrl = url('message/mailbox/inbox?');
         }
-        $messages_query = "SELECT * FROM messages WHERE $where $limit";
-        $messages = DB::run($messages_query)->fetchAll();
 
-        $arr = ['pager' => $pagerbuttons, 'messages' => $messages];
+        $count = (int) DB::run(
+            "SELECT COUNT(*) FROM messages WHERE $where",
+            [$id]
+        )->fetchColumn();
 
-        return $arr;
+        [$pager, $limit] = pagination(25, $count, $pageUrl);
+
+        $messages = DB::run(
+            "SELECT * FROM messages WHERE $where ORDER BY added DESC $limit",
+            [$id]
+        )->fetchAll(PDO::FETCH_ASSOC);
+
+        return ['pager' => $pager, 'messages' => $messages];
     }
 
-    // Add Message Type
-    public static function insertByType($id)
+    public static function insertByType(int $senderId): never
     {
-        // Check User Input
-        $receiver = Input1('receiver');
-        $subject = Input1('subject');
-        $body = Input1('body');
-        $history = Input1('history', 'int');
+        $receiver = input_string('receiver');
+        $subject  = input_string('subject');
+        $body     = input_string('body');
+        $history  = input_int('history', 0);
+        $update   = input_string('Update') !== '' ? input_string('Update') : (string) ($_REQUEST['Update'] ?? 'create');
 
-        // Check Correct Input
         if (strlen($body) < 5 || strlen($subject) < 3) {
-            message('message/mailbox/inbox', LANG['SMALL_INPUT']);
+            redirect('message/mailbox/inbox', __('SMALL_INPUT'), 'warning');
         }
 
-        // Get User Id
-        if (!is_numeric($receiver)) {
-            $users_query = "SELECT id FROM `users` WHERE username=?";
-            $receiver = DB::run($users_query, [$receiver])->fetchColumn();
+        if (!ctype_digit($receiver)) {
+            $receiver = (string) (int) DB::run(
+                'SELECT id FROM users WHERE username = ?',
+                [$receiver]
+            )->fetchColumn();
         }
-        
-        if ($receiver == 0 && $_REQUEST['Update'] == 'create') {
-            message('message/mailbox/inbox', LANG['MISSING_ID']);
-        }
-        
 
-        switch ($_REQUEST['Update']) {
+        $receiverId = (int) $receiver;
+
+        if ($receiverId < 1 && $update === 'create') {
+            redirect('message/create', __('MISSING_ID'), 'warning');
+        }
+
+        switch ($update) {
             case 'create':
-                if (isset($_POST['save'])) {
-                    MessagesLogic::newinsert(['sender'=>$id, 'receiver'=>$receiver, 'added'=>CONFIG['TT_DATE'], 'subject'=>$subject, 'msg'=>$body, 'unread'=>'yes', 'location'=>'both', 'history' => $history]);
-                } else {
-                    MessagesLogic::newinsert(['sender'=>$id, 'receiver'=>$receiver, 'added'=>CONFIG['TT_DATE'], 'subject'=>$subject, 'msg'=>$body, 'unread'=>'yes', 'location'=>'in', 'history' => $history]);
-                }
-                message('message/mailbox/outbox', LANG['MESSAGES_SENT']);
-                break;
+                $location = isset($_POST['save']) ? 'both' : 'in';
+                self::newinsert([
+                    'sender'   => $senderId,
+                    'receiver' => $receiverId,
+                    'added'    => CONFIG['TT_DATE'],
+                    'subject'  => $subject,
+                    'msg'      => $body,
+                    'unread'   => 'yes',
+                    'location' => $location,
+                    'history'  => $history,
+                ]);
+                redirect('message/mailbox/outbox', __('MESSAGES_SENT'), 'success');
+
             case 'draft':
-                MessagesLogic::newinsert(['sender'=>$id, 'receiver'=>$receiver, 'added'=>CONFIG['TT_DATE'], 'subject'=>$subject, 'msg'=>$body, 'unread'=>'no', 'location'=>'draft']);
-                message('message/mailbox/draft', LANG['SAVED_DRAFT']);
-                break;
+                self::newinsert([
+                    'sender'   => $senderId,
+                    'receiver' => $receiverId,
+                    'added'    => CONFIG['TT_DATE'],
+                    'subject'  => $subject,
+                    'msg'      => $body,
+                    'unread'   => 'no',
+                    'location' => 'draft',
+                ]);
+                redirect('message/mailbox/draft', __('SAVED_DRAFT'), 'success');
+
             case 'template':
-                MessagesLogic::newinsert(['sender'=>$id, 'receiver'=>$receiver, 'added'=>CONFIG['TT_DATE'], 'subject'=>$subject, 'msg'=>$body, 'unread'=>'no', 'location'=>'template']);
-                message('message/mailbox/templates', LANG['SAVED_TEMPLATE']);
-                break;
+                self::newinsert([
+                    'sender'   => $senderId,
+                    'receiver' => $receiverId,
+                    'added'    => CONFIG['TT_DATE'],
+                    'subject'  => $subject,
+                    'msg'      => $body,
+                    'unread'   => 'no',
+                    'location' => 'template',
+                ]);
+                redirect('message/mailbox/templates', __('SAVED_TEMPLATE'), 'success');
+
+            default:
+                redirect('message/create', __('MISSING_FORM_DATA'), 'warning');
         }
     }
 
-    // Delete Message
-    public static function delete($type, $current_user)
+    /** @param string $type inbox|outbox */
+    public static function delete(string $type, int $userid): never
     {
-        $ids = multiIds('del');
+        $raw = multiIds('del');
+        $ids = is_array($raw)
+            ? implode(',', array_map('intval', $raw))
+            : preg_replace('/[^0-9,]/', '', (string) $raw);
 
-        if ($type == 0 && $current_user->isStaff) {
-            die('todo');
-        } elseif ($_POST["read"]) {
-            $messages_query = "UPDATE messages SET unread' => ? WHERE id IN (?)";
-            DB::run($messages_query, ['no', $ids]);
-        } elseif ($type == 'inbox') {
-            $messages_query = "DELETE FROM messages WHERE `location` = ? AND `receiver` = ? AND `id` IN (?)";
-            DB::run($messages_query, ['in', $current_user->id, $ids]);
-            $messages_query = "UPDATE messages SET `location` = ? WHERE `location` = ? AND `receiver` = ? AND `id` IN (?)";
-            DB::run($messages_query, ['out', 'both', $current_user->id, $ids]);
-        } elseif ($type == 'outbox') {
-            $messages_query = "UPDATE messages SET `location` =  WHERE `location` = ? AND `sender` = ? AND `id` IN (?)";
-            DB::run($messages_query, ['in', 'both', $current_user->id, $ids]);
-            $messages_query = "DELETE FROM messages WHERE `location` IN ('out', 'draft', 'template') AND `sender` = ? AND `id` IN (?)";
-            DB::run($messages_query, [$current_user->id, $ids]);
+        if ($ids === '' || $ids === '0') {
+            redirect('message/mailbox/' . $type, __('NOTHING_SELECTED'), 'warning');
         }
-        message(("message/mailbox/$type"), LANG["SUCCESS"]);
+
+        if (!empty($_POST['read'])) {
+            DB::run(
+                "UPDATE messages SET unread = ? WHERE id IN ($ids) AND receiver = ?",
+                ['no', $userid]
+            );
+            redirect('message/mailbox/' . $type, __('SUCCESS'), 'success');
+        }
+
+        if ($type === 'inbox') {
+            DB::run(
+                "DELETE FROM messages WHERE location = ? AND receiver = ? AND id IN ($ids)",
+                ['in', $userid]
+            );
+            DB::run(
+                "UPDATE messages SET location = ? WHERE location = ? AND receiver = ? AND id IN ($ids)",
+                ['out', 'both', $userid]
+            );
+        } elseif ($type === 'outbox') {
+            DB::run(
+                "UPDATE messages SET location = ? WHERE location = ? AND sender = ? AND id IN ($ids)",
+                ['in', 'both', $userid]
+            );
+            DB::run(
+                "DELETE FROM messages WHERE location IN ('out','draft','template') AND sender = ? AND id IN ($ids)",
+                [$userid]
+            );
+        }
+
+        redirect('message/mailbox/' . $type, __('SUCCESS'), 'success');
     }
 
-    // Get Message Id
-    public static function getById($id, $userid)
+    public static function getById(int $id, int $userid): array
     {
-        $messages_query = "SELECT * FROM `messages` WHERE id = ?";
-        $arr = DB::run($messages_query, [$id])->fetch(PDO::FETCH_ASSOC);
-        
-        if ($arr["history"] != 0) {
-            $messages_query= "SELECT * FROM `messages` WHERE history=?";
-            $history = DB::run($messages_query, [$arr["history"]])->fetchAll();
+        $arr = DB::run(
+            'SELECT * FROM messages WHERE id = ?',
+            [$id]
+        )->fetch(PDO::FETCH_ASSOC);
+
+        if (!$arr) {
+            redirect('message/mailbox/inbox', __('MISSING_ID'), 'warning');
         }
 
-        // Check User
-        if ($arr["sender"] != $userid && $arr["receiver"] != $userid) {
-            message(URLROOT, LANG['NO_PERMISSION']);
-        }
-        
-        // Mark Read
-        if ($arr["unread"] == "yes" && $arr["receiver"] == $userid) {
-            $messages_query = "UPDATE messages SET unread = ? WHERE id=? AND receiver = ? ";
-            DB::run($messages_query, ['no', $id, $userid]);
+        if ((int) $arr['sender'] !== $userid && (int) $arr['receiver'] !== $userid) {
+            redirect('home', __('NO_PERMISSION'), 'warning');
         }
 
-		$arr["replyto"] = (($userid == $arr["receiver"])) ? $arr["sender"] : $arr["receiver"];
+        $history = [];
+        if (!empty($arr['history'])) {
+            $history = DB::run(
+                'SELECT * FROM messages WHERE history = ? ORDER BY added ASC',
+                [(int) $arr['history']]
+            )->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        if (($arr['unread'] ?? '') === 'yes' && (int) $arr['receiver'] === $userid) {
+            DB::run(
+                'UPDATE messages SET unread = ? WHERE id = ? AND receiver = ?',
+                ['no', $id, $userid]
+            );
+            $arr['unread'] = 'no';
+        }
+
+        $arr['replyto']  = ((int) $arr['receiver'] === $userid)
+            ? (int) $arr['sender']
+            : (int) $arr['receiver'];
         $arr['previous'] = $history;
 
         return $arr;
     }
 
-    // Update Message
-    public static function update($id, $userid)
+    public static function update(int $id, int $userid): never
     {
-        // Get Message
-        $messages_query = "SELECT * FROM `messages` WHERE id = ?";
-        $row = DB::run($messages_query, [$id])->fetch(PDO::FETCH_ASSOC);
-        
-        if ($row["sender"] != $userid && $row["receiver"] != $userid) {
-            message(URLROOT, LANG['NO_PERMISSION']);
-        }
+        $row = DB::run(
+            'SELECT * FROM messages WHERE id = ?',
+            [$id]
+        )->fetch(PDO::FETCH_ASSOC);
+
         if (!$row) {
-            message('message/mailbox/inbox', LANG["MISSING_ID"]);
+            redirect('message/mailbox/inbox', __('MISSING_ID'), 'warning');
         }
-        
-        // Submit Form
-        if (!empty($_POST)) {
-            $msg = isset($_POST['msg']) ? $_POST['msg'] : '';
-            // Update Message
-            $messages_query = "UPDATE messages SET msg = ? WHERE id=?";
-            DB::run($messages_query, [$msg,$id]);
-            message('message/mailbox/inbox', LANG["UPDATE_COMPLETE"]);
+
+        if ((int) $row['sender'] !== $userid && (int) $row['receiver'] !== $userid) {
+            redirect('home', __('NO_PERMISSION'), 'warning');
         }
-        message('message/mailbox/inbox', LANG["EDIT_FAILED"]);
+
+        $msg = input_string('msg');
+        if ($msg === '') {
+            redirect('message/view/' . $id, __('EDIT_FAILED'), 'warning');
+        }
+
+        DB::run('UPDATE messages SET msg = ? WHERE id = ?', [$msg, $id]);
+        redirect('message/view/' . $id, __('UPDATE_COMPLETE'), 'success');
     }
 
-    // Admin Delete Messages
-    public static function deleteByIds()
+    public static function deleteByIds(): never
     {
-        $ids = multiIds('ids');
-        $messages_query = "DELETE FROM `messages` WHERE `id` IN (?)";
-        DB::run($messages_query, [$ids]);
-        message('adminmessage', LANG["DEL_COMPLETE"]);
-    }
+        $raw = multiIds('ids');
+        $ids = is_array($raw)
+            ? implode(',', array_map('intval', $raw))
+            : preg_replace('/[^0-9,]/', '', (string) $raw);
 
-    // Admin Send Multiple Messages
-    public static function multiPM($userid)
-    {
-        $sender_id = Input1('sender_id');
-        $receiver = Input1('receiver');
-        $id = Input1('id');
-        $msg = Input1('msg');
-        $subject = Input1('sebject');
-        // Check Correct Input
-        if (!$msg) {
-            message('adminmessage/masspm', LANG["MISSING_FORM_DATA"]);
+        if ($ids === '' || $ids === '0') {
+            redirect('message/admin', __('NOTHING_SELECTED'), 'warning');
         }
 
-        
-        $updateset = array_map("intval", $_POST['classes']);
-        $users_query = "SELECT id FROM users WHERE class IN (" . implode(",", $updateset) . ")";
-        $query = DB::run($users_query);// AND enabled = 'yes' AND status = 'confirmed'
-        while ($dat = $query->fetch(PDO::FETCH_ASSOC)) {
-            $messages_query = "INSERT INTO `messages` (sender,receiver,added,msg,subject) VALUES (?,?,?,?,?)";
-            DB::run($messages_query,
-            [$sender_id, $dat['id'], CONFIG['TT_DATE'], $msg, $subject]);
-        }
-        
-        LogsLogic::write("A Mass PM was sent by " . $userid . "");
-        message('adminmessage/masspm', LANG["SUCCESS"]);
+        DB::run("DELETE FROM messages WHERE id IN ($ids)");
+        redirect('message/admin', __('DEL_COMPLETE'), 'success');
     }
 
-    // Admin Get All Messages
-    public static function getAll()
+    public static function multiPM(int $staffId): never
     {
-        // Pagination
-        $messages_query = "SELECT COUNT(*) FROM messages WHERE location in ('in', 'both')";
-        $count = DB::run($messages_query)->fetchColumn();
-        list($pager, $limit) = pagination(40, $count, url('message/admin?'));
-        $messages_query = "SELECT * FROM messages WHERE location in ('in', 'both') ORDER BY id DESC $limit";
-        $stmt = DB::run($messages_query)->fetchAll();
+        $msg     = input_string('msg');
+        $subject = input_string('subject');
+        $sender  = (input_string('sender') === 'system') ? 0 : $staffId;
 
-        // Get Groups
-        $groups_query = "SELECT group_id,level FROM `groups`";
-        $groups =DB::run($groups_query);
-        $array = [
-            'res' => $stmt,
-            'pager' => $pager,
-            'groups' => $groups
-        ];
-        return $array;
+        if ($msg === '') {
+            redirect('message/admin', __('MISSING_FORM_DATA'), 'warning');
+        }
+
+        $classes = array_map('intval', (array) ($_POST['classes'] ?? []));
+        $classes = array_filter($classes, static fn (int $c): bool => $c > 0);
+
+        if ($classes === []) {
+            redirect('message/admin', __('NOTHING_SELECTED'), 'warning');
+        }
+
+        $in    = implode(',', $classes);
+        $users = DB::run("SELECT id FROM users WHERE class IN ($in)")->fetchAll(PDO::FETCH_COLUMN);
+
+        foreach ($users as $uid) {
+            DB::run(
+                'INSERT INTO messages (sender, receiver, added, msg, subject, unread, location)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)',
+                [$sender, (int) $uid, CONFIG['TT_DATE'], $msg, $subject, 'yes', 'in']
+            );
+        }
+
+        LogsLogic::write('A Mass PM was sent by user id ' . $staffId);
+        redirect('message/admin', __('SUCCESS'), 'success');
     }
 
+    public static function getAll(): array
+    {
+        $count = (int) DB::run(
+            "SELECT COUNT(*) FROM messages WHERE location IN ('in','both')"
+        )->fetchColumn();
+
+        [$pager, $limit] = pagination(40, $count, url('message/admin?'));
+
+        $stmt = DB::run(
+            "SELECT * FROM messages WHERE location IN ('in','both') ORDER BY id DESC $limit"
+        )->fetchAll(PDO::FETCH_ASSOC);
+
+        $groups = DB::run(
+            'SELECT group_id, level FROM groups ORDER BY group_id'
+        )->fetchAll(PDO::FETCH_ASSOC);
+
+        return ['res' => $stmt, 'pager' => $pager, 'groups' => $groups];
+    }
 }

@@ -1,11 +1,6 @@
 <?php
 declare(strict_types=1);
 
-/**
- * URL: /profile/confirmemail/{id}/{secret}/{email}
- * email may be urlencoded in the link
- */
-
 use Bootstrap\Models\ConfirmLogic;
 
 $id     = (int) param(0, 0);

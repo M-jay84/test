@@ -19,35 +19,38 @@ class RulesLogic
         return $stmt;
     }
 
-    // Admin Delete Rule
-    public static function delete($id, $current_user_username)
-    {
-        $rules_query = "DELETE FROM rules WHERE id' = ?";
-        DB::run($rules_query, [$id]);
-        LogsLogic::write("Rules have been deleted by ".$current_user_username."");
-        message('rule', LANG["SUCCESS"]);
+public static function delete(int $id, string $username): void
+{
+    DB::run('DELETE FROM rules WHERE id = ?', [$id]);
+    LogsLogic::write('Rules have been deleted by ' . $username);
+    redirect('rule', __('SUCCESS'), 'success');
+}
+
+public static function insertOrUpdate(string $username): void
+{
+    $id     = input_int('id', 0);
+    $title  = input_string('title');
+    $text   = input_string('text');
+    $public = input_string('public');
+    $class  = input_string('classs');
+
+    if ($title === '' || $text === '') {
+        redirect('rule', __('MISSING_FORM_DATA'), 'warning');
     }
 
-    // Admin Add/Update Rules
-    public static function insertOrUpdate($current_user_username)
-    {
-        if (!empty($_POST)) {
-            $id = Input1('id', 'int');
-            $title = Input1('title');
-            $text = Input1('text');
-            $public = Input1('public');
-            $class = Input1('classs');
-            if ($id == 0) {
-                $rules_query = "INSERT INTO `rules` (title, text, public, class) VALUES (?,?,?,?)";
-                DB::run($rules_query, [$title, $text, $public, $class]);
-            } else {
-                $rules_query = "UPDATE rules SET title = ? AND text = ? AND public = ? AND class = ? WHERE id=?";
-                DB::run($rules_query, [$title, $text, $public, $class, $id]);
-            }
-            LogsLogic::write("Rules have been changed by ".$current_user_username."");
-            message('rule', LANG["SUCCESS"]);
-        } else {
-            message(URLROOT, LANG["MISSING_FORM_DATA"]);
-        }
+    if ($id < 1) {
+        DB::run(
+            'INSERT INTO rules (title, text, public, class) VALUES (?, ?, ?, ?)',
+            [$title, $text, $public, $class]
+        );
+    } else {
+        DB::run(
+            'UPDATE rules SET title = ?, text = ?, public = ?, class = ? WHERE id = ?',
+            [$title, $text, $public, $class, $id]
+        );
     }
+
+    LogsLogic::write('Rules have been changed by ' . $username);
+    redirect('rule', __('SUCCESS'), 'success');
+}
 }

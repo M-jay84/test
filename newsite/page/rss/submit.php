@@ -1,11 +1,6 @@
 <?php
 declare(strict_types=1);
 
-/**
- * Process custom RSS form → RssLogic builds / shows the feed URL.
- * URL: /rss/submit
- */
-
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\RssLogic;
 
@@ -20,4 +15,3 @@ if (!is_post() || !csrf_verify()) {
 }
 
 RssLogic::rsslink($current_user);
-// Model should redirect or display the generated feed URL (e.g. rss/view?cats=…&passkey=…)

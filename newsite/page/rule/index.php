@@ -31,7 +31,7 @@ foreach ($RULES as $row) {
     if ($isStaffEditor) {
         echo '<p class="text-end">';
         echo '<i class="fa fa-user-secret m-1 tt_prime" title="' . e(__('STAFF')) . '"></i> ';
-        echo '<a href="' . url('rule/delete/' . (int) $row['id']) . '"><i class="fa fa-trash"></i></a> ';
+        echo '<a href="' . e(url('rule/delete/' . (int) $row['id'])) . '"><i class="fa fa-trash"></i></a> ';
         echo '<a href="javascript:;" class="rulesAttr" data-bs-toggle="modal" data-bs-target="#rulesModal"';
         echo ' data-id="' . (int) $row['id'] . '"';
         echo ' data-title="' . e($row['title'] ?? '') . '"';
@@ -64,7 +64,7 @@ if ($isStaffEditor) :
     });
     </script>
 
-    <form id="submit" method="post" action="<?= url('rule/edit') ?>">
+    <form id="submit" method="post" action="<?= e(url('rule/edit')) ?>">
         <?= csrf_field() ?>
         <div class="modal fade" id="rulesModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">

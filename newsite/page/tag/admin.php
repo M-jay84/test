@@ -9,10 +9,7 @@ if (!Auth::isStaff()) {
 }
 
 if (is_post() && !isset($_POST['ids'])) {
-    // Add/edit from modal (not delete form)
-    if (!csrf_verify()) {
-        redirect('tag/admin', 'Invalid request', 'warning');
-    }
+    csrf_verify() || redirect('tag/admin', __('INVALID_REQUEST'), 'warning');
     TagsLogic::insertOrUpdate();
     return;
 }
@@ -24,10 +21,12 @@ render_flash();
 block_begin(__('TAGS'));
 ?>
 <p class="text-center">
-    <a type="button" class="model_form ttbtn btn-sm" data-bs-toggle="modal" data-bs-target="#tagModal"><?= e(__('ADD')) ?></a>
+    <a type="button" class="model_form ttbtn btn-sm" data-bs-toggle="modal" data-bs-target="#tagModal">
+        <?= e(__('ADD')) ?>
+    </a>
 </p>
 
-<form id="delete" action="<?= url('tag/delete') ?>" method="post">
+<form id="delete" action="<?= e(url('tag/delete')) ?>" method="post">
     <?= csrf_field() ?>
     <div class="table-responsive p-2">
         <table class="table table-striped">
@@ -43,13 +42,15 @@ block_begin(__('TAGS'));
                 <tr>
                     <td>
                         <a href="javascript:;" class="tagAttr" data-bs-toggle="modal" data-bs-target="#tagModal"
-                           data-id="<?= (int) $row['id'] ?>"
-                           data-name="<?= e($row['name'] ?? '') ?>"
-                           data-colour="<?= e($row['colour'] ?? '') ?>"><i class="fa fa-edit"></i></a>
-                        <input type="checkbox" name="ids[]" value="<?= (int) $row['id'] ?>">
+                           data-id="<?= (int) ($row['id'] ?? 0) ?>"
+                           data-name="<?= e((string) ($row['name'] ?? '')) ?>"
+                           data-colour="<?= e((string) ($row['colour'] ?? '')) ?>">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <input type="checkbox" name="ids[]" value="<?= (int) ($row['id'] ?? 0) ?>">
                     </td>
-                    <td><?= e($row['name'] ?? '') ?></td>
-                    <td><?= e($row['colour'] ?? '') ?></td>
+                    <td><?= e((string) ($row['name'] ?? '')) ?></td>
+                    <td><?= e((string) ($row['colour'] ?? '')) ?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
@@ -70,16 +71,16 @@ document.querySelectorAll('.tagAttr').forEach(function (el) {
 });
 </script>
 
-<form method="post" action="<?= url('tag/admin') ?>">
+<form method="post" action="<?= e(url('tag/admin')) ?>">
     <?= csrf_field() ?>
     <div class="modal fade" id="tagModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">
             <div class="modal-content">
                 <div class="modal-body">
                     <input type="hidden" name="id" id="id" value="">
-                    <?= e(__('NAME')) ?>
+                    <label for="name"><?= e(__('NAME')) ?></label>
                     <input id="name" type="text" class="form-control fullwidth" name="name" minlength="3" maxlength="200">
-                    <?= e(__('COLOUR')) ?>
+                    <label for="colour"><?= e(__('COLOUR')) ?></label>
                     <input id="colour" type="text" class="form-control fullwidth" name="colour" minlength="3" maxlength="200">
                 </div>
                 <div class="modal-footer">

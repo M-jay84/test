@@ -1,11 +1,6 @@
 <?php
 declare(strict_types=1);
 
-/**
- * URL: /rating/add/{torrent_id}
- * POST field: rating (1–5)
- */
-
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\RatingsLogic;
 
@@ -24,8 +19,6 @@ if (!is_post()) {
     redirect('torrent/' . $id, __('NOTHING_SELECTED'), 'warning');
 }
 
-if (!csrf_verify()) {
-    redirect('torrent/' . $id, 'Invalid request', 'warning');
-}
+csrf_verify() || redirect('torrent/' . $id, __('INVALID_REQUEST'), 'warning');
 
 RatingsLogic::addRating($id, (int) $current_user->id);

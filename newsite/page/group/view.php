@@ -4,25 +4,21 @@ declare(strict_types=1);
 /**
  * Admin – user groups list + add/edit modal
  * URL: /group/view
- * POST same URL → insertOrUpdate
+ * POST same URL → GroupsLogic::insertOrUpdate()
  */
 
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\GroupsLogic;
 
-$current_user = Auth::user();
-
 if (!Auth::isStaff()) {
     redirect('home', __('NO_PERMISSION'), 'warning');
 }
 
-// POST: create or update group
 if (is_post()) {
     if (!csrf_verify()) {
-        redirect('group/view', 'Invalid request', 'warning');
+        redirect('group/view', __('INVALID_REQUEST'), 'warning');
     }
-    GroupsLogic::insertOrUpdate();
-    // Model should redirect back with flash
+    GroupsLogic::insertOrUpdate(); // model redirects
     return;
 }
 
@@ -52,37 +48,40 @@ block_begin(__('GROUPS'));
             </tr>
         </thead>
         <tbody>
-        <?php foreach ($GROUPS as $row) : ?>
+        <?php foreach ($GROUPS as $row) :
+            $gid   = (int) ($row['group_id'] ?? 0);
+            $color = ltrim((string) ($row['Color'] ?? '000000'), '#');
+            ?>
             <tr>
-                <td><?= (int) ($row['group_id'] ?? 0) ?></td>
+                <td><?= $gid ?></td>
                 <td>
-                    <span style="color:#<?= e(ltrim((string) ($row['Color'] ?? '000'), '#')) ?>">
-                        <?= e($row['level'] ?? '') ?>
+                    <span style="color:#<?= e($color) ?>">
+                        <?= e((string) ($row['level'] ?? '')) ?>
                     </span>
                 </td>
                 <td>
-                    <a href="<?= url('permission/view') ?>">
+                    <a href="<?= e(url('permission/view')) ?>">
                         <?= e((string) ($row['group_role_id'] ?? '')) ?>
                     </a>
                 </td>
-                <td><?= e($row['permission_name'] ?? '') ?></td>
+                <td><?= e((string) ($row['permission_name'] ?? '')) ?></td>
                 <td><?= e((string) ($row['staff_sort'] ?? '')) ?></td>
                 <td>
-                    <a href="<?= url('group/delete/' . (int) ($row['group_id'] ?? 0)) ?>">
+                    <a href="<?= e(url('group/delete/' . $gid)) ?>">
                         <i class="fa fa-trash"></i>
                     </a>
                     <a href="javascript:;"
                        class="groupAttr"
                        data-bs-toggle="modal"
                        data-bs-target="#groupModal"
-                       data-group_id="<?= (int) ($row['group_id'] ?? 0) ?>"
-                       data-group_color="<?= e($row['Color'] ?? '') ?>"
-                       data-level="<?= e($row['level'] ?? '') ?>"
+                       data-group_id="<?= $gid ?>"
+                       data-group_color="<?= e((string) ($row['Color'] ?? '')) ?>"
+                       data-level="<?= e((string) ($row['level'] ?? '')) ?>"
                        data-group_role_id="<?= e((string) ($row['group_role_id'] ?? '')) ?>"
                        data-maxslots="<?= e((string) ($row['maxslots'] ?? '')) ?>"
-                       data-control_panel="<?= e($row['control_panel'] ?? 'no') ?>"
-                       data-staff_page="<?= e($row['staff_page'] ?? 'no') ?>"
-                       data-staff_public="<?= e($row['staff_public'] ?? 'no') ?>"
+                       data-control_panel="<?= e((string) ($row['control_panel'] ?? 'no')) ?>"
+                       data-staff_page="<?= e((string) ($row['staff_page'] ?? 'no')) ?>"
+                       data-staff_public="<?= e((string) ($row['staff_public'] ?? 'no')) ?>"
                        data-staff_sort="<?= e((string) ($row['staff_sort'] ?? '')) ?>">
                         <i class="fa fa-edit"></i>
                     </a>
@@ -107,21 +106,18 @@ document.querySelectorAll('.groupAttr').forEach(function (el) {
         document.getElementById('staff_sort').value = this.dataset.staff_sort || '';
     });
 });
-// Clear form when opening for ADD
 document.querySelector('[data-bs-target="#groupModal"].model_form')?.addEventListener('click', function () {
-    document.getElementById('group_id').value = '';
-    document.getElementById('group_color').value = '';
-    document.getElementById('level').value = '';
-    document.getElementById('group_role_id').value = '';
-    document.getElementById('maxslots').value = '';
+    ['group_id', 'group_color', 'level', 'group_role_id', 'maxslots', 'staff_sort'].forEach(function (id) {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
     document.getElementById('control_panel').value = 'no';
     document.getElementById('staff_page').value = 'no';
     document.getElementById('staff_public').value = 'no';
-    document.getElementById('staff_sort').value = '';
 });
 </script>
 
-<form id="submit" method="post" action="<?= url('group/view') ?>">
+<form id="submit" method="post" action="<?= e(url('group/view')) ?>">
     <?= csrf_field() ?>
     <div class="modal fade" id="groupModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">

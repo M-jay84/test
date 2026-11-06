@@ -40,34 +40,43 @@ class GroupsLogic
         return $stmt;
     }
 
-    // Admin Delete Group
-    public static function delete($group_id)
-    {
-        // Protect Groups
-        if (($group_id == "1") || ($group_id == CONFIG['_ADMINISTRATOR'])) {
-            message('admingroup', LANG["YOU_CANT_DEL_THIS_GRP"]);
-        }
-        $groups_query = "DELETE FROM `groups` WHERE group_id' = ?";
-        DB::run($groups_query, [$group_id]);
-        message('admingroup/groups', LANG["DEL_COMPLETE"]);
+public static function delete(int $group_id): void
+{
+    if ($group_id === 1 || $group_id === (int) (CONFIG['_ADMINISTRATOR'] ?? 0)) {
+        redirect('group/view', __('YOU_CANT_DEL_THIS_GRP'), 'warning');
+    }
+    DB::run('DELETE FROM `groups` WHERE group_id = ?', [$group_id]);
+    redirect('group/view', __('DEL_COMPLETE'), 'success');
+}
+
+public static function insertOrUpdate(): void
+{
+    $group_id = input_int('group_id', 0);
+    $level    = input_string('level');
+    $color    = input_string('group_color');
+    $role_id  = input_string('group_role_id');
+    $slots    = input_int('maxslots', 0);
+    $cp       = input_string('control_panel') === 'yes' ? 'yes' : 'no';
+    $staff    = input_string('staff_page') === 'yes' ? 'yes' : 'no';
+    $public   = input_string('staff_public') === 'yes' ? 'yes' : 'no';
+    $sort     = input_int('staff_sort', 0);
+
+    if ($group_id < 1) {
+        DB::run(
+            'INSERT INTO `groups` (level, Color, group_role_id, maxslots, control_panel, staff_page, staff_public, staff_sort)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            [$level, $color, $role_id, $slots, $cp, $staff, $public, $sort]
+        );
+        redirect('group/view', __('SUCCESS'), 'success');
     }
 
-    // Admin Add/Edit Group
-    public static function insertOrUpdate()
-    {
-        $group_id = Input1('group_id', 'int');
-        if (!$group_id) {
-            $groups_query = "INSERT INTO `groups` (level,Color,group_role_id,maxslots,control_panel,staff_page,staff_public,staff_sort) VALUES (?,?,?,?,?,?,?,?)";
-            DB::run($groups_query,
-             [$_POST["level"], $_POST["group_color"], $_POST["group_role_id"], $_POST["maxslots"],
-                $_POST["control_panel"], $_POST["staff_page"], $_POST["staff_public"], intval($_POST['staff_sort'])]);
-            message('admingroup', LANG["SUCCESS"]);
-        } else {
-            $groups_query = "UPDATE groups SET level=? AND Color=? AND group_role_id=? AND maxslots=? AND control_panel=? AND staff_page=? AND staff_public=?
-             AND staff_sort=? WHERE group_id=?";
-            DB::run($groups_query, [$_POST["level"], $_POST["group_color"], $_POST["group_role_id"], $_POST["maxslots"], $_POST["control_panel"], $_POST["staff_page"], $_POST["staff_public"], intval($_POST['staff_sort']), $group_id]);
-            message('admingroup', LANG["UPDATE_COMPLETE"]);
-        }
-    }
+    DB::run(
+        'UPDATE `groups` SET level = ?, Color = ?, group_role_id = ?, maxslots = ?,
+         control_panel = ?, staff_page = ?, staff_public = ?, staff_sort = ?
+         WHERE group_id = ?',
+        [$level, $color, $role_id, $slots, $cp, $staff, $public, $sort, $group_id]
+    );
+    redirect('group/view', __('UPDATE_COMPLETE'), 'success');
+}
 
 }

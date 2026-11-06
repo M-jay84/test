@@ -11,9 +11,7 @@ if (!Auth::check()) {
 }
 
 if (is_post()) {
-    if (!csrf_verify()) {
-        redirect('snatch/trade', 'Invalid request', 'warning');
-    }
+    csrf_verify() || redirect('snatch/trade', __('INVALID_REQUEST'), 'warning');
     SnatchedLogic::submitTrade($current_user);
     return;
 }
@@ -25,9 +23,7 @@ render_flash();
 block_begin(__('TRADE'));
 ?>
 <p class="text-center">
-    To solve this problem you must keep seeding these torrents for <?= (int) (CONFIG['HNR_SEEDTIME'] ?? 0) ?> hours
-    or until ratio becomes 1:1.<br>
-    Or trade to clear them with Bonus or Upload.
+    <?= e(__('HNR_TRADE_HELP', (int) (CONFIG['HNR_SEEDTIME'] ?? 0))) ?>
 </p>
 
 <div class="table-responsive p-3">
@@ -35,45 +31,46 @@ block_begin(__('TRADE'));
         <thead>
             <tr>
                 <th><?= e(__('TORRENT_NAME')) ?></th>
-                <th><i class="fa fa-upload tticon" title="Uploaded"></i></th>
-                <th><i class="fa fa-download tticon" title="Downloaded"></i></th>
+                <th><i class="fa fa-upload tticon" title="<?= e(__('UPLOADED')) ?>"></i></th>
+                <th><i class="fa fa-download tticon" title="<?= e(__('DOWNLOADED')) ?>"></i></th>
                 <th><?= e(__('SEED_TIME')) ?></th>
                 <th><?= e(__('SIZE')) ?></th>
-                <th>Remove Bonus</th>
-                <th>Remove Upload</th>
+                <th><?= e(__('REMOVE_BONUS')) ?></th>
+                <th><?= e(__('REMOVE_UPLOAD')) ?></th>
             </tr>
         </thead>
         <tbody>
         <?php foreach ($SNATCHED as $row) :
-            $smallname = htmlspecialchars(CutName($row['name'] ?? '', 40));
+            $size = (int) ($row['size'] ?? 0);
+            $smallname = e(CutName((string) ($row['name'] ?? ''), 40));
             ?>
             <tr>
-                <td><a href="<?= url('torrent/view/' . (int) $row['tid']) ?>"><b><?= $smallname ?></b></a></td>
-                <td><span style="color:#27B500"><?= mksize($row['uploaded'] ?? 0) ?></span></td>
-                <td><span style="color:#FF2200"><?= mksize($row['download'] ?? 0) ?></span></td>
+                <td><a href="<?= e(url('torrent/view/' . (int) $row['tid'])) ?>"><b><?= $smallname ?></b></a></td>
+                <td><span style="color:#27B500"><?= mksize((int) ($row['upload'] ?? $row['uploaded'] ?? 0)) ?></span></td>
+                <td><span style="color:#FF2200"><?= mksize((int) ($row['download'] ?? 0)) ?></span></td>
                 <td><?= !empty($row['last_time']) ? e(get_elapsed_time($row['last_time'])) : '---' ?></td>
-                <td><?= mksize($row['size'] ?? 0) ?></td>
+                <td><?= mksize($size) ?></td>
                 <td>
-                    <form method="post" action="<?= url('snatch/trade') ?>" style="display:inline">
+                    <form method="post" action="<?= e(url('snatch/trade')) ?>" style="display:inline">
                         <?= csrf_field() ?>
                         <input type="hidden" name="torid" value="<?= (int) $row['tid'] ?>">
-                        <?php if (($row['seedbonus'] ?? 0) >= ($row['size'] ?? 0)) : ?>
-                            <button type="submit" class="btn btn-sm ttbtn" name="requestpoints" value="1">Delete</button>
-                            Cost <b><?= (int) $row['size'] ?></b> Bonus
+                        <?php if ((int) ($row['seedbonus'] ?? 0) >= $size) : ?>
+                            <button type="submit" class="btn btn-sm ttbtn" name="requestpoints" value="1"><?= e(__('DEL')) ?></button>
+                            <?= e(__('COST_BONUS', $size)) ?>
                         <?php else : ?>
-                            Not enough Seed Bonus
+                            <?= e(__('NOT_ENOUGH_BONUS')) ?>
                         <?php endif; ?>
                     </form>
                 </td>
                 <td>
-                    <form method="post" action="<?= url('snatch/trade') ?>" style="display:inline">
+                    <form method="post" action="<?= e(url('snatch/trade')) ?>" style="display:inline">
                         <?= csrf_field() ?>
                         <input type="hidden" name="torid" value="<?= (int) $row['tid'] ?>">
-                        <?php if (($row['uploaded'] ?? 0) > ($row['size'] ?? 0)) : ?>
-                            <button type="submit" class="btn btn-sm ttbtn" name="requestupload" value="1">Delete</button>
-                            Cost <b><?= mksize($row['size'] ?? 0) ?></b> Upload
+                        <?php if ((int) ($row['uploaded'] ?? 0) > $size) : ?>
+                            <button type="submit" class="btn btn-sm ttbtn" name="requestupload" value="1"><?= e(__('DEL')) ?></button>
+                            <?= e(__('COST_UPLOAD', mksize($size))) ?>
                         <?php else : ?>
-                            Not enough Upload
+                            <?= e(__('NOT_ENOUGH_UPLOAD')) ?>
                         <?php endif; ?>
                     </form>
                 </td>

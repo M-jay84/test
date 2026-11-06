@@ -19,4 +19,5 @@ if ($id < 1) {
     redirect('rule', __('MISSING_ID'), 'warning');
 }
 
-RulesLogic::delete($id, $current_user->username);
+// Prefer POST later; for now model deletes
+RulesLogic::delete($id, (string) $current_user->username);

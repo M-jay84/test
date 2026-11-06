@@ -1,12 +1,13 @@
 <?php
 declare(strict_types=1);
 
+use Bootstrap\Libs\Auth;
 use Bootstrap\Models\TopicsLogic;
 use Bootstrap\Models\ForumsLogic;
 
 $current_user = ForumsLogic::forum_guard();
-// Original used view_forum != yes — keep same idea
-if (($current_user->view_forum ?? '') !== 'yes' && !\Bootstrap\Libs\Auth::isStaff()) {
+
+if (($current_user->view_forum ?? '') !== 'yes' && !Auth::isStaff()) {
     redirect('home', __('FORUM_BANNED'), 'warning');
 }
 
@@ -17,8 +18,10 @@ if ($forumid < 1) {
 
 $TOPICS     = TopicsLogic::getForumTopics($forumid, $current_user);
 $FORUM_ID   = $forumid;
-$TOPIC_NAME = $TOPICS['topic_name'] ?? '';
-$FORUM_NAME = $TOPICS['forum_name'] ?? '';
+$TOPIC_NAME = (string) ($TOPICS['topic_name'] ?? '');
+$FORUM_NAME = (string) ($TOPICS['forum_name'] ?? '');
+$canMod     = (($current_user->edit_forum ?? '') === 'yes'
+           || ($current_user->delete_news ?? '') === 'yes');
 
 theme_header(__('FORUM'));
 render_flash();
@@ -40,7 +43,7 @@ forumheader($FORUM_NAME . '/' . $TOPIC_NAME);
                     <th class="col-1"><?= e(__('VIEWS')) ?></th>
                     <th class="col-1"><?= e(__('AUTHOR')) ?></th>
                     <th class="col-3"><?= e(__('LAST_POST')) ?></th>
-                    <?php if (($current_user->edit_forum ?? '') === 'yes' || ($current_user->delete_news ?? '') === 'yes') : ?>
+                    <?php if ($canMod) : ?>
                         <th class="col-1"><?= e(__('MODERATE')) ?></th>
                     <?php endif; ?>
                 </tr>
@@ -50,7 +53,7 @@ forumheader($FORUM_NAME . '/' . $TOPIC_NAME);
                 <tr>
                     <td><?= $row['read'] ?></td>
                     <td>
-                        <a href="<?= url('post/view/' . (int) $row['id']) ?>">
+                        <a href="<?= e(url('post/view/' . (int) $row['id'])) ?>">
                             <b><?= e(encodehtml(stripslashes((string) ($row['subject'] ?? '')))) ?></b>
                         </a>
                     </td>
@@ -58,18 +61,18 @@ forumheader($FORUM_NAME . '/' . $TOPIC_NAME);
                     <td><?= (int) ($row['views'] ?? 0) ?></td>
                     <td><?= coloredname((int) ($row['userid'] ?? 0)) ?></td>
                     <td><?= $row['lastuserpost'] ?? '' ?></td>
-                    <?php if (($current_user->edit_forum ?? '') === 'yes' || ($current_user->delete_news ?? '') === 'yes') : ?>
+                    <?php if ($canMod) : ?>
                         <td>
                             <?php if (!empty($row['locked'])) : ?>
-                                <a href="<?= url("topic/action/{$FORUM_ID}/{$row['id']}/unlock") ?>"><i class="fa fa-unlock" style="color:red"></i></a>
+                                <a href="<?= e(url("topic/action/{$FORUM_ID}/{$row['id']}/unlock")) ?>"><i class="fa fa-unlock" style="color:red"></i></a>
                             <?php else : ?>
-                                <a href="<?= url("topic/action/{$FORUM_ID}/{$row['id']}/lock") ?>"><i class="fa fa-lock"></i></a>
+                                <a href="<?= e(url("topic/action/{$FORUM_ID}/{$row['id']}/lock")) ?>"><i class="fa fa-lock"></i></a>
                             <?php endif; ?>
-                            <a href="<?= url('topic/delete/' . (int) $row['id']) ?>"><i class="fa fa-trash" style="color:red"></i></a>
+                            <a href="<?= e(url('topic/delete/' . (int) $row['id'])) ?>"><i class="fa fa-trash" style="color:red"></i></a>
                             <?php if (!empty($row['sticky'])) : ?>
-                                <a href="<?= url("topic/action/{$FORUM_ID}/{$row['id']}/unsticky") ?>"><i class="fa fa-exclamation" style="color:red"></i></a>
+                                <a href="<?= e(url("topic/action/{$FORUM_ID}/{$row['id']}/unsticky")) ?>"><i class="fa fa-exclamation" style="color:red"></i></a>
                             <?php else : ?>
-                                <a href="<?= url("topic/action/{$FORUM_ID}/{$row['id']}/sticky") ?>"><i class="fa fa-exclamation"></i></a>
+                                <a href="<?= e(url("topic/action/{$FORUM_ID}/{$row['id']}/sticky")) ?>"><i class="fa fa-exclamation"></i></a>
                             <?php endif; ?>
                         </td>
                     <?php endif; ?>
@@ -82,13 +85,14 @@ forumheader($FORUM_NAME . '/' . $TOPIC_NAME);
 
 <?= $TOPICS['pager'] ?? '' ?>
 
-<form name="form" action="<?= url('topic/submit/' . $FORUM_ID) ?>" method="post" enctype="multipart/form-data">
+<form name="form" action="<?= e(url('topic/submit/' . $FORUM_ID)) ?>" method="post" enctype="multipart/form-data">
     <?= csrf_field() ?>
     <div class="modal fade" id="postModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">
             <div class="modal-content">
                 <div class="modal-body">
-                    <input type="text" class="form-control fullwidth" maxlength="200" name="subject" placeholder="<?= e(__('SUBJECT')) ?>">
+                    <input type="text" class="form-control fullwidth" maxlength="200" name="subject"
+                           placeholder="<?= e(__('SUBJECT')) ?>">
                     <?php textbbcode('form', 'body'); ?>
                     <p class="text-center"><b><?= e(__('ADD_ATTACH')) ?></b><br>
                         <input type="file" name="file[]" multiple>

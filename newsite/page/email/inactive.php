@@ -1,9 +1,12 @@
-Your account on %sitename% was marked as inactive and will be deleted within a few days.
-If you want to remain member at %sitename% you must just login and download something nice!
+Your account on %sitename% was marked as inactive and may be deleted within a few days.
 
-Your username it's:      %username%
-Account created on:      %added%
-Last visit on site:      %last_access%
+If you want to remain a member, log in and use the site (for example download a torrent).
 
-You can login here:      %siteurl%/login
-Recovery password:       %siteurl%/recover
+Username:           %username%
+Account created:    %added%
+Last visit:         %last_access%
+
+Login:              %siteurl%/authorise/login
+Password recovery:  %siteurl%/authorise/recover
+
+Please do not reply to this message.

@@ -1,99 +1,121 @@
 <?php
+declare(strict_types=1);
 
 namespace Bootstrap\Models;
 
 use Bootstrap\Libs\DB;
-use Bootstrap\Libs\Validate;
+use Bootstrap\Libs\Auth;
 use Bootstrap\Models\LogsLogic;
+use PDO;
 
-/*
-* Shoutbox Table Data
-*/
 class ShoutboxLogic
 {
-    // Delete Shout
-    public static function remove($id)
+    public static function shouts(int $limit = 20, int $staff = 0): array
     {
-        $shoutbox_query = "DELETE FROM shoutbox WHERE id = ?";
-        $stmt = DB::run($shoutbox_query, [$id]);
-        message(URLROOT, LANG["ACTION_COMPLETE"]);
-	}
+        $limit = max(1, min(200, $limit));
 
-    // Get Shouts
-    public static function shouts($limit, $public = 0)
-    {
-        $shoutbox_query = "SELECT * FROM `shoutbox` WHERE staff=? ORDER BY msgid DESC LIMIT $limit";
-        $shouts = DB::run($shoutbox_query, [$public]);
-        return $shouts;
+        return DB::run(
+            "SELECT s.msgid, s.userid, s.date, s.user, s.message, s.staff,
+                    u.avatar
+             FROM shoutbox s
+             LEFT JOIN users u ON u.id = s.userid
+             WHERE s.staff = ?
+             ORDER BY s.msgid DESC
+             LIMIT {$limit}",
+            [$staff]
+        )->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Truncate All Shouts
-    public static function truncate($current_user, $sure = 0)
+    public static function add(object $user, int $staff = 0): never
     {
-        if ($sure == 'sure') {
-        
-            $shoutbox_query = "TRUNCATE TABLE shoutbox";
-            DB::run($shoutbox_query);
-            LogsLogic::write("Shoutbox cleared by ".$current_user->username."");
-            $msg_shout = "[color=#ff0000]" . LANG["SHOUTBOX_CLEARED_MESSAGE"] . "[/color]";
-            $shoutbox_query = "INSERT INTO shoutbox (userid,date,user,message) VALUES (?,?,?,?)";
-            DB::run($shoutbox_query, [0, CONFIG['TT_DATE'], 'System', $msg_shout]);
-            message('admincp', "<b><font color='#ff0000'>Shoutbox Cleared....</font></b>");
-        } else {
-            message('admincp', "<b>Are You Sure <a href='".URLROOT."/task/clearshout/sure'>delete all shouts</a></b>");
+        if (($user->shoutboxpos ?? '') === 'yes' || empty($user->id)) {
+            redirect('home', __('NO_PERMISSION'), 'warning');
         }
+
+        $message = input_string('message');
+        if ($message === '') {
+            redirect('home', __('MISSING_FORM_DATA'), 'warning');
+        }
+
+        $dup = (int) DB::run(
+            'SELECT COUNT(*) FROM shoutbox
+             WHERE message = ? AND user = ?
+               AND UNIX_TIMESTAMP(?) - UNIX_TIMESTAMP(date) < ?',
+            [$message, $user->username, CONFIG['TT_DATE'], 30]
+        )->fetchColumn();
+
+        if ($dup === 0) {
+            DB::run(
+                'INSERT INTO shoutbox (userid, date, user, message, staff) VALUES (?, ?, ?, ?, ?)',
+                [(int) $user->id, CONFIG['TT_DATE'], $user->username, $message, $staff]
+            );
+        }
+
+        redirect('home', __('SUCCESS'), 'success');
     }
 
-    // Add Shout
-    public static function add($current_user, $staff = 0)
+    public static function edit(object $user): never
     {
-        if ($current_user->shoutboxpos != 'yes' && $current_user->id) {
-            if (!empty($_POST['message']) && $current_user->id) {
-                $message = Input1('message');
+        $ownerId = input_int('user');
+        $msgid   = input_int('id');
+        $message = input_string('text');
 
-
-                $count =  DB::run('SELECT count(*) FROM `shoutbox` WHERE message=? AND user=? AND UNIX_TIMESTAMP(?)-UNIX_TIMESTAMP(date) <?', [$message, $current_user->username, CONFIG['TT_DATE'], 30])->fetchColumn();
-                if ($count == '0') {
-
-                    DB::run('INSERT INTO shoutbox (userid, date, user, message, staff) VALUES (?, ?, ?, ?, ?)', [$current_user->id, CONFIG['TT_DATE'], $current_user->username, $message, $staff]);
-                }
-            }
-        } else {
-            message(URLROOT, LANG["NO_PERMISSION"]);
+        $isStaff = Auth::isStaff() || (($user->edit_users ?? '') === 'yes');
+        if (!$isStaff && (int) $user->id !== $ownerId) {
+            redirect('home', __('NO_PERMISSION'), 'warning');
         }
+        if ($msgid < 1 || $message === '') {
+            redirect('home', __('MISSING_FORM_DATA'), 'warning');
+        }
+
+        DB::run('UPDATE shoutbox SET message = ? WHERE msgid = ?', [$message, $msgid]);
+        redirect('home', __('UPDATE_COMPLETE'), 'success');
     }
 
-    // Delete Shout
-    public static function delete($id, $current_user, $sure = 0)
+    public static function delete(int $id, object $user, int $sure = 0): never
     {
-        if ($sure == 0) {
-            message(URLROOT, "Sanity check: Click <a href='".URLROOT."/shoutbox/delete/$id/1'>here</a> if you are sure.");
+        if ($id < 1) {
+            redirect('home', __('NOTHING_FOUND'), 'warning');
+        }
+        if ($sure !== 1) {
+            // confirmation via message() or flash + link — prefer redirect with flash if you have a confirm UI
+            message(
+                __('SANITY_CHECK_DELETE', url('shoutbox/delete/' . $id . '/1')),
+                'home'
+            );
         }
 
-        $shoutbox_query = "SELECT user FROM `shoutbox` WHERE msgid=?";
-        $row =  DB::run($shoutbox_query, [$id])->fetchColumn();
-        if ($current_user->edit_users == 'yes' || $current_user->username == $row['user']) {
-            LogsLogic::write("<b><font color='orange'>Shout Deleted:</font> Deleted by   " . $current_user->username . "</b>");
-            ShoutboxLogic::remove(['msgid'=>$id]);
+        $owner = (string) DB::run(
+            'SELECT user FROM shoutbox WHERE msgid = ?',
+            [$id]
+        )->fetchColumn();
+
+        $isStaff = ($user->edit_users ?? '') === 'yes' || Auth::isStaff();
+        if (!$isStaff && (string) $user->username !== $owner) {
+            redirect('home', __('NO_PERMISSION'), 'warning');
         }
-       url(URLROOT);
+
+        DB::run('DELETE FROM shoutbox WHERE msgid = ?', [$id]);
+        LogsLogic::write('Shout deleted by ' . $user->username);
+        redirect('home', __('ACTION_COMPLETE'), 'success');
     }
 
-    // Edit Shout
-    public static function edit($current_user)
+    public static function truncate(string $sure = ''): never
     {
-        // Check User Input
-        $user = Input1('user', 'int');
-        if ($current_user->isStaff || $current_user->id == $user) {
-            // Check User Input
-            $msgid = Input1('id', 'int');
-            $message = Input1('text');
-            $shoutbox_query = "UPDATE shoutbox SET message = ? WHERE msgid=?";
-            DB::run($shoutbox_query, [$message, $msgid]);
-            message(URLROOT, LANG["UPDATE_COMPLETE"]);
-        } else {
-            message('authorise/logout', LANG["NO_PERMISSION"]);
+        if ($sure !== 'sure') {
+            message(
+                __('CONFIRM_CLEAR_SHOUT', url('task/clearshout/sure')),
+                'admin/admincp'
+            );
         }
-    }
 
+        $user = \Bootstrap\Libs\Auth::user();
+        DB::run('TRUNCATE TABLE shoutbox');
+        LogsLogic::write('Shoutbox cleared by ' . ($user->username ?? 'staff'));
+        DB::run(
+            'INSERT INTO shoutbox (userid, date, user, message) VALUES (?, ?, ?, ?)',
+            [0, CONFIG['TT_DATE'], 'System', __('SHOUTBOX_CLEARED_MESSAGE')]
+        );
+        redirect('admin/admincp', __('SHOUTBOX_CLEARED'), 'success');
+    }
 }

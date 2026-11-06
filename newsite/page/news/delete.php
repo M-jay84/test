@@ -11,4 +11,4 @@ $id = (int) param(0, 0);
 if ($id < 1) {
     redirect('news/view', __('MISSING_ID'), 'warning');
 }
-NewsLogic::delete($id, (int) Auth::user()->id);
+NewsLogic::delete($id, (int) Auth::id());

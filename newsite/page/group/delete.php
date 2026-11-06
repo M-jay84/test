@@ -18,5 +18,4 @@ if ($groupId < 1) {
     redirect('group/view', __('MISSING_ID'), 'warning');
 }
 
-GroupsLogic::delete($groupId);
-// Model should redirect('group/view', …) after delete
+GroupsLogic::delete($groupId); // model redirects

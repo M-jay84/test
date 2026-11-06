@@ -19,39 +19,33 @@ class TagsLogic
     return $stmt;
   }
 
-  // Admin Add/Update Tag
-  public static function insertOrUpdate()
-  {
-    $name = Input1('name');
-    $colour = Input1('colour');
-    $id = Input1('id', 'int');
+public static function insertOrUpdate(): never
+{
+    $name   = input_string('name');
+    $colour = input_string('colour');
+    $id     = input_int('id');
 
-    if (!$name) {
-      message('admintag', LANG["MISSING_FORM_DATA"]);
+    if ($name === '') {
+        redirect('tag/admin', __('MISSING_FORM_DATA'), 'warning');
     }
 
-    if (!$id) {
-      $tags_query = "INSERT INTO tags (name,colour) VALUES (?,?)";
-      DB::run($tags_query, [$name, $colour]);
-      message('admintag', LANG['SUCCESS']);
+    if ($id < 1) {
+        DB::run('INSERT INTO tags (name, colour) VALUES (?, ?)', [$name, $colour]);
     } else {
-      $tags_query = "UPDATE tags SET name = ? AND colour = ? WHERE id=?";
-      DB::run($tags_query, [$name,$colour,$id]);
-      message('admintag', LANG['SUCCESS']);
+        DB::run('UPDATE tags SET name = ?, colour = ? WHERE id = ?', [$name, $colour, $id]);
     }
-    
-    message('admintag', LANG["ACTION_COMPLETE"]);
-  }
+    redirect('tag/admin', __('SUCCESS'), 'success');
+}
 
-  // Admin Delete Tag
-  public static function delete()
-  {
-    // Check User Input
+public static function delete(): never
+{
     $ids = multiIds('ids');
-    $tags_query = "DELETE FROM `tags` WHERE `id` IN (?)";
-    DB::run($tags_query, [$ids]);
-    message('admintag', LANG["DEL_COMPLETE"]);
-  }
+    if ($ids === '' || $ids === []) {
+        redirect('tag/admin', __('NOTHING_SELECTED'), 'warning');
+    }
+    DB::run("DELETE FROM tags WHERE id IN ($ids)");
+    redirect('tag/admin', __('DEL_COMPLETE'), 'success');
+}
 
   // Search By Tag
   public static function search($name)

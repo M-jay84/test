@@ -15,12 +15,8 @@ if ($userId < 1) {
     redirect('home', __('MISSING_ID'), 'warning');
 }
 
-if (!is_post()) {
-    redirect('warning/index/' . $userId, __('NOTHING_SELECTED'), 'warning');
-}
-
-if (!csrf_verify()) {
-    redirect('warning/index/' . $userId, 'Invalid request', 'warning');
+if (!is_post() || !csrf_verify()) {
+    redirect('warning/index/' . $userId, __('INVALID_REQUEST'), 'warning');
 }
 
 WarningsLogic::newwarn($userId);

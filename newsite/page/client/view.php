@@ -8,19 +8,22 @@ if (!Auth::isStaff()) {
     redirect('home', __('NO_PERMISSION'), 'warning');
 }
 
-$type = (string) param(0, 'peers'); // peers | client
+$type = (string) param(0, 'peers');
+if (!in_array($type, ['peers', 'client'], true)) {
+    $type = 'peers';
+}
+
 $CLIENTS = ClientsLogic::select($type);
-$TYPE = $type;
 
 theme_admin_header(__('CLIENTS'));
 render_flash();
 block_begin(__('CLIENTS'));
 ?>
 <div class="text-center">
-    <a href="<?= url('client/view/peers') ?>"><?= e(__('CURRENT')) ?></a> -
-    <a href="<?= url('client/view/client') ?>"><?= e(__('BANNED')) ?></a>
+    <a href="<?= e(url('client/view/peers')) ?>"><?= e(__('CURRENT')) ?></a> -
+    <a href="<?= e(url('client/view/client')) ?>"><?= e(__('BANNED')) ?></a>
 </div>
-<?php if ($TYPE === 'client' || $TYPE === 'clients') : ?>
+<?php if ($type === 'client') : ?>
     <div class="text-center">
         <a type="button" class="model_form ttbtn btn-sm" data-bs-toggle="modal" data-bs-target="#clientModal"><?= e(__('ADD')) ?></a>
     </div>
@@ -40,22 +43,22 @@ block_begin(__('CLIENTS'));
         <?php foreach ($CLIENTS as $row) :
             $peer = @hex2bin((string) ($row['peer_id'] ?? '')) ?: (string) ($row['peer_id'] ?? '');
             $code = substr($peer, 0, 8);
-            $isbanned = (($row['banned'] ?? '') === 'yes')
-                ? "<span style='color:green'><b>Yes</b></span>"
-                : "<span style='color:red'><b>No</b></span>";
+            $banned = (($row['banned'] ?? '') === 'yes')
+                ? "<span style='color:green'><b>" . e(__('YES')) . "</b></span>"
+                : "<span style='color:red'><b>" . e(__('NO')) . "</b></span>";
             ?>
             <tr>
                 <td><?= e($row['type'] ?? '') ?></td>
                 <td><?= e($peer) ?></td>
                 <td><?= e($code) ?></td>
-                <td><?= $isbanned ?></td>
+                <td><?= $banned ?></td>
                 <td>
                     <?php if ((int) ($row['id'] ?? 0) === 0) : ?>
                         <a href="javascript:;" class="clientAttr" data-bs-toggle="modal" data-bs-target="#clientModal"
                            data-peer_id="<?= e($row['peer_id'] ?? '') ?>"
                            data-type="<?= e($row['type'] ?? '') ?>"><i class="fa fa-plus"></i></a>
                     <?php else : ?>
-                        <a href="<?= url('client/delete/' . (int) $row['id']) ?>"><i class="fa fa-trash"></i></a>
+                        <a href="<?= e(url('client/delete/' . (int) $row['id'])) ?>"><i class="fa fa-trash"></i></a>
                     <?php endif; ?>
                 </td>
             </tr>
@@ -71,7 +74,7 @@ document.querySelectorAll('.clientAttr').forEach(function (el) {
     });
 });
 </script>
-<form method="post" action="<?= url('client/submit') ?>">
+<form method="post" action="<?= e(url('client/submit')) ?>">
     <?= csrf_field() ?>
     <div class="modal fade" id="clientModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">

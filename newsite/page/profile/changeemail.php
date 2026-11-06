@@ -1,10 +1,6 @@
 <?php
 declare(strict_types=1);
 
-/**
- * URL: /profile/changeemail/{user_id}
- */
-
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\ProfilechangeLogic;
 
@@ -27,8 +23,6 @@ if (!is_post()) {
     redirect('profile/view/' . $userId, __('MISSING_FORM_DATA'), 'warning');
 }
 
-if (!csrf_verify()) {
-    redirect('profile/view/' . $userId, 'Invalid request', 'warning');
-}
+csrf_verify() || redirect('profile/view/' . $userId, __('INVALID_REQUEST'), 'warning');
 
 ProfilechangeLogic::changeemail($userId);

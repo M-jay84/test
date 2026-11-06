@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\ShoutboxLogic;
 

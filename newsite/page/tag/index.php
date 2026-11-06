@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * URL: /tag/index/{name}  or leftover segments as name
+ * URL: /tag/index/{name}
  */
 
 use Bootstrap\Libs\Auth;
@@ -27,7 +27,7 @@ render_flash();
 block_begin(__('SEARCH'));
 ?>
 <div class="text-center">
-    <a href="<?= url('torrents/browse') ?>"><?= e(__('BROWSE_TORRENTS')) ?></a>
+    <a href="<?= e(url('torrents/browse')) ?>"><?= e(__('BROWSE_TORRENTS')) ?></a>
 </div>
 <?php
 torrenttable($TAGS);

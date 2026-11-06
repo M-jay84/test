@@ -1,6 +1,9 @@
-You have been banned from %sitename%. 
+You have been banned from %sitename%.
 
-Reason: 
+Reason:
 -------------------------------------------------------------------------------
-You have too many hit & runs so the site has automatically banned your account %mess%
+You have too many hit & runs. The site has automatically banned your account.
+%mess%
 -------------------------------------------------------------------------------
+
+Please do not reply to this message.

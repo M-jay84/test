@@ -8,20 +8,20 @@ if (!Auth::isStaff()) {
     redirect('home', __('NO_PERMISSION'), 'warning');
 }
 
-$snatched  = SnatchedLogic::join('snatched.hnr = ?', 'yes');
-$COUNT     = $snatched['count'] ?? 0;
-$PAGER     = $snatched['pager'] ?? '';
-$SNATCHED  = $snatched['stmt'] ?? [];
+$snatched = SnatchedLogic::join('snatched.hnr = ?', 'yes');
+$COUNT    = (int) ($snatched['count'] ?? 0);
+$PAGER    = $snatched['pager'] ?? '';
+$SNATCHED = $snatched['stmt'] ?? [];
 
 theme_admin_header(__('HNR'));
 render_flash();
 block_begin(__('HNR'));
 ?>
 <div class="text-center">
-    <?= sprintf(__('WE_HAVE_X_SNATCH'), (int) $COUNT) ?>
+    <?= e(__('WE_HAVE_X_SNATCH', $COUNT)) ?>
 </div>
 
-<form id="snatched" method="post" action="<?= url('snatch/submit') ?>">
+<form id="snatched" method="post" action="<?= e(url('snatch/submit')) ?>">
     <?= csrf_field() ?>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -40,12 +40,12 @@ block_begin(__('HNR'));
             <tbody>
             <?php foreach ($SNATCHED as $row) :
                 $stime = get_elapsed_time((int) ($row['last_time'] ?? 0));
-                $startdate = user_timezone_date(date('Y-m-d H:i:s', (int) ($row['start_time'] ?? 0)));
+                $startdate  = user_timezone_date(date('Y-m-d H:i:s', (int) ($row['start_time'] ?? 0)));
                 $lastaction = user_timezone_date(date('Y-m-d H:i:s', (int) ($row['upload_time'] ?? 0)));
                 ?>
                 <tr>
                     <td>
-                        <a href="<?= url('torrent/view/' . (int) ($row['tid'] ?? 0)) ?>">
+                        <a href="<?= e(url('torrent/view/' . (int) ($row['tid'] ?? 0))) ?>">
                             <?= e(CutName((string) ($row['name'] ?? ''), 35)) ?>
                         </a>
                     </td>
@@ -53,14 +53,14 @@ block_begin(__('HNR'));
                         <?php if (!empty($row['username'])) : ?>
                             <b><?= coloredname((int) ($row['uid'] ?? 0)) ?></b>
                         <?php else : ?>
-                            <?= e($row['ip'] ?? '') ?>
+                            <?= e((string) ($row['ip'] ?? '')) ?>
                         <?php endif; ?>
                     </td>
                     <td><span style="color:limegreen"><?= mksize((int) ($row['upload'] ?? 0)) ?></span></td>
                     <td><span style="color:red"><?= mksize((int) ($row['download'] ?? 0)) ?></span></td>
                     <td><?= e($stime !== null && $stime !== '' ? (string) $stime : '0') ?></td>
-                    <td><?= e(date('d.M.Y H:i', strtotime($startdate) ?: 0)) ?></td>
-                    <td><?= e(date('d.M.Y H:i', strtotime($lastaction) ?: 0)) ?></td>
+                    <td><?= e(date('d.M.Y H:i', strtotime((string) $startdate) ?: 0)) ?></td>
+                    <td><?= e(date('d.M.Y H:i', strtotime((string) $lastaction) ?: 0)) ?></td>
                     <td><input type="checkbox" name="ids[]" value="<?= (int) ($row['sid'] ?? 0) ?>"></td>
                 </tr>
             <?php endforeach; ?>

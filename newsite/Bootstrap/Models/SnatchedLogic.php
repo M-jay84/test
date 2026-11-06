@@ -26,18 +26,6 @@ class SnatchedLogic
         return  $stmt;
     }
 
-    // Admin Delete By IDs
-    public static function deleteByIds()
-    {
-        // Delete
-        if (Input1('do') == 'delete') {
-            $ids = multiIds('ids');
-            $snatched_query = "UPDATE snatched SET last_time = ? AND hnr = ? AND done = ? WHERE `sid` IN (?)";
-            DB::run($snatched_query, [86400, 'no', 'yes', $ids]);
-            message('adminsnatch', LANG["DEL_COMPLETE"]);
-        }
-    }
-
     // Get Snatched Data
     public static function join($where, $value)
     {
@@ -92,49 +80,95 @@ class SnatchedLogic
     }
 
     // Trade Snatch
-    public static function trade($uid)
-    {
-        $snatched_query =
-            "SELECT  snatched.tid as tid, torrents.name,  torrents.size, 
-	                snatched.upload, snatched.download, snatched.last_time, 
-		            snatched.hnr, users.uploaded, users.downloaded, users.seedbonus, users.modcomment 
-		    FROM snatched 
-		    INNER JOIN users ON snatched.uid = users.id 
-		    INNER JOIN torrents ON snatched.tid = torrents.id
-		    WHERE users.status = 'confirmed'
-		    AND snatched.uid = '$uid'
-		    AND snatched.hnr = 'yes'
-		    AND snatched.done = 'no'
-		    ORDER BY start_time DESC";
-        $res = DB::run($snatched_query)->fetchAll();
-
-        return $res;
+ public static function deleteByIds(): never
+{
+    $ids = multiIds('ids'); // existing helper
+    if ($ids === '' || $ids === []) {
+        redirect('snatch/admin', __('NOTHING_SELECTED'), 'warning');
     }
 
-    // Submit Trade
-    public static function submitTrade($current_user)
-    {
-        $torid = Input1('torid');
-        $torsize = Input1('size');
-        if ($_POST["requestpoints"]) {
-            $modcomment = date("d-M-Y") . " - " . LANG["DELETED_RECORDING"] . ": " . $torid . " with " . $torsize . " " . LANG["POINTS_OF_SEED_BONUS"];
-            $snatched_query = "UPDATE users SET seedbonus = seedbonus - ? AND modcomment = ? WHERE id = ?";
-            DB::run($snatched_query, [$torsize, $modcomment, $current_user->id]);
-            $snatched_query = "UPDATE snatched SET last_time = ? AND hnr =? AND done =? WHERE tid=? AND uid =?";
-            DB::run($snatched_query, [86400, 'no', 'yes', $torid,  $current_user->id]);
-            LogsLogic::write("<a href=" . URLROOT . "/profile/view/" . $current_user->id . "><b>" . $current_user->username . "</b></a> " . LANG["DELETED_RECORDING"] . ": <a href=" . URLROOT . "/torrent/view/$torid><b>$torid</b></a>  " . LANG["HIT_AND_RUN_WITH"] . " <b>$torsize</b> " . LANG["POINTS_OF_SEED_BONUS"] . "");
-            message('snatch/trade', LANG["DEL_COMPLETE"]);
-        } elseif ($_POST["requestupload"]) {
-            $modcomment = date("d-M-Y") . " - " . LANG["DELETED_RECORDING"] . ": " . $torid . " with " . mksize($torsize) . " " . LANG["OF_UPLOAD"];
-            $users_query = "UPDATE users SET uploaded = uploaded - '$torsize' AND modcomment = ? WHERE id = ?";
-            DB::run($users_query, [$modcomment, $current_user->id]);
-            $snatched_query = "UPDATE snatched SET last_time = ? AND hnr =? AND done =? WHERE tid=? AND uid =?";
-            DB::run($snatched_query, [86400, 'no', 'yes', $torid,  $current_user->id]);
-            LogsLogic::write("<a href=" . URLROOT . "/profile/view/" . $current_user->id . "><b>" . $current_user->username . "</b></a> " . LANG["DELETED_RECORDING"] . ": <a href=" . URLROOT . "/torrent/view/$torid><b>$torid</b></a> " . LANG["HIT_AND_RUN_WITH"] . " <b>$torsize</b> " . LANG["OF_UPLOAD"] . "");
-            message('snatch/trade', LANG["DEL_COMPLETE"]);
-        } else {
-            message('snatch/trade', LANG["ACTION_FAILED"]);
+    // Prefer proper IN expansion if multiIds returns array
+    DB::run(
+        "UPDATE snatched SET last_time = ?, hnr = ?, done = ? WHERE sid IN ($ids)",
+        [86400, 'no', 'yes']
+    );
+    redirect('snatch/admin', __('DEL_COMPLETE'), 'success');
+}
+
+public static function trade(int $uid): array
+{
+    return DB::run(
+        "SELECT s.tid, t.name, t.size, s.upload, s.download, s.last_time, s.hnr,
+                u.uploaded, u.downloaded, u.seedbonus
+         FROM snatched s
+         INNER JOIN users u ON s.uid = u.id
+         INNER JOIN torrents t ON s.tid = t.id
+         WHERE u.status = 'confirmed'
+           AND s.uid = ?
+           AND s.hnr = 'yes'
+           AND s.done = 'no'
+         ORDER BY s.start_time DESC",
+        [$uid]
+    )->fetchAll(\PDO::FETCH_ASSOC);
+}
+
+public static function submitTrade(object $user): never
+{
+    $torid = input_int('torid');
+    if ($torid < 1) {
+        redirect('snatch/trade', __('MISSING_ID'), 'warning');
+    }
+
+    $row = DB::run(
+        "SELECT t.size, u.seedbonus, u.uploaded
+         FROM snatched s
+         INNER JOIN torrents t ON t.id = s.tid
+         INNER JOIN users u ON u.id = s.uid
+         WHERE s.tid = ? AND s.uid = ? AND s.hnr = 'yes' AND s.done = 'no'",
+        [$torid, (int) $user->id]
+    )->fetch(\PDO::FETCH_ASSOC);
+
+    if (!$row) {
+        redirect('snatch/trade', __('NOTHING_FOUND'), 'warning');
+    }
+
+    $size = (int) $row['size'];
+
+    if (!empty($_POST['requestpoints'])) {
+        if ((int) $row['seedbonus'] < $size) {
+            redirect('snatch/trade', __('NOT_ENOUGH_BONUS'), 'warning');
         }
+        $mod = date('d-M-Y') . ' - ' . __('DELETED_RECORDING') . ": {$torid}";
+        DB::run(
+            'UPDATE users SET seedbonus = seedbonus - ?, modcomment = CONCAT(?, "\n", IFNULL(modcomment,"")) WHERE id = ?',
+            [$size, $mod, (int) $user->id]
+        );
+        DB::run(
+            'UPDATE snatched SET last_time = ?, hnr = ?, done = ? WHERE tid = ? AND uid = ?',
+            [86400, 'no', 'yes', $torid, (int) $user->id]
+        );
+        LogsLogic::write($user->username . ' cleared HnR torrent ' . $torid . ' with bonus');
+        redirect('snatch/trade', __('DEL_COMPLETE'), 'success');
     }
+
+    if (!empty($_POST['requestupload'])) {
+        if ((int) $row['uploaded'] < $size) {
+            redirect('snatch/trade', __('NOT_ENOUGH_UPLOAD'), 'warning');
+        }
+        $mod = date('d-M-Y') . ' - ' . __('DELETED_RECORDING') . ": {$torid}";
+        DB::run(
+            'UPDATE users SET uploaded = uploaded - ?, modcomment = CONCAT(?, "\n", IFNULL(modcomment,"")) WHERE id = ?',
+            [$size, $mod, (int) $user->id]
+        );
+        DB::run(
+            'UPDATE snatched SET last_time = ?, hnr = ?, done = ? WHERE tid = ? AND uid = ?',
+            [86400, 'no', 'yes', $torid, (int) $user->id]
+        );
+        LogsLogic::write($user->username . ' cleared HnR torrent ' . $torid . ' with upload');
+        redirect('snatch/trade', __('DEL_COMPLETE'), 'success');
+    }
+
+    redirect('snatch/trade', __('ACTION_FAILED'), 'warning');
+}
 
 }

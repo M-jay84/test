@@ -10,10 +10,8 @@ if (!Auth::isStaff()) {
 
 $type   = (string) param(0, '');
 $search = trim((string) get('search', ''));
-// Do NOT inject raw LIKE into SQL here — pass $search to the model if possible.
-// Legacy: $where was broken (unquoted). Prefer model handling of search.
-$where  = ''; // model should use bound params for search
 
+// Prefer TorrentsLogic::adminList($type, $search) that binds LIKE params
 if ($type === 'dead') {
     $torrents = TorrentsLogic::getAll(
         'WHERE banned = ? AND seeders < 1 ORDER BY torrents.added DESC',
@@ -36,11 +34,11 @@ if ($type === 'dead') {
     $torrents = TorrentsLogic::getAll(
         'WHERE torrents.id > ? ORDER BY name',
         [0],
-        'torrents/admin?'
+        'torrents/admin'
     );
 }
 
-$COUNT    = $torrents['count'] ?? 0;
+$COUNT    = (int) ($torrents['count'] ?? 0);
 $PAGER    = $torrents['pager'] ?? '';
 $TORRENTS = $torrents['stmt'] ?? [];
 
@@ -48,7 +46,7 @@ theme_admin_header(__('TORRENT'));
 render_flash();
 block_begin(__('TORRENT'));
 ?>
-<form method="get" action="<?= url('torrents/admin' . ($type !== '' ? '/' . $type : '')) ?>">
+<form method="get" action="<?= e(url('torrents/admin' . ($type !== '' ? '/' . $type : ''))) ?>">
     <p class="tt_blockcenter rounded text-center">
         <?= e(__('SEARCH')) ?>:
         <input type="text" name="search" value="<?= e($search) ?>" size="30">
@@ -57,15 +55,15 @@ block_begin(__('TORRENT'));
 </form>
 
 <p class="text-center">
-    <a href="<?= url('torrents/admin') ?>"><?= e(__('ALL')) ?></a> -
-    <a href="<?= url('torrents/admin/dead') ?>"><?= e(__('DEAD')) ?></a> -
-    <a href="<?= url('torrents/admin/banned') ?>"><?= e(__('BANNED')) ?></a> -
-    <a href="<?= url('torrents/admin/free') ?>"><?= e(__('FREELEECH')) ?></a><br>
-    <?= e(__('TORRENT')) ?> - <?= e(__('TOTAL')) ?> <?= (int) $COUNT ?>
+    <a href="<?= e(url('torrents/admin')) ?>"><?= e(__('ALL')) ?></a> -
+    <a href="<?= e(url('torrents/admin/dead')) ?>"><?= e(__('DEAD')) ?></a> -
+    <a href="<?= e(url('torrents/admin/banned')) ?>"><?= e(__('BANNED')) ?></a> -
+    <a href="<?= e(url('torrents/admin/free')) ?>"><?= e(__('FREELEECH')) ?></a><br>
+    <?= e(__('TORRENT')) ?> - <?= e(__('TOTAL')) ?> <?= $COUNT ?>
     <?php if ($type !== '') : ?> - <?= e($type) ?><?php endif; ?>
 </p>
 
-<form id="delete" method="post" action="<?= url('torrents/admindelete') ?>">
+<form id="delete" method="post" action="<?= e(url('torrents/admindelete')) ?>">
     <?= csrf_field() ?>
     <?php torrenttable($TORRENTS); ?>
     <p class="text-center">

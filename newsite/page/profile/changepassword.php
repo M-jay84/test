@@ -1,11 +1,6 @@
 <?php
 declare(strict_types=1);
 
-/**
- * URL: /profile/changepassword/{user_id}
- * Fields: chpassword, passagain
- */
-
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\ProfilechangeLogic;
 
@@ -28,8 +23,6 @@ if (!is_post()) {
     redirect('profile/view/' . $userId, __('MISSING_FORM_DATA'), 'warning');
 }
 
-if (!csrf_verify()) {
-    redirect('profile/view/' . $userId, 'Invalid request', 'warning');
-}
+csrf_verify() || redirect('profile/view/' . $userId, __('INVALID_REQUEST'), 'warning');
 
 ProfilechangeLogic::submitPassword($userId);

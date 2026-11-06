@@ -7,8 +7,8 @@ if (!Auth::isStaff()) {
     redirect('home', __('NO_PERMISSION'), 'warning');
 }
 
-require BASEROOT . '/page/admin/admin_header.php';
+theme_admin_header(__('ADMINISTRATION'));
 render_flash();
 block_begin(__('ADMINISTRATION'));
 block_end();
-require BASEROOT . '/page/admin/admin_footer.php';
+theme_admin_footer();

@@ -4,42 +4,39 @@ declare(strict_types=1);
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\BansLogic;
 
-$current_user = Auth::user();
+if (!Auth::isStaff()) {
+    redirect('home', __('NO_PERMISSION'), 'warning');
+}
+
 $type = (string) param(0, 'email');
 if (!in_array($type, ['email', 'ip', 'domain'], true)) {
     $type = 'email';
 }
 
-if (!Auth::isStaff()) {
-    redirect('home', __('NO_PERMISSION'), 'warning');
-}
-
 if (is_post()) {
-    if (!csrf_verify()) {
-        redirect('ban/admin/' . $type, 'Invalid request', 'warning');
-    }
-    BansLogic::insert($current_user);
+    csrf_verify() || redirect('ban/admin/' . $type, __('INVALID_REQUEST'), 'warning');
+    BansLogic::insert(Auth::user());
     return;
 }
 
-$bans  = BansLogic::getAll($type);
-$BANS  = $bans['bans'] ?? [];
-$PAGER = $bans['pager'] ?? '';
+$data  = BansLogic::getAll($type);
+$BANS  = $data['bans'] ?? [];
+$PAGER = $data['pager'] ?? '';
 
 theme_admin_header(__('BANNED'));
 render_flash();
 block_begin(__('BANNED'));
 ?>
 <div class="text-center">
-    <a href="<?= url('ban/admin/email') ?>"><?= e(__('EMAIL')) ?></a>&nbsp;
-    <a href="<?= url('ban/admin/ip') ?>"><?= e(__('IP')) ?></a>&nbsp;
-    <a href="<?= url('ban/admin/domain') ?>"><?= e(__('DOMAIN')) ?></a>
+    <a href="<?= e(url('ban/admin/email')) ?>"><?= e(__('EMAIL')) ?></a>&nbsp;
+    <a href="<?= e(url('ban/admin/ip')) ?>"><?= e(__('IP')) ?></a>&nbsp;
+    <a href="<?= e(url('ban/admin/domain')) ?>"><?= e(__('DOMAIN')) ?></a>
 </div>
 <p class="text-end">
     <a type="button" class="model_form ttbtn btn-sm" data-bs-toggle="modal" data-bs-target="#banModal"><?= e(__('ADD')) ?></a>
 </p>
 
-<form id="delete" action="<?= url('ban/delete') ?>" method="post">
+<form id="delete" action="<?= e(url('ban/delete')) ?>" method="post">
     <?= csrf_field() ?>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -70,7 +67,7 @@ block_begin(__('BANNED'));
     <p class="text-center"><button type="submit" class="btn btn-sm ttbtn"><?= e(__('DEL')) ?></button></p>
 </form>
 
-<form method="post" action="<?= url('ban/admin/' . $type) ?>">
+<form method="post" action="<?= e(url('ban/admin/' . $type)) ?>">
     <?= csrf_field() ?>
     <div class="modal fade" id="banModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">

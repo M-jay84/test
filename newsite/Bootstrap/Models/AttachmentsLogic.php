@@ -11,19 +11,37 @@ use Bootstrap\Libs\Thumbnail;
 class AttachmentsLogic
 {
     // Download Attachment
-    public static function downloadAttachment($id, $hash)
-    {
-        $file = ATTACHMENT_PATH . "/$hash.data";
-        $attachments_query = "SELECT filename FROM attachments WHERE id = ?";
-        $attachment =  DB::run($attachments_query, [$id])->fetchColumn();
-        $extension = substr($attachment['filename'], -3);
-        $array = [
-            'id' => $id,
-            'extension' => $extension,
-            'file' => $file,
-        ];
-        return $array;
+public static function downloadAttachment(int $id, string $hash): array
+{
+    if ($id < 1 || $hash === '') {
+        redirect('home', __('NOTHING_FOUND'), 'warning');
     }
+
+    $row = DB::run(
+        'SELECT filename, file_hash FROM attachments WHERE id = ?',
+        [$id]
+    )->fetch(\PDO::FETCH_ASSOC);
+
+    if (!$row || !hash_equals((string) $row['file_hash'], $hash)) {
+        redirect('home', __('NOTHING_FOUND'), 'warning');
+    }
+
+    $file = ATTACHMENT_PATH . '/' . $row['file_hash'] . '.data';
+
+    if (!is_file($file)) {
+        redirect('home', __('NO_FILE', $hash), 'warning');
+    }
+
+    $filename  = (string) $row['filename'];
+    $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION) ?: 'octet-stream');
+
+    return [
+        'id'        => $id,
+        'filename'  => $filename,
+        'extension' => $extension,
+        'file'      => $file,
+    ];
+}
 
     // Delete Attachment
     public static function deleteAll($id, $post = false)

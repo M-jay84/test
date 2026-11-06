@@ -53,28 +53,23 @@ class InvitesLogic
         message(URLROOT, LANG["A_CONFIRMATION_EMAIL_HAS_BEEN_SENT"] . " (" . htmlspecialchars($email) . "). " . LANG["ACCOUNT_CONFIRM_SENT_TO_ADDY_REST"] . " <br/ >");
     }
 
-    // Admin Fetch All Pending Users
-    public static function InviteTree($user_id)
-    {
-        // Get Invitees Data
-        $users_query = "SELECT * FROM `users` WHERE status=? AND invited_by=? ORDER BY username";
-        $res = DB::run($users_query, ['confirmed',$user_id]);
-        $num = $res->rowCount();
-        $users_query ="SELECT count(id) FROM `users` WHERE status =? AND invited_by=?ORDER BY username";
-        $invitees = DB::run($users_query, ['confirmed',$user_id])->fetchColumn();
-        if ($invitees == 0) {
-            message("profile/view/$user_id", LANG["USER_NOT_INVITED"]);
-        }
-        
-        $title = "Invite Tree for [<a href=" . URLROOT . "/profile/view/$user_id>" . $user_id . "</a>]";
+public static function InviteTree(int $user_id): array
+{
+    $rows = DB::run(
+        'SELECT * FROM users WHERE status = ? AND invited_by = ? ORDER BY username',
+        ['confirmed', $user_id]
+    )->fetchAll(\PDO::FETCH_ASSOC);
 
-        $data = [
-            'res' => $res,
-            'num' => $num,
-            'title' => $title
-        ];
-        return $data;
+    if ($rows === []) {
+        redirect('profile/view/' . $user_id, __('USER_NOT_INVITED'), 'warning');
     }
+
+    return [
+        'rows'  => $rows,
+        'num'   => count($rows),
+        'title' => __('INVITES') . ' #' . $user_id,
+    ];
+}
 
     // Invite Form Submit
     public static function submitInvite()

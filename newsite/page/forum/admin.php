@@ -10,8 +10,9 @@ if (!Auth::isStaff()) {
 
 $id      = (int) param(0, 0);
 $forumid = (int) param(1, 0);
-$move    = param(2, false);
-if ($move === 'up' || $move === 'down' || $move === true) {
+$move    = (string) param(2, '');
+
+if ($move === 'up' || $move === 'down') {
     ForumsLogic::reorderForum($id, $forumid, $move);
     redirect('forum/admin/' . $id, __('ACTION_COMPLETE'), 'success');
 }
@@ -28,7 +29,7 @@ block_begin(__('FORUMS'));
 ?>
 <div class="rounded">
     <div class="text-center">
-        <a class="ttbtn btn-sm" href="<?= url('forumcat/admin') ?>"><?= e(__('BACK')) ?></a>
+        <a class="ttbtn btn-sm" href="<?= e(url('forumcat/admin')) ?>"><?= e(__('BACK')) ?></a>
         <a type="button" class="model_form ttbtn btn-sm" data-bs-toggle="modal" data-bs-target="#forumModal"><?= e(__('ADD')) ?></a>
     </div>
     <div class="table-responsive p-1">
@@ -51,27 +52,27 @@ block_begin(__('FORUMS'));
                 <tr>
                     <td><?= $rid ?></td>
                     <td>
-                        <?= e($row['name'] ?? '') ?><br>
-                        <small><?= format_comment($row['description'] ?? '') ?></small>
+                        <?= e((string) ($row['name'] ?? '')) ?><br>
+                        <small><?= format_comment((string) ($row['description'] ?? '')) ?></small>
                     </td>
                     <td><?= $sort ?></td>
                     <td>
                         <?php if ($sort === 1) : ?>
-                            <a href="<?= url("forum/admin/{$cid}/{$rid}/down") ?>"><i class="fa fa-arrow-down"></i></a>
+                            <a href="<?= e(url("forum/admin/{$cid}/{$rid}/down")) ?>"><i class="fa fa-arrow-down"></i></a>
                         <?php else : ?>
-                            <a href="<?= url("forum/admin/{$cid}/{$rid}/up") ?>"><i class="fa fa-arrow-up"></i></a>
-                            <a href="<?= url("forum/admin/{$cid}/{$rid}/down") ?>"><i class="fa fa-arrow-down"></i></a>
+                            <a href="<?= e(url("forum/admin/{$cid}/{$rid}/up")) ?>"><i class="fa fa-arrow-up"></i></a>
+                            <a href="<?= e(url("forum/admin/{$cid}/{$rid}/down")) ?>"><i class="fa fa-arrow-down"></i></a>
                         <?php endif; ?>
                     </td>
                     <td>
                         <a href="javascript:;" class="forumAttr" data-bs-toggle="modal" data-bs-target="#forumModal"
                            data-id="<?= $rid ?>"
-                           data-name="<?= e($row['name'] ?? '') ?>"
+                           data-name="<?= e((string) ($row['name'] ?? '')) ?>"
                            data-sort="<?= $sort ?>"
-                           data-description="<?= e($row['description'] ?? '') ?>">
+                           data-description="<?= e((string) ($row['description'] ?? '')) ?>">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <a href="<?= url('forum/delete/' . $rid) ?>"><i class="fa fa-trash tticon-red"></i></a>
+                        <a href="<?= e(url('forum/delete/' . $rid)) ?>"><i class="fa fa-trash tticon-red"></i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -91,7 +92,7 @@ document.querySelectorAll('.forumAttr').forEach(function (el) {
 });
 </script>
 
-<form method="post" action="<?= url('forum/submit') ?>">
+<form method="post" action="<?= e(url('forum/submit')) ?>">
     <?= csrf_field() ?>
     <div class="modal fade" id="forumModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">
@@ -107,27 +108,26 @@ document.querySelectorAll('.forumAttr').forEach(function (el) {
                     <?= e(__('CAT')) ?>
                     <select name="new_forum_cat" class="form-select">
                         <?php foreach ($CATS as $row) : ?>
-                            <option value="<?= (int) $row['id'] ?>"><?= e($row['name'] ?? '') ?></option>
+                            <option value="<?= (int) $row['id'] ?>"><?= e((string) ($row['name'] ?? '')) ?></option>
                         <?php endforeach; ?>
                     </select><br>
                     <?= e(__('SUB_FORUM_HELP')) ?>
                     <select name="sub" id="sub" class="form-select">
                         <option value="0"><?= e(__('NONE')) ?></option>
                         <?php foreach ($FORUM as $row) : ?>
-                            <option value="<?= (int) $row['id'] ?>"><?= e($row['name'] ?? '') ?></option>
+                            <option value="<?= (int) $row['id'] ?>"><?= e((string) ($row['name'] ?? '')) ?></option>
                         <?php endforeach; ?>
                     </select><br>
                     <?= e(__('MIN_CLASS_READ')) ?>
                     <select name="minclassread" id="minclassread" class="form-select">
                         <?php foreach ($GROUPS as $group) : ?>
-                            <option value="<?= (int) $group['group_id'] ?>"><?= e($group['level'] ?? '') ?></option>
+                            <option value="<?= (int) $group['group_id'] ?>"><?= e((string) ($group['level'] ?? '')) ?></option>
                         <?php endforeach; ?>
                     </select><br>
                     <?= e(__('MIN_CLASS_POST')) ?>
                     <select name="minclasswrite" id="minclasswrite" class="form-select">
-                        <option value="1">Member</option>
                         <?php foreach ($GROUPS as $group) : ?>
-                            <option value="<?= (int) $group['group_id'] ?>"><?= e($group['level'] ?? '') ?></option>
+                            <option value="<?= (int) $group['group_id'] ?>"><?= e((string) ($group['level'] ?? '')) ?></option>
                         <?php endforeach; ?>
                     </select><br>
                     <?= e(__('FORUM_ALLOW_GUEST_READ')) ?>

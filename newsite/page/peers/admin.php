@@ -8,17 +8,16 @@ if (!Auth::isStaff()) {
     redirect('home', __('NO_PERMISSION'), 'warning');
 }
 
-$current_user = Auth::user();
-$peers  = PeersLogic::getPeers('admin', 0, $current_user, 'peers/admin?');
-$COUNT  = $peers['count'] ?? 0;
-$PAGER  = $peers['pager'] ?? '';
-$PEERS  = $peers['stmt'] ?? [];
+$peers = PeersLogic::getPeers('admin', 0, Auth::user(), 'peers/admin?');
+$COUNT = (int) ($peers['count'] ?? 0);
+$PAGER = $peers['pager'] ?? '';
+$PEERS = $peers['stmt'] ?? [];
 
-theme_admin_header(__('_PEERS') !== '_PEERS' ? __('_PEERS') : __('PEERS'));
+theme_admin_header(__('PEERS'));
 render_flash();
-block_begin(__('_PEERS') !== '_PEERS' ? __('_PEERS') : 'Peers');
+block_begin(__('PEERS'));
 ?>
-<p class="text-center"><?= sprintf(__('MANY_PEERS'), (int) $COUNT) ?></p>
+<p class="text-center"><?= sprintf(e(__('MANY_PEERS')), $COUNT) ?></p>
 <?= $PAGER ?>
 <div class="table-responsive p-3">
     <table class="table table-striped">
@@ -42,7 +41,7 @@ block_begin(__('_PEERS') !== '_PEERS' ? __('_PEERS') : 'Peers');
             $username = (int) ($row['userid'] ?? 0) !== 0
                 ? coloredname((int) $row['userid'])
                 : e($row['ip'] ?? '');
-            $smallname = CutName(htmlspecialchars((string) ($row['name'] ?? '')), 40);
+            $smallname = CutName(e($row['name'] ?? ''), 40);
             $seedColor = (($row['seeder'] ?? '') === 'yes') ? 'green' : 'red';
             $connColor = (($row['connectable'] ?? '') === 'yes') ? 'green' : 'red';
             $up = (int) ($row['uploaded'] ?? 0);
@@ -51,16 +50,16 @@ block_begin(__('_PEERS') !== '_PEERS' ? __('_PEERS') : 'Peers');
             ?>
             <tr>
                 <td><?= $username ?></td>
-                <td><a href="<?= url('torrent/view/' . (int) ($row['torrent'] ?? 0)) ?>"><?= $smallname ?></a></td>
+                <td><a href="<?= e(url('torrent/view/' . (int) ($row['torrent'] ?? 0))) ?>"><?= $smallname ?></a></td>
                 <td><?= e($row['ip'] ?? '') ?></td>
                 <td><?= e((string) ($row['port'] ?? '')) ?></td>
-                <td><?php if ($upColor) : ?><span style="color:<?= $upColor ?>"><?php endif; ?>
+                <td><?php if ($upColor !== '') : ?><span style="color:<?= e($upColor) ?>"><?php endif; ?>
                     <?= mksize($up) ?>
-                    <?php if ($upColor) : ?></span><?php endif; ?></td>
+                    <?php if ($upColor !== '') : ?></span><?php endif; ?></td>
                 <td><?= mksize($down) ?></td>
                 <td><?= e(substr((string) ($row['peer_id'] ?? ''), 0, 8)) ?></td>
-                <td><span style="color:<?= $connColor ?>"><?= e($row['connectable'] ?? '') ?></span></td>
-                <td><span style="color:<?= $seedColor ?>"><?= e($row['seeder'] ?? '') ?></span></td>
+                <td><span style="color:<?= e($connColor) ?>"><?= e($row['connectable'] ?? '') ?></span></td>
+                <td><span style="color:<?= e($seedColor) ?>"><?= e($row['seeder'] ?? '') ?></span></td>
                 <td><?= e(user_timezone_date($row['started'] ?? '')) ?></td>
                 <td><?= e(user_timezone_date($row['last_action'] ?? '')) ?></td>
             </tr>

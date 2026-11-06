@@ -1,13 +1,13 @@
-You have requested that your user profile (username %usersname%)
-%sitename% should be updated with this email address (%newemail%) as your user contact.
+You have requested that your user profile on %sitename%
+(username: %usersname%) be updated to use this email address: %newemail%
 
-If you did not do this, please ignore this email.
+If you did not request this change, please ignore this email.
+The request was made from IP address: %usersip%
 
-The person who entered your email address had the IP address %usersip%.
+Please do not reply to this message.
 
-Please do not reply.
+To complete the update of your profile, open this link:
+%siteurl%/confirm/confirmpassword/%usersid%/%userssecret%/%obemail%
 
-To complete the update of your user profile, please follow this link:
-%sitename%/confirm/confirmpassword/%usersid%/%userssecret%/%obemail%
-
-Your new email address will appear in your profile after you do this. Otherwise your profile will remain unchanged.
+Your new email address will appear in your profile after you confirm.
+Otherwise your profile will remain unchanged.

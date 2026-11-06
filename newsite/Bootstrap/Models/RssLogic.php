@@ -103,9 +103,11 @@ class RssLogic
                         $where 
                         ORDER BY added 
                         DESC $limit";
-                        $cres = DB::run($torrents_query)->fetchAll();
-                        $cres['res'] = $cres;
-                        $cres['link'] = $link;
-        return $cres;
+         $rows = DB::run($torrents_query)->fetchAll();
+
+return [
+    'res'  => $rows,
+    'link' => $link,
+];
     }
 }

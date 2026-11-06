@@ -4,15 +4,13 @@ declare(strict_types=1);
 use Bootstrap\Libs\Auth;
 use Bootstrap\Models\BonusLogic;
 
-$current_user = Auth::user();
-
 if (!Auth::check()) {
     redirect('authorise/login', __('NO_PERMISSION'), 'warning');
 }
 
+$USER           = Auth::user();
 $BONUS          = BonusLogic::getAll();
 $BONUS_INTERVAL = BonusLogic::interval();
-$USER           = $current_user;
 
 theme_header(__('BONUS'));
 render_flash();
@@ -41,7 +39,7 @@ block_begin(__('BONUS'));
                 <td><?= e($row['descr'] ?? '') ?></td>
                 <td><?= e((string) ($row['cost'] ?? '')) ?></td>
                 <td>
-                    <form method="post" action="<?= url('bonus/submit') ?>" style="display:inline">
+                    <form method="post" action="<?= e(url('bonus/submit')) ?>" style="display:inline">
                         <?= csrf_field() ?>
                         <input type="hidden" name="id" value="<?= (int) $row['id'] ?>">
                         <button type="submit" class="btn btn-sm ttbtn"><?= e(__('SUBMIT')) ?></button>
@@ -49,7 +47,7 @@ block_begin(__('BONUS'));
                 </td>
                 <?php if (Auth::isStaff()) : ?>
                     <td>
-                        <a href="<?= url('bonus/delete/' . (int) $row['id']) ?>"><i class="fa fa-trash"></i></a>
+                        <a href="<?= e(url('bonus/delete/' . (int) $row['id'])) ?>"><i class="fa fa-trash"></i></a>
                         <a href="javascript:;" class="bonusAttr"
                            data-bs-toggle="modal" data-bs-target="#bonusModal"
                            data-id="<?= (int) $row['id'] ?>"
@@ -80,10 +78,9 @@ if (Auth::isStaff()) :
 ?>
     <p class="text-end">
         <button type="button" class="ttbtn" data-bs-toggle="modal" data-bs-target="#bonusModal">
-            <i class="fa fa-user-secret" title="Admin"></i> <?= e(__('ADD')) ?>
+            <i class="fa fa-user-secret" title="<?= e(__('ADMIN')) ?>"></i> <?= e(__('ADD')) ?>
         </button>
     </p>
-
     <script>
     document.querySelectorAll('.bonusAttr').forEach(function (el) {
         el.addEventListener('click', function () {
@@ -96,8 +93,7 @@ if (Auth::isStaff()) :
         });
     });
     </script>
-
-    <form method="post" action="<?= url('bonus/update') ?>">
+    <form method="post" action="<?= e(url('bonus/update')) ?>">
         <?= csrf_field() ?>
         <div class="modal fade" id="bonusModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">

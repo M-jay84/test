@@ -9,9 +9,7 @@ if (!Auth::isStaff()) {
 }
 
 if (is_post()) {
-    if (!csrf_verify()) {
-        redirect('categorie/view', 'Invalid request', 'warning');
-    }
+    csrf_verify() || redirect('categorie/view', __('INVALID_REQUEST'), 'warning');
     CatagoriesLogic::insertOrUpdate();
     return;
 }
@@ -55,7 +53,7 @@ block_begin(__('CATEGORIES'));
                        data-parent_cat="<?= e($row['parent_cat'] ?? '') ?>"
                        data-name="<?= e($row['name'] ?? '') ?>"
                        data-image="<?= e($row['image'] ?? '') ?>"><i class="fa fa-edit"></i></a>
-                    <a href="<?= url('categorie/delete/' . (int) $row['id']) ?>"><i class="fa fa-trash"></i></a>
+                    <a href="<?= e(url('categorie/delete/' . (int) $row['id'])) ?>"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -73,7 +71,7 @@ document.querySelectorAll('.addAttr').forEach(function (el) {
     });
 });
 </script>
-<form method="post" action="<?= url('categorie/view') ?>">
+<form method="post" action="<?= e(url('categorie/view')) ?>">
     <?= csrf_field() ?>
     <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md" style="max-width:700px;">

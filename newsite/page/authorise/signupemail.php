@@ -1,12 +1,6 @@
 <?php
 declare(strict_types=1);
 
-/**
- * Confirm signup email link.
- * URL: /authorise/signupemail/{id}/{secret}
- */
-
-use Bootstrap\Libs\Auth;
 use Bootstrap\Models\ConfirmLogic;
 
 $id     = (int) param(0, 0);
@@ -16,9 +10,5 @@ if ($id < 1 || strlen($secret) < 10) {
     redirect('authorise/login', __('NOTHING_FOUND'), 'warning');
 }
 
-// Model currently ends with message()/redirect — call it
+// Model currently redirects via message()
 ConfirmLogic::confirmemail($id, $secret);
-
-// If model is updated to return instead of redirect:
-// ConfirmLogic::confirmemail($id, $secret);
-// redirect('authorise/login', __('ACCOUNT_ACTIVATED'), 'success');

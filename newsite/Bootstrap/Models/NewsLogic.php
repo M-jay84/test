@@ -1,59 +1,55 @@
 <?php
+declare(strict_types=1);
 
 namespace Bootstrap\Models;
 
+use Bootstrap\Libs\Auth;
 use Bootstrap\Libs\DB;
-use Bootstrap\Libs\Validate;
-use Bootstrap\Models\CommentsLogic;
+use PDO;
 
-/*
-* News Table Data
-*/
 class NewsLogic
 {
-    // Admin Add/Edit News
-    public static function insertOrUpdate()
+    public static function getAll(): array
     {
-        // Check User Input
-        $body = Input1('body');
-        $title = Input1('title');
-        $added = Input1('added');
-        $id = Input1('id');
-       
-        // Check Correct Input
-        if (!$body || !$title) {
-            message('adminnews', LANG["MISSING_FORM_DATA"]);
-        }
-        
-        if (!$added) {
-            $added = CONFIG['TT_DATE'];
+        return DB::run(
+            'SELECT * FROM news ORDER BY added DESC'
+        )->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function insertOrUpdate(): never
+    {
+        $body  = input_string('body');
+        $title = input_string('title');
+        $id    = input_int('id', 0);
+        $uid   = (int) Auth::id();
+
+        if ($body === '' || $title === '') {
+            redirect('news/view', __('MISSING_FORM_DATA'), 'warning');
         }
 
-        if (!$id) {
-            $news_query = "INSERT INTO news (userid,added,body,title) VALUES (?,?,?,?)";
-            DB::run($news_query, [$id, CONFIG['TT_DATE'], $body, $title]);
+        if ($id < 1) {
+            DB::run(
+                'INSERT INTO news (userid, added, body, title) VALUES (?, ?, ?, ?)',
+                [$uid, CONFIG['TT_DATE'], $body, $title]
+            );
         } else {
-            $news_query = "UPDATE news SET body = ? AND title = ? WHERE id=?";
-            DB::run($news_query, [$body, $title, $id]);
+            DB::run(
+                'UPDATE news SET body = ?, title = ? WHERE id = ?',
+                [$body, $title, $id]
+            );
         }
-        message('adminnews', LANG["ACTION_COMPLETE"]);
+
+        redirect('news/view', __('ACTION_COMPLETE'), 'success');
     }
 
-    // Admin Delete Catagorie
-    public static function getAll()
+    public static function delete(int $id, int $userid): never
     {
-        $news_query = "SELECT * FROM `news` ORDER BY added DESC";
-        $news = DB::run($news_query);
-        return $news;
-    }
+        if ($id < 1) {
+            redirect('news/view', __('MISSING_ID'), 'warning');
+        }
 
-    // Admin Delete News
-    public static function delete($id, $userid)
-    {
-        $news_query = "DELETE FROM `news` WHERE id' = ?";
-        DB::run($news_query, [$id]);
+        DB::run('DELETE FROM news WHERE id = ?', [$id]);
         CommentsLogic::delete($id, $userid, 'news');
-        message('adminnews', LANG["DEL_COMPLETE"]);
+        redirect('news/view', __('DEL_COMPLETE'), 'success');
     }
-
 }

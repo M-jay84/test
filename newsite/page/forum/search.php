@@ -1,25 +1,22 @@
 <?php
 declare(strict_types=1);
 
-use Bootstrap\Libs\Auth;
 use Bootstrap\Models\ForumsLogic;
 
 $current_user = ForumsLogic::forum_guard();
-
 $data     = ForumsLogic::search();
 $TITLE    = $data['TITLE'] ?? __('SEARCH');
-$KEYWORDS = $data['KEYWORDS'] ?? (string) get('keywords', '');
+$KEYWORDS = (string) ($data['KEYWORDS'] ?? get('keywords', ''));
 $FORUMS   = $data['FORUMS'] ?? ($data['stmt'] ?? []);
-$PAGER    = $data['PAGER'] ?? ($data['pager'] ?? '');
-$USER     = $current_user;
+$PAGER    = (string) ($data['PAGER'] ?? $data['pager'] ?? '');
 
 theme_header(is_string($TITLE) ? $TITLE : __('SEARCH'));
 render_flash();
-block_begin($TITLE);
+block_begin(is_string($TITLE) ? $TITLE : __('SEARCH'));
 forumheader('search');
 ?>
 <div class="tt_blockcenter p-2">
-    <form method="get" action="<?= url('forum/search') ?>">
+    <form method="get" action="<?= e(url('forum/search')) ?>">
         <div class="row justify-content-md-center">
             <input id="keywords" type="text" class="form-control w-50" name="keywords"
                    minlength="3" maxlength="25" value="<?= e($KEYWORDS) ?>">
@@ -30,7 +27,6 @@ forumheader('search');
         </div>
     </form>
 </div>
-
 <div class="table-responsive p-3">
     <p class="text-center"><?= e(__('SEARCH')) ?>: <b><?= e($KEYWORDS) ?></b></p>
     <table class="table table-striped">
@@ -45,14 +41,14 @@ forumheader('search');
         <tbody>
         <?php foreach ($FORUMS as $row) :
             if (($row['name'] ?? '') === ''
-                || ((int) ($row['minclassread'] ?? 0) > (int) ($USER->class ?? 0)
+                || ((int) ($row['minclassread'] ?? 0) > (int) ($current_user->class ?? 0)
                     && ($row['guest_read'] ?? '') === 'no')) {
                 continue;
             }
             ?>
             <tr>
-                <td><a href="<?= url('post/view/' . (int) $row['topicid']) ?>"><?= e($row['subject'] ?? '') ?></a></td>
-                <td><a href="<?= url('topic/view/' . (int) $row['forumid']) ?>"><?= e($row['name'] ?? '') ?></a></td>
+                <td><a href="<?= e(url('post/view/' . (int) $row['topicid'])) ?>"><?= e((string) ($row['subject'] ?? '')) ?></a></td>
+                <td><a href="<?= e(url('topic/view/' . (int) $row['forumid'])) ?>"><?= e((string) ($row['name'] ?? '')) ?></a></td>
                 <td><?= e((string) ($row['added'] ?? '')) ?></td>
                 <td><?= coloredname((int) ($row['userid'] ?? 0)) ?></td>
             </tr>
